@@ -193,9 +193,6 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/lib/libsnd.so:system/lib/libsnd.so \
     vendor/lge/thunderc/files/lib/libqmi.so:system/lib/libqmi.so \
     vendor/lge/thunderc/files/lib/libdll.so:system/lib/libdll.so \
-    vendor/lge/thunderc/files/lib/liblgeat.so:system/lib/liblgeat.so \
-    vendor/lge/thunderc/files/lib/liblgdrm.so:system/lib/liblgdrm.so \
-    vendor/lge/thunderc/files/lib/liblgdrmwbxml.so:system/lib/liblgdrmwbxml.so \
     vendor/lge/thunderc/files/lib/liblgerft.so:system/lib/liblgerft.so \
     vendor/lge/thunderc/files/lib/libbcmwl.so:system/lib/libbcmwl.so \
     vendor/lge/thunderc/files/lib/libdss.so:system/lib/libdss.so \
