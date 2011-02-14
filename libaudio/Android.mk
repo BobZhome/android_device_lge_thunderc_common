@@ -1,4 +1,4 @@
-ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),thunderg)
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),thunderc)
 
 
 LOCAL_PATH:= $(call my-dir)

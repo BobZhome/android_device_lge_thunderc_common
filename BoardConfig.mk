@@ -2,14 +2,14 @@ USE_CAMERA_STUB := false
 BOARD_USE_FROYO_LIBCAMERA := true
 
 # inherit from the proprietary version
-#-include vendor/lge/thunderg/BoardConfigVendor.mk
+#-include vendor/lge/thunderc/BoardConfigVendor.mk
 
 TARGET_BOARD_PLATFORM := msm7k
 TARGET_ARCH_VARIANT := armv6-vfp
 TARGET_CPU_ABI := armeabi-v6l
 TARGET_CPU_ABI2 := armeabi
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
-TARGET_BOOTLOADER_BOARD_NAME := thunderg
+TARGET_BOOTLOADER_BOARD_NAME := thunderc
 
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
 BOARD_NO_RGBX_8888 := true
@@ -19,7 +19,7 @@ TARGET_PROVIDES_INIT_TARGET_RC := true
 
 TARGET_USES_OLD_LIBSENSORS_HAL:=true
 
-TARGET_OTA_ASSERT_DEVICE := thunderg
+TARGET_OTA_ASSERT_DEVICE := thunderc
 
 TARGET_NO_BOOTLOADER := true
 #TARGET_NO_RECOVERY := true
@@ -48,7 +48,7 @@ WIFI_DRIVER_MODULE_NAME := wireless
 #WIFI_DRIVER_FW_STA_PATH := "/system/etc/wl/rtecdc.bin"
 #WIFI_DRIVER_FW_AP_PATH := "/system/etc/wl/rtecdc-apsta.bin"
 
-BOARD_EGL_CFG := device/lge/thunderg/files/lib/egl/egl.cfg
+BOARD_EGL_CFG := vendor/lge/thunderc/files/lib/egl/egl.cfg
 
 BOARD_KERNEL_CMDLINE := mem=477M console=ttyMSM2,115200n8 androidboot.hardware=thunderc
 BOARD_KERNEL_BASE := 0x12200000
