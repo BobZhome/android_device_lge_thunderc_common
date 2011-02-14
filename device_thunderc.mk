@@ -149,8 +149,10 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/bin/rmt_storage:system/bin/rmt_storage \
 
 # wipeirface (What is this?)
-PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/bin/wiperiface:system/bin/wiperiface \
+# (Whatever it is LS670 doesn't have it)
+# PRODUCT_COPY_FILES += \
+#    vendor/lge/thunderc/files/bin/wiperiface:system/bin/wiperiface \
+
 # Touchscreen firmware updater
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/bin/tsdown:system/bin/tsdown \
