@@ -1,5 +1,5 @@
 #
-# system.prop for thunderg
+# system.prop for thunderc
 #
 
 rild.libpath=/system/lib/libril-qc-1.so
