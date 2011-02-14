@@ -261,5 +261,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.cdma.home.operator.alpha=Sprint \
         ro.setupwizard.enable_bypass=1 \
         ro.media.dec.jpeg.memcap=20000000 \
-        dalvik.vm.lockprof.threshold=500
+	ro.ril.def.preferred.network=4 \
+        ro.telephony.default_network=4 \
+        dalvik.vm.lockprof.threshold=500 \
+	gsm.sim.operator.alpha=Sprint \
+	gsm.sim.operator.numeric=310120 \
+	gsm.sim.operator.iso-country=us \
+	gsm.operator.alpha=Sprint \
+	gsm.operator.numeric=310120 \
+	gsm.operator.iso-country=us
 
