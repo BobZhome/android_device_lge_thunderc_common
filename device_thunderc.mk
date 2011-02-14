@@ -103,9 +103,9 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/proprietary/lib/liboemcamera.so:system/lib/liboemcamera.so \
-    vendor/lge/thunderc/proprietary/lib/libmmipl.so:system/lib/libmmipl.so \
-    vendor/lge/thunderc/proprietary/lib/libmmjpeg.so:system/lib/libmmjpeg.so \
+    vendor/lge/thunderc/lib/liboemcamera.so:system/lib/liboemcamera.so \
+    vendor/lge/thunderc/lib/libmmipl.so:system/lib/libmmipl.so \
+    vendor/lge/thunderc/lib/libmmjpeg.so:system/lib/libmmjpeg.so \
 
 
 # Wifi
