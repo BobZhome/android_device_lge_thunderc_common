@@ -1,0 +1,5 @@
+Info about vendor/lge/thunderc files..
+
+The easiest way to dump all the required files you need
+is to just take a system.img from your latest nandroid dump
+and unyaffs the contents of it into vendor/lge/thunderc/files/
