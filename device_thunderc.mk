@@ -24,7 +24,6 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/etc/loc_parameter.ini:system/etc/loc_parameter.ini \
     vendor/lge/thunderc/files/lib/librpc.so:system/lib/librpc.so \
     vendor/lge/thunderc/files/lib/libloc_api.so:system/lib/libloc_api.so \
     vendor/lge/thunderc/files/lib/libgps.so:system/lib/libgps.so \
