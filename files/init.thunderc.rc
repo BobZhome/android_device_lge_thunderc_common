@@ -206,18 +206,6 @@ service netmgrd /system/bin/netmgrd -E
 on property:ro.use_data_netmgrd=true
     start netmgrd
 
-# LGE_CHANGE [dojip.kim@lge.com] 2010-10-28, LS670 doesn't the qcom wifi positioning
-#service wiperiface /system/bin/wiperiface
-#    user location
-#    group qcom_oncrpc
-#    oneshot
-
-# LGE_CHANGE [dojip.kim@lge.com] 2010-08-06, 
-# CKPD-daemon is required to support remote AT command feature. (eg. CKPD, CTSA)
-# FIXME: really need???
-#service ckpd /system/bin/CKPD-daemon
-#    onrestart /system/bin/log -t RIL-CKPD -p w "CKPD daemon restarted"
-
 # LGE_CHANGE [dojip.kim@lge.com] 2010-09-02, blocked in production build
 # bugreport is triggered by the KEY_VOLUME_DOWN and KEY_MENU keycodes
 service bugreport /system/bin/logwrapper /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport

@@ -43,6 +43,25 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/init.thunderc.rc:root/init.thunderc.rc \
     device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunderc.rc \
     device/lge/thunderc/files/initlogo.rle:root/initlogo.rle \
+    device/lge/thunderc/files/chargerlogo:root/chargerlogo \
+    device/lge/thunderc/files/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
+    device/lge/thunderc/files/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
+    device/lge/thunderc/files/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
+    device/lge/thunderc/files/chargerimages/battery_ani_04.rle:root/chargerimages/battery_ani_04.rle \
+    device/lge/thunderc/files/chargerimages/battery_ani_05.rle:root/chargerimages/battery_ani_05.rle \
+    device/lge/thunderc/files/chargerimages/battery_charging_01.rle:root/chargerimages/battery_charging_01.rle \
+    device/lge/thunderc/files/chargerimages/battery_charging_02.rle:root/chargerimages/battery_charging_02.rle \
+    device/lge/thunderc/files/chargerimages/battery_charging_03.rle:root/chargerimages/battery_charging_03.rle \
+    device/lge/thunderc/files/chargerimages/battery_charging_04.rle:root/chargerimages/battery_charging_04.rle \
+    device/lge/thunderc/files/chargerimages/battery_charging_05.rle:root/chargerimages/battery_charging_05.rle \
+    device/lge/thunderc/files/chargerimages/battery_charging_06.rle:root/chargerimages/battery_charging_06.rle \
+    device/lge/thunderc/files/chargerimages/battery_notenough.rle:root/chargerimages/battery_notenough.rle \
+    device/lge/thunderc/files/chargerimages/battery_bg.rle:root/chargerimages/battery_bg.rle \
+    device/lge/thunderc/files/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
+    device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
+    device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
+    vendor/lge/thunderc/files/system/framework/lgsvcitems.jar:system/framework/lgsvcitems.jar \
+    vendor/lge/thunderc/files/system/framework/qcrilhook.jar:system/framework/qcrilhook.jar \
 
 # Backlight
 PRODUCT_COPY_FILES += \
@@ -189,6 +208,7 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/etc/bluetooth/blacklist.conf:system/etc/bluetooth/blacklist.conf \
     vendor/lge/thunderc/files/system/etc/bluetooth/input.conf:system/etc/bluetooth/input.conf \
     vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
+
 
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
