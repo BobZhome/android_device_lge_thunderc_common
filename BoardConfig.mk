@@ -1,9 +1,6 @@
 USE_CAMERA_STUB := false
 BOARD_USE_FROYO_LIBCAMERA := true
 
-# inherit from the proprietary version
-#-include vendor/lge/thunderc/BoardConfigVendor.mk
-
 TARGET_BOARD_PLATFORM := msm7k
 TARGET_ARCH_VARIANT := armv6-vfp
 TARGET_CPU_ABI := armeabi-v6l
@@ -48,7 +45,7 @@ WIFI_DRIVER_MODULE_NAME := wireless
 #WIFI_DRIVER_FW_STA_PATH := "/system/etc/wl/rtecdc.bin"
 #WIFI_DRIVER_FW_AP_PATH := "/system/etc/wl/rtecdc-apsta.bin"
 
-BOARD_EGL_CFG := vendor/lge/thunderc/files/lib/egl/egl.cfg
+BOARD_EGL_CFG := vendor/lge/thunderc/files/system/lib/egl/egl.cfg
 
 BOARD_KERNEL_CMDLINE := mem=477M console=ttyMSM2,115200n8 androidboot.hardware=thunderc
 BOARD_KERNEL_BASE := 0x12200000
@@ -72,6 +69,8 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x0a4e0000
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 #BOARD_HAS_NO_SELECT_BUTTON := true
+
+# Tag: Odex
 WITH_DEXPREOPT := true
 
 #JS_ENGINE := v8
