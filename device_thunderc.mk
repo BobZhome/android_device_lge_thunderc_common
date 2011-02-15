@@ -41,7 +41,7 @@ PRODUCT_COPY_FILES += \
 # Board-specific init (does not support charging in "power off" state yet)
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/init.thunderc.rc:root/init.thunderc.rc \
-    device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunderc.rc \
+    device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunder.rc \
     device/lge/thunderc/files/initlogo.rle:root/initlogo.rle \
     device/lge/thunderc/files/chargerlogo:root/chargerlogo \
     device/lge/thunderc/files/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
