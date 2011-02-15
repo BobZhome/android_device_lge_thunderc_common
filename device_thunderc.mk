@@ -62,6 +62,10 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
     vendor/lge/thunderc/files/system/framework/lgsvcitems.jar:system/framework/lgsvcitems.jar \
     vendor/lge/thunderc/files/system/framework/qcrilhook.jar:system/framework/qcrilhook.jar \
+    vendor/lge/thunderc/files/system/etc/permissions/qcrilhook.xml:system/etc/permissions/qcrilhook.xml \
+    vendor/lge/thunderc/files/system/etc/permissions/lgsvcitems.xml:system/etc/permissions/lgsvcitems.xml \
+    device/lge/thunderc/files/SprintHiddenMenu.apk:system/app/SprintHiddenMenu.apk \
+    device/lge/thunderc/files/LgHiddenMenu.apk:system/app/LgHiddenMenu.apk \
 
 # Backlight
 PRODUCT_COPY_FILES += \

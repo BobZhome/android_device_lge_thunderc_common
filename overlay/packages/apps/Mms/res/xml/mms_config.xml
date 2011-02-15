@@ -12,4 +12,5 @@
     <int name="recipientLimit">40</int>
     <int name="smsToMmsTextThreshold">4</int>
     <string name="uaProfTagName">Profile</string>
+    <string name="uaProfUrl">http://device.sprintpcs.com/LG/LS670/LS670ZVC.rdf</string>
 </mms_config>
