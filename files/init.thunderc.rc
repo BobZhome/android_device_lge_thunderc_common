@@ -188,11 +188,6 @@ stop dhcpcd
 #service dhcp-service /system/bin/netcfg eth0 dhcp
 #    oneshot
 
-service qcom-post-boot /system/bin/sh /init.qcom.post_boot.sh
-	user root
-	disabled
-	oneshot
-
 on property:dev.bootcomplete=1
     start qcom-post-boot
 

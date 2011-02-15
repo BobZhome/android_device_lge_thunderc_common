@@ -43,7 +43,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/init.thunderc.rc:root/init.thunderc.rc \
     device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunderc.rc \
-    device/lge/thunderc/files/init.qcom.post_boot.sh:root/init.qcom.post_boot.sh \
 #    vendor/lge/thunderc/files/system/fota.rc:root/fota.rc \
 #    vendor/lge/thunderc/files/system/init.lge.hidden_reset.sh:root/init.lge.hidden_reset.sh \
 #    vendor/lge/thunderc/files/system/chargerlogo:root/sbin/chargerlogo \
