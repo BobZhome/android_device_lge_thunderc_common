@@ -71,7 +71,7 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/system/lib/liboemcamera.so:system/lib/liboemcamera.so \
+    device/lge/thunderc/files/liboemcamera.so:system/lib/liboemcamera.so \
     vendor/lge/thunderc/files/system/lib/libmmipl.so:system/lib/libmmipl.so \
     vendor/lge/thunderc/files/system/lib/libmmjpeg.so:system/lib/libmmjpeg.so \
 
@@ -190,7 +190,7 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/etc/bluetooth/input.conf:system/etc/bluetooth/input.conf \
     vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
 
-$(call inherit-product, device/common/gps/gps_eu_supl.mk)
+$(call inherit-product, device/common/gps/gps_us_supl.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_thunderc
