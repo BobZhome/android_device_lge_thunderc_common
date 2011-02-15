@@ -42,7 +42,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/init.thunderc.rc:root/init.thunderc.rc \
     device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunderc.rc \
-    device/lge/thunderg/files/initlogo.rle:root/initlogo.rle \
+    device/lge/thunderc/files/initlogo.rle:root/initlogo.rle \
 
 # Backlight
 PRODUCT_COPY_FILES += \
