@@ -35,7 +35,7 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/usr/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
     vendor/lge/thunderc/files/system/usr/keylayout/thunder.kl:system/usr/keylayout/thunder.kl \
     vendor/lge/thunderc/files/system/usr/keychars/thunder.kcm.bin:system/usr/keychars/thunder.kcm.bin \
-    vendor/lge/thunderc/files/system/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
+    device/lge/thunderc/files/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
     vendor/lge/thunderc/files/system/usr/keychars/thunder_keypad.kcm.bin:system/usr/keychars/thunder_keypad.kcm.bin \
 
 # Board-specific init (does not support charging in "power off" state yet)
