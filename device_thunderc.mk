@@ -13,7 +13,6 @@ PRODUCT_PACKAGES += \
     libmm-omxcore \
     libOmxCore \
     brcm_patchram_plus \
-    libaudio.thunderc \
     gps.thunderc
 
 
@@ -43,33 +42,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/init.thunderc.rc:root/init.thunderc.rc \
     device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunderc.rc \
-#    vendor/lge/thunderc/files/system/fota.rc:root/fota.rc \
-#    vendor/lge/thunderc/files/system/init.lge.hidden_reset.sh:root/init.lge.hidden_reset.sh \
-#    vendor/lge/thunderc/files/system/chargerlogo:root/sbin/chargerlogo \
-#    vendor/lge/thunderc/files/system/ftm_power:root/sbin/ftm_power \
-#    vendor/lge/thunderc/files/system/bootlogo:root/sbin/bootlogo \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_ani_04.rle:root/chargerimages/battery_ani_04.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_ani_05.rle:root/chargerimages/battery_ani_05.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_bg.rle:root/chargerimages/battery_bg.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_charging_01.rle:root/chargerimages/battery_charging_01.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_charging_02.rle:root/chargerimages/battery_charging_02.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_charging_03.rle:root/chargerimages/battery_charging_03.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_charging_04.rle:root/chargerimages/battery_charging_04.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_charging_05.rle:root/chargerimages/battery_charging_05.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_charging_06.rle:root/chargerimages/battery_charging_06.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/battery_wait_ani_02.rle:root/chargerimages/battery_wait_ani_02.rle \
-#    vendor/lge/thunderc/files/system/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
-#    vendor/lge/thunderc/files/system/bootimages/opening_01.rle:root/bootimages/opening_01.rle \
-#    vendor/lge/thunderc/files/system/bootimages/opening_02.rle:root/bootimages/opening_02.rle \
-#    vendor/lge/thunderc/files/system/bootimages/opening_03.rle:root/bootimages/opening_03.rle \
-#    vendor/lge/thunderc/files/system/bootimages/opening_04.rle:root/bootimages/opening_04.rle \
-#    vendor/lge/thunderc/files/system/bootimages/opening_05.rle:root/bootimages/opening_05.rle \
-#    vendor/lge/thunderc/files/system/bootimages/opening_06.rle:root/bootimages/opening_06.rle \
-#    vendor/lge/thunderc/files/system/init.rc:root/init.rc \
+    device/lge/thunderg/files/initlogo.rle:root/initlogo.rle \
 
 # Backlight
 PRODUCT_COPY_FILES += \
@@ -137,10 +110,7 @@ PRODUCT_COPY_FILES += \
 
 # LGE services
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/system/bin/port-bridge:system/bin/port-bridge \
     vendor/lge/thunderc/files/system/bin/qmuxd:system/bin/qmuxd \
-    vendor/lge/thunderc/files/system/etc/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
-    vendor/lge/thunderc/files/system/bin/rmt_storage:system/bin/rmt_storage \
 
 # wipeirface (What is this?)
 # (Whatever it is LS670 doesn't have it)
@@ -161,10 +131,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.lge.vibrator_amp=125 \
-
-# Move dalvik-cache to /data
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dexopt-data-only=1 \
 
 # RIL
 PRODUCT_COPY_FILES += \
@@ -213,20 +179,6 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/lib/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
     vendor/lge/thunderc/files/system/lib/libOmxWmaDec.so:system/lib/libOmxWmaDec.so \
     vendor/lge/thunderc/files/system/lib/libOmxWmvDec.so:system/lib/libOmxWmvDec.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_aacdec_sharedlibrary.so:system/lib/libomx_aacdec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_amrdec_sharedlibrary.so:system/lib/libomx_amrdec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_amrenc_sharedlibrary.so:system/lib/libomx_amrenc_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_avcdec_sharedlibrary.so:system/lib/libomx_avcdec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_m4vdec_sharedlibrary.so:system/lib/libomx_m4vdec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_mp3dec_sharedlibrary.so:system/lib/libomx_mp3dec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_nextreaming_divxdec_sharedlibrary.so:system/lib/libomx_nextreaming_divxdec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_nextreaming_wmadec_sharedlibrary.so:system/lib/libomx_nextreaming_wmadec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_nextreaming_wmvdec_sharedlibrary.so:system/lib/libomx_nextreaming_wmvdec_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libomx_sharedlibrary.so:system/lib/libomx_sharedlibrary.so \
-#    vendor/lge/thunderc/files/system/lib/libqcomm_omx.so:system/lib/libqcomm_omx.so \
-#    vendor/lge/thunderc/files/system/lib/libstagefright_omx.so:system/lib/libstagefright_omx.so \
-#    vendor/lge/thunderc/files/system/lib/libopencore_common.so:system/lib/libopencore_common.so \
-#    vendor/lge/thunderc/files/system/lib/libmm-omxcore.so:system/lib/libmm-omxcore.so \
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
