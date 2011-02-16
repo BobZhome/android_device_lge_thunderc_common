@@ -22,10 +22,6 @@
 -->
 <apns version="6">
 <!-- use empty string to specify no proxy or port -->
-  <apn carrier="CDMA" mcc="310" mnc="120" apn="0" port="" mmsproxy="" mmsport="" mmsc="" type="default,supl" />
-  <apn carrier="CDMA" mcc="310" mnc="120" apn="1" port="" mmsproxy="68.28.31.7" mmsport="80" mmsc="http://mms.sprintpcs.com" type="mms" />
-  <apn carrier="CDMA" mcc="311" mnc="23" apn="1" port="" mmsproxy="" mmsport="" mmsc="http://pix.cellularsouth.com/servlets/mms" type="mms" />
-  <apn carrier="CDMA" mcc="310" mnc="60" apn="1" port="" mmsproxy="" mmsport="80" mmsc="http://mms.cellcom.com/cellcom/mms.php" type="mms" />
-  <apn carrier="CDMA" mcc="311" mnc="61" apn="1" port="" mmsproxy="66.255.55.23" mmsport="9401" mmsc="http://mms.iot1.com/srt/mms.php" type="mms" />
-  <apn carrier="CDMA" mcc="310" mnc="027" apn="1" port="" mmsproxy="" mmsport="" mmsc="http://mms.metropcs.net/mmsc" type="mms" />
+  <apn carrier="CDMA" mcc="310" mnc="120" apn="0" port="" mmsproxy="" mmsport="" mmsc="" type="*"/>
+  <apn carrier="CDMA" mcc="310" mnc="120" apn="1" port="" mmsproxy="" mmsport="" mmsc="http://mms.sprintpcs.com" />
 </apns>

@@ -14,7 +14,6 @@ PRODUCT_PACKAGES += \
     libOmxCore \
     brcm_patchram_plus \
     gps.thunderc \
-    lights.thunderc \
     flash_image \
     dump_image \
     erase_image
@@ -27,6 +26,11 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/lib/libloc.so:obj/lib/libloc.so \
     vendor/lge/thunderc/files/system/lib/libcommondefs.so:system/lib/libcommondefs.so \
     vendor/lge/thunderc/files/system/lib/libloc-rpc.so:system/lib/libloc-rpc.so \
+
+
+# Backlight
+PRODUCT_COPY_FILES += \
+    vendor/lge/thunderc/files/system/lib/hw/lights.thunderc.so:system/lib/hw/lights.thunderc.so \
 
 # Publish that we support the live wallpaper feature.
 PRODUCT_COPY_FILES += \
