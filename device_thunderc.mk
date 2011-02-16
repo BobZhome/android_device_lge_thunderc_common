@@ -13,12 +13,14 @@ PRODUCT_PACKAGES += \
     libmm-omxcore \
     libOmxCore \
     brcm_patchram_plus \
-    gps.thunderc
-
+    gps.thunderc \
+    lights.thunderc \
+    flash_image \
+    dump_image \
+    erase_image
 
 # GPS
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/system/lib/librpc.so:system/lib/librpc.so \
     vendor/lge/thunderc/files/system/lib/libloc_api.so:system/lib/libloc_api.so \
     vendor/lge/thunderc/files/system/lib/libgps.so:system/lib/libgps.so \
     vendor/lge/thunderc/files/system/lib/libloc.so:system/lib/libloc.so \
@@ -66,10 +68,6 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/etc/permissions/lgsvcitems.xml:system/etc/permissions/lgsvcitems.xml \
     device/lge/thunderc/files/SprintHiddenMenu.apk:system/app/SprintHiddenMenu.apk \
     device/lge/thunderc/files/LgHiddenMenu.apk:system/app/LgHiddenMenu.apk \
-
-# Backlight
-PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/system/lib/hw/lights.thunderc.so:system/lib/hw/lights.thunderc.so \
 
 # 2D (using proprietary because of poor perfomance of open source libs)
 PRODUCT_COPY_FILES += \
