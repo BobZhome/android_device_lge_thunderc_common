@@ -86,3 +86,10 @@ persist.cust.tel.eons=1
 dalvik.vm.dexopt-flags=m=y
 dalvik.vm.heapsize=32m
 dalvik.vm.execution-mode=int:jit
+
+
+media.stagefright.enable-player=true
+media.stagefright.enable-meta=true
+media.stagefright.enable-scan=true
+media.stagefright.enable-http=true
+debug.sf.hw=1

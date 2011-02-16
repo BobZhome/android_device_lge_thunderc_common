@@ -35,8 +35,6 @@ BOARD_USES_GPSSHIM := true
 BOARD_GPS_NEEDS_XTRA := true
 BOARD_GPS_LIBRARIES := libloc
 
-BOARD_USE_USB_MASS_STORAGE_SWITCH := true
-
 # VER_0_6_X does not search networks
 WPA_SUPPLICANT_VERSION := VER_0_5_X
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
@@ -45,8 +43,8 @@ WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wireless.ko"
 WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/system/etc/wl/nvram.txt"
 WIFI_DRIVER_MODULE_NAME := wireless
 ## Tethering is not working now
-#WIFI_DRIVER_FW_STA_PATH := "/system/etc/wl/rtecdc.bin"
-#WIFI_DRIVER_FW_AP_PATH := "/system/etc/wl/rtecdc-apsta.bin"
+WIFI_DRIVER_FW_STA_PATH := "/system/etc/wl/rtecdc.bin"
+WIFI_DRIVER_FW_AP_PATH := "/system/etc/wl/rtecdc-apsta.bin"
 
 BOARD_EGL_CFG := vendor/lge/thunderc/files/system/lib/egl/egl.cfg
 
@@ -76,7 +74,9 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 # Tag: Odex
 WITH_DEXPREOPT := true
 
-#JS_ENGINE := v8
+JS_ENGINE := v8
+
+BUILD_WITH_FULL_STAGEFRIGHT := true
 
 TARGET_PROVIDES_LIBAUDIO := true 
 #TARGET_PROVIDES_LIBRIL := true

@@ -16,7 +16,13 @@ PRODUCT_PACKAGES += \
     gps.thunderc \
     flash_image \
     dump_image \
-    erase_image
+    erase_image \
+    FM \
+    hcitool \
+    libOmxVidEnc \
+    libmm-omxcore
+
+
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -205,7 +211,7 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/lib/libOmxMpeg4Dec.so:system/lib/libOmxMpeg4Dec.so \
     vendor/lge/thunderc/files/system/lib/libOmxQcelp13Enc.so:system/lib/libOmxQcelp13Enc.so \
     vendor/lge/thunderc/files/system/lib/libOmxQcelpDec.so:system/lib/libOmxQcelpDec.so \
-    vendor/lge/thunderc/files/system/lib/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
+#   vendor/lge/thunderc/files/system/lib/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
     vendor/lge/thunderc/files/system/lib/libOmxWmaDec.so:system/lib/libOmxWmaDec.so \
     vendor/lge/thunderc/files/system/lib/libOmxWmvDec.so:system/lib/libOmxWmvDec.so \
 
