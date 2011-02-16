@@ -2,7 +2,7 @@
 # system.prop for thunderc
 #
 
-ro.lge.proximity.delay=150
+ro.lge.proximity.delay=100
 ro.ril.def.preferred.network=4
 ro.telephony.default_network=4
 rild.libpath=/system/lib/libril-qc-1.so
