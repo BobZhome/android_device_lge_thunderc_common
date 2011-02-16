@@ -225,6 +225,9 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/etc/bluetooth/input.conf:system/etc/bluetooth/input.conf \
     vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
 
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc/files/07mvdalvik:system/etc/init.d/07mvdalvik \
+
 
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
