@@ -109,6 +109,7 @@ PRODUCT_COPY_FILES += \
 # Wifi
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/wireless.ko:system/lib/modules/wireless.ko \
+    device/lge/thunderc/files/tun.ko:system/lib/modules/tun.ko \
     vendor/lge/thunderc/files/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     vendor/lge/thunderc/files/system/etc/wl/nvram.txt:system/etc/wl/nvram.txt \
     vendor/lge/thunderc/files/system/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
@@ -226,7 +227,7 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
 
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/07mvdalvik:system/etc/init.d/07mvdalvik \
+    device/lge/thunderc/files/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
 
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
