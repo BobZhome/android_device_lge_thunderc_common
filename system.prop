@@ -2,6 +2,8 @@
 # system.prop for thunderc
 #
 
+persist.mvpdm.ProxyServerAddr=68.28.31.1
+persist.mvpdm.ProxyServerIp=80
 ro.lge.proximity.delay=100
 ro.ril.def.preferred.network=4
 ro.telephony.default_network=4
