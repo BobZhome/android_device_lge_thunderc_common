@@ -133,6 +133,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/bin/qmuxd:system/bin/qmuxd \
 
+# Sprint MMS
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc/files/apns-conf.xml:system/etc/apns-conf.xml \
+
 # wipeirface (What is this?)
 # (Whatever it is LS670 doesn't have it)
 # PRODUCT_COPY_FILES += \
