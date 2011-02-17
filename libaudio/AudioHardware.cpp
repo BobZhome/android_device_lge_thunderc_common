@@ -34,9 +34,9 @@
 #include "AudioHardware.h"
 #include <media/AudioRecord.h>
 
-#define LOG_SND_RPC 0  // Set to 1 to log sound RPC's
+#define LOG_SND_RPC 1  // Set to 1 to log sound RPC's
 
-#define COMBO_DEVICE_SUPPORTED 0 // Headset speaker combo device not supported on this target
+#define COMBO_DEVICE_SUPPORTED 1 // Headset speaker combo device not supported on this target
 #define DUALMIC_KEY "dualmic_enabled"
 #define TTY_MODE_KEY "tty_mode"
 
@@ -1035,9 +1035,13 @@ status_t AudioHardware::setVoiceVolume(float v)
     int vol = 0;
     if(mCurSndDevice == SND_DEVICE_SPEAKER)
     {
-        vol = lrint(v * 18.0);
+        vol = (lrint(v * 7.0) * 2.5);
     }
-    else
+    else if (mCurSndDevice == SND_DEVICE_BT) 
+    { 
+	// Bluetooth volume is controlled externally, so we'll set a reasonable volume here, and let it handle volume.
+	vol = 5;
+    } else
     {
         vol = lrint(v * 7.0);
     }
