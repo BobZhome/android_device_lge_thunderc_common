@@ -119,7 +119,7 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/system/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
+    device/lge/thunderc/files/AudioFilter.csv:system/etc/AudioFilter.csv \
 #    vendor/lge/thunderc/files/system/lib/liba2dp.so:system/lib/liba2dp.so \
     vendor/lge/thunderc/files/system/lib/libaudioeq.so:system/lib/libaudioeq.so \
     vendor/lge/thunderc/files/system/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
