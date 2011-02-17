@@ -88,8 +88,4 @@ dalvik.vm.heapsize=32m
 dalvik.vm.execution-mode=int:jit
 
 
-media.stagefright.enable-player=false
-media.stagefright.enable-meta=false
-media.stagefright.enable-scan=false
-media.stagefright.enable-http=false
 debug.sf.hw=1
