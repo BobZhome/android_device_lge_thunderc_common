@@ -241,6 +241,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.com.google.locationfeatures=1 \
         ro.cdma.home.operator.numeric=310120 \
         ro.cdma.home.operator.alpha=Sprint \
+	ro.cdma.voicemail.number=mine \
         ro.setupwizard.enable_bypass=1 \
 	gsm.sim.operator.alpha=Sprint \
 	gsm.sim.operator.numeric=310120 \
