@@ -121,7 +121,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/AudioFilter.csv:system/etc/AudioFilter.csv \
     vendor/lge/thunderc/files/system/lib/libaudioeq.so:system/lib/libaudioeq.so \
-    device/lge/thunderc/files/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    vendor/lge/thunderc/files/system/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
 
 # Device permissions
 PRODUCT_COPY_FILES += \
