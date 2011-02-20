@@ -53,7 +53,6 @@ BOARD_EGL_CFG := vendor/lge/thunderc/files/system/lib/egl/egl.cfg
 BOARD_KERNEL_CMDLINE := mem=477M console=ttyMSM2,115200n8 androidboot.hardware=thunderc
 BOARD_KERNEL_BASE := 0x12200000
 BOARD_PAGE_SIZE := 0x00000800
-KERNEL_DEFCONFIG := thunderc-sprint-xionia_defconfig
 
 #dev:    size   erasesize  name
 #mtd0: 00700000 00020000 "boot"
