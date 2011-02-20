@@ -1,12 +1,12 @@
 #$(call inherit-product, build/target/product/full.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay
+LOCAL_KERNEL := $(INSTALLED_KERNEL_TARGET)
 
-TARGET_PREBUILT_KERNEL := device/lge/thunderc/files/zImage
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_KERNEL):kernel \
+#    device/lge/thunderc/files/wireless.ko:system/lib/modules/wireless.ko \
+#    device/lge/thunderc/files/tun.ko:system/lib/modules/tun.ko \
 
 PRODUCT_PACKAGES += \
     librs_jni \
@@ -104,8 +104,6 @@ PRODUCT_COPY_FILES += \
 
 # Wifi
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/wireless.ko:system/lib/modules/wireless.ko \
-    device/lge/thunderc/files/tun.ko:system/lib/modules/tun.ko \
     vendor/lge/thunderc/files/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     vendor/lge/thunderc/files/system/etc/wl/nvram.txt:system/etc/wl/nvram.txt \
     vendor/lge/thunderc/files/system/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
@@ -215,11 +213,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/bin/BCM4325D1_004.002.004.0218.0248.hcd:system/bin/BCM4325D1_004.002.004.0218.0248.hcd \
     vendor/lge/thunderc/files/system/bin/btld:system/bin/btld \
-    vendor/lge/thunderc/files/system/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/blacklist.conf:system/etc/bluetooth/blacklist.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/input.conf:system/etc/bluetooth/input.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
 
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/mvdalvik.sh:system/etc/init.d/01mvdalvik \
