@@ -1117,7 +1117,7 @@ status_t AudioHardware::setVoiceVolume(float v)
     int vol = 0;
     if (mCurSndDevice == SND_DEVICE_SPEAKER)
     {
-        vol = lrint(v * 21.0);
+        vol = (lrint(v * 7.0) * 3);
     }
     else
     {
