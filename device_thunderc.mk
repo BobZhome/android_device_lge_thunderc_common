@@ -19,7 +19,6 @@ PRODUCT_PACKAGES += \
     flash_image \
     dump_image \
     erase_image \
-    FM \
     hcitool \
     libOmxVidEnc \
     libmm-omxcore
