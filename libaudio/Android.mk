@@ -1,9 +1,9 @@
-ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),thunderc)
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),thunderg)
+ifneq ($(BUILD_TINY_ANDROID),true)
 
+LOCAL_PATH := $(call my-dir)
 
-LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
-LOCAL_MODULE_TAGS := optional
 
 LOCAL_MODULE := libaudio
 
@@ -44,7 +44,6 @@ LOCAL_SHARED_LIBRARIES := \
     libutils \
     libmedia
 
-LOCAL_MODULE_TAGS := optional
 LOCAL_STATIC_LIBRARIES := libaudiopolicybase
 
 LOCAL_MODULE:= libaudiopolicy
@@ -55,5 +54,5 @@ endif
 
 include $(BUILD_SHARED_LIBRARY)
 
-endif
-
+endif # not BUILD_TINY_ANDROID
+endif # TARGET_BOOTLOADER_BOARD_NAME

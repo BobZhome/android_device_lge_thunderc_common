@@ -25,6 +25,9 @@ PRODUCT_PACKAGES += \
     libmm-omxcore
 
 
+# Scott Pilgrim Awesome, thanks to Nick7!
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc/files/bootanimation.zip:system/media/bootanimation.zip \
 
 # GPS
 PRODUCT_COPY_FILES += \
