@@ -28,16 +28,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/bootanimation.zip:system/media/bootanimation.zip \
 
-# GPS
-PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/system/lib/libloc_api.so:system/lib/libloc_api.so \
-    vendor/lge/thunderc/files/system/lib/libgps.so:system/lib/libgps.so \
-    vendor/lge/thunderc/files/system/lib/libloc.so:system/lib/libloc.so \
-    vendor/lge/thunderc/files/system/lib/libloc.so:obj/lib/libloc.so \
-    vendor/lge/thunderc/files/system/lib/libcommondefs.so:system/lib/libcommondefs.so \
-    vendor/lge/thunderc/files/system/lib/libloc-rpc.so:system/lib/libloc-rpc.so \
-
-
 # Backlight
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/lib/hw/lights.thunderc.so:system/lib/hw/lights.thunderc.so \
