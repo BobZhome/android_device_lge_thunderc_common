@@ -9,20 +9,23 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
 
 PRODUCT_PACKAGES += \
+    libaudio.thunderc \
+    gps.thunderc \
     librs_jni \
     libmm-omxcore \
     libOmxCore \
     brcm_patchram_plus \
-    gps.thunderc \
-    libaudio.thunderc \
     liba2dp \
     flash_image \
     dump_image \
     erase_image \
     hcitool \
     libOmxVidEnc \
-    libmm-omxcore
+    libmm-omxcore \
+    dexpreopt
 
+
+DISABLE_DEXPREOPT := false
 
 # Scott Pilgrim Awesome, thanks to Nick7!
 PRODUCT_COPY_FILES += \
@@ -38,9 +41,6 @@ PRODUCT_COPY_FILES += \
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/files/system/usr/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
-    vendor/lge/thunderc/files/system/usr/keylayout/thunder.kl:system/usr/keylayout/thunder.kl \
-    vendor/lge/thunderc/files/system/usr/keychars/thunder.kcm.bin:system/usr/keychars/thunder.kcm.bin \
     device/lge/thunderc/files/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
     vendor/lge/thunderc/files/system/usr/keychars/thunder_keypad.kcm.bin:system/usr/keychars/thunder_keypad.kcm.bin \
 
@@ -239,5 +239,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	gsm.sim.operator.iso-country=us \
 	gsm.operator.alpha=Sprint \
 	gsm.operator.numeric=310120 \
-	gsm.operator.iso-country=us
-
+	gsm.operator.iso-country=us 
+        qemu.sf.lcd_density=160 \
+        ro.sf.hwrotation=180 \
+        ro.sf.lcd_density=160
