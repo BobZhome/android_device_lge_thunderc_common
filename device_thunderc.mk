@@ -98,10 +98,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/wireless.ko:system/lib/modules/wireless.ko \
     device/lge/thunderc/files/tun.ko:system/lib/modules/tun.ko \
-    device/lge/thunderc/files/dma_test.ko:system/lib/modules/dma_test.ko
-    device/lge/thunderc/files/tcp_bic.kosystem/lib/modules/tcp_bic.ko
-    device/lge/thunderc/files/tcp_htcp.kosystem/lib/modules/tcp_htcp.ko
-    device/lge/thunderc/files/tcp_westwood.kosystem/lib/modules/tcp_westwood.ko
+    device/lge/thunderc/files/dma_test.ko:system/lib/modules/dma_test.ko \
+    device/lge/thunderc/files/tcp_bic.kosystem/lib/modules/tcp_bic.ko \
+    device/lge/thunderc/files/tcp_htcp.kosystem/lib/modules/tcp_htcp.ko \
+    device/lge/thunderc/files/tcp_westwood.kosystem/lib/modules/tcp_westwood.ko \
     vendor/lge/thunderc/files/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     vendor/lge/thunderc/files/system/etc/wl/nvram.txt:system/etc/wl/nvram.txt \
     vendor/lge/thunderc/files/system/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
