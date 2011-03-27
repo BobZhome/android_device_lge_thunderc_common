@@ -22,7 +22,8 @@ PRODUCT_PACKAGES += \
     hcitool \
     libOmxVidEnc \
     libmm-omxcore \
-    dexpreopt
+    dexpreopt \
+    e2fsck
 
 
 DISABLE_DEXPREOPT := false
