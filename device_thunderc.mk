@@ -1,5 +1,7 @@
 #$(call inherit-product, build/target/product/full.mk)
 
+PRODUCT_LOCALES += mdpi
+
 DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay
 
 TARGET_PREBUILT_KERNEL := device/lge/thunderc/files/zImage
