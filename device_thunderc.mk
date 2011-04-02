@@ -69,6 +69,7 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
     device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
     device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
+    device/lge/thunderC/files/etc/init.local.rc:/system/etc/init.local.rc
 
 # 2D (using proprietary because of poor perfomance of open source libs)
 PRODUCT_COPY_FILES += \
