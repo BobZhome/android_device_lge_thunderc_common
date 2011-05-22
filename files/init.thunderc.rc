@@ -107,6 +107,13 @@ on boot
 
 #DHCP
 	mkdir /data/misc/dhcp 0777 system system
+        chmod 0666 /data/bdaddr
+
+service bdaddr /system/bin/bdaddr_read
+    user root
+    disabled
+    oneshot
+
 # LGE_CHANGE_E, [jisung.yang@lge.com] 2010-04-24, <make wifi directory> 
 
 ## ERS
@@ -142,6 +149,9 @@ on property:init.svc.hcid=running
 # LGE_CHANGE_E [kaisr.shin@lge.com] 2010-07-14
 
 
+on property:init.svc.bootanim=running
+    start bdaddr
+
 service hciattach /system/bin/brcm_patchram_plus -d --baudrate 3000000 --patchram /system/bin/BCM4325D1_004.002.004.0218.0248.hcd --enable_hci /dev/ttyHS0
     user bluetooth
     group bluetooth net_bt_admin
@@ -176,12 +186,12 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wi
 #	console
 
 #service dhcpcd /system/bin/dhcpcd -B wlan0
-service dhcpcd /system/bin/dhcpcd -BKLA wlan0 # disable ARP operation
+service dhcpcd_wlan0 /system/bin/dhcpcd -BKLA wlan0 # disable ARP operation
 	disabled
 	oneshot
 
 on property:init.svc.wpa_supplicant=stopped
-stop dhcpcd
+stop dhcpcd_wlan0
 # LGE_CHANGE_E, [jisung.yang@lge.com], 2010-04-24,<register WLAN services>
 
 #service dhcp-service /system/bin/netcfg eth0 dhcp
@@ -199,11 +209,11 @@ service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmc
     user root
     disabled
 
-service netmgrd /system/bin/netmgrd -E
-    disabled
+#service netmgrd /system/bin/netmgrd -E
+#    disabled
 
-on property:ro.use_data_netmgrd=true
-    start netmgrd
+#on property:ro.use_data_netmgrd=true
+#    start netmgrd
 
 # LGE_CHANGE [dojip.kim@lge.com] 2010-09-02, blocked in production build
 # bugreport is triggered by the KEY_VOLUME_DOWN and KEY_MENU keycodes

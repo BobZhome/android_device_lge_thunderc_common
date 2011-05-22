@@ -11,6 +11,7 @@ TARGET_BOOTLOADER_BOARD_NAME := thunderc
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
 BOARD_NO_RGBX_8888 := true
 BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+TARGET_USES_16BPPSURFACE_FOR_OPAQUE := true
 
 TARGET_PROVIDES_INIT_TARGET_RC := true
 
@@ -33,6 +34,7 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := thunderc
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
 BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+BOARD_CUSTOM_USB_CONTROLLER := ../../device/lge/thunderg/netd/UsbController.cpp
 
 # VER_0_6_X does not search networks
 WPA_SUPPLICANT_VERSION := VER_0_5_X
@@ -44,6 +46,7 @@ WIFI_DRIVER_MODULE_NAME := wireless
 ## Tethering is not working now
 WIFI_DRIVER_FW_STA_PATH := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_AP_PATH := "/system/etc/wl/rtecdc-apsta.bin"
+WIFI_DRIVER_HAS_LGE_SOFTAP := true
 
 BOARD_EGL_CFG := vendor/lge/thunderc/files/system/lib/egl/egl.cfg
 
@@ -70,7 +73,6 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 #BOARD_HAS_NO_SELECT_BUTTON := true
 
-# Tag: Odex
 WITH_DEXPREOPT := true
 WITH_JIT := true
 ENABLE_JSC_JIT := true
@@ -82,4 +84,4 @@ TARGET_PROVIDES_LIBAUDIO := true
 
 BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
-BOARD_USE_BROADCOM_FM_VOLUME_HACK := true
+TARGET_SF_NEEDS_REAL_DIMENSIONS := true

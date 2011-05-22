@@ -10,22 +10,18 @@ LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
 
+#    libaudio.thunderc \
+
 PRODUCT_PACKAGES += \
-    libaudio.thunderc \
     gps.thunderc \
     librs_jni \
     libmm-omxcore \
     libOmxCore \
-    brcm_patchram_plus \
-    liba2dp \
     flash_image \
     dump_image \
     erase_image \
-    hcitool \
-    libOmxVidEnc \
-    libmm-omxcore \
-    dexpreopt \
-    e2fsck
+    e2fsck \
+    SpareParts
 
 
 DISABLE_DEXPREOPT := false
@@ -222,6 +218,7 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
 
 PRODUCT_COPY_FILES += \
+    device/lge/thunderc/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
     device/lge/thunderc/files/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
 
