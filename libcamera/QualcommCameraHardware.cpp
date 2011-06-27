@@ -77,7 +77,7 @@ extern "C" {
 #define THUMBNAIL_BUFFER_SIZE (THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT * 3/2)
 #define MAX_ZOOM_LEVEL 6
 #define NOT_FOUND -1
-// Number of video buffers held by kernal (initially 1,2 &3)
+// Number of video buffers held by kernel (initially 1,2, and 3)
 #define ACTIVE_VIDEO_BUFFERS 3
 
 #if DLOPEN_LIBMMCAMERA
@@ -614,7 +614,7 @@ struct SensorType {
 
 static SensorType sensorTypes[] = {
         { "5mp", 2608, 1960, true,  2592, 1944,0x00000fff },
-        { "5mp", 5184, 1944, false,  2592, 1944,0x00000fff },
+        { "5mp", 5184, 1944, false, 2592, 1944,0x00000fff },
         { "3mp", 2064, 1544, false, 2048, 1536,0x000007ff },
         { "2mp", 3200, 1200, false, 1600, 1200,0x000007ff } };
 
