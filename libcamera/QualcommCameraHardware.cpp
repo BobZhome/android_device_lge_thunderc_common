@@ -859,8 +859,8 @@ QualcommCameraHardware::QualcommCameraHardware()
       mFrameThreadRunning(false),
       mVideoThreadRunning(false),
       mSnapshotThreadRunning(false),
-      mInSnapshotMode(false),
       mJpegThreadRunning(false),
+      mInSnapshotMode(false),
       mSnapshotFormat(0),
       mReleasedRecordingFrame(false),
       mPreviewFrameSize(0),
@@ -868,6 +868,7 @@ QualcommCameraHardware::QualcommCameraHardware()
       mCameraControlFd(-1),
       mAutoFocusThreadRunning(false),
       mAutoFocusFd(-1),
+      mInitialized(false),
       mBrightness(0),
       mHJR(0),
       mInPreviewCallback(false),
@@ -878,7 +879,6 @@ QualcommCameraHardware::QualcommCameraHardware()
       mDataCallback(0),
       mDataCallbackTimestamp(0),
       mCallbackCookie(0),
-      mInitialized(false),
       mDebugFps(0)
 {
 
@@ -929,9 +929,10 @@ QualcommCameraHardware::QualcommCameraHardware()
 void QualcommCameraHardware::filterPreviewSizes(){
 
     unsigned int boardMask = 0;
-    int prop = 0;
-    for(prop=0;prop<sizeof(boardProperties)/sizeof(board_property);prop++){
-        if(mCurrentTarget == boardProperties[prop].target){
+    unsigned int prop = 0;
+
+    for (prop=0; prop<sizeof(boardProperties)/sizeof(board_property); prop++){
+        if (mCurrentTarget == boardProperties[prop].target) {
             boardMask = boardProperties[prop].previewSizeMask;
             break;
         }
@@ -3358,13 +3359,13 @@ void QualcommCameraHardware::receivePreviewFrame(struct msm_frame *frame)
 
 bool QualcommCameraHardware::initRecord()
 {
-    char *pmem_region;
+    const char *pmem_region;
 
     LOGV("initREcord E");
 
     mRecordFrameSize = (mDimension.video_width  * mDimension.video_height *3)/2;
 
-    if( mCurrentTarget == TARGET_QSD8250 )
+    if (mCurrentTarget == TARGET_QSD8250)
         pmem_region = "/dev/pmem_smipool";
     else
         pmem_region = "/dev/pmem_adsp";
@@ -3507,7 +3508,7 @@ void QualcommCameraHardware::releaseRecordingFrame(
         LOGV(" in release recording frame :  heap base %d offset %d buffer %d ", heap->base(), offset, heap->base() + offset );
         int cnt;
         for (cnt = 0; cnt < kRecordBufferCount; cnt++) {
-            if((unsigned int)recordframes[cnt].buffer == (unsigned int)(heap->base()+ offset)){
+            if ((unsigned int)recordframes[cnt].buffer == ((unsigned int)(heap->base())+offset)) {
                 LOGV("in release recording frame found match , releasing buffer %d", (unsigned int)recordframes[cnt].buffer);
                 releaseframe = &recordframes[cnt];
                 break;
@@ -4733,13 +4734,13 @@ bool QualcommCameraHardware::isValidDimension(int width, int height) {
      *    data structure.
      */
 
-    if( (width == CEILING16(width)) && (height == CEILING16(height))
+    if( (width == (int)CEILING16(width)) && (height == (int)CEILING16(height))
      && (width <= sensorType->max_supported_snapshot_width)
      && (height <= sensorType->max_supported_snapshot_height) )
     {
         uint32_t pictureAspectRatio = (uint32_t)((width * Q12)/height);
-        for(int i = 0; i < THUMBNAIL_SIZE_COUNT; i++ ) {
-            if(thumbnail_sizes[i].aspect_ratio == pictureAspectRatio) {
+        for (unsigned int i=0; i < THUMBNAIL_SIZE_COUNT; i++) {
+            if (thumbnail_sizes[i].aspect_ratio == pictureAspectRatio) {
                 retVal = TRUE;
                 break;
             }
