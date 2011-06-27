@@ -38,6 +38,8 @@ extern "C" {
 #include <msm_camera.h>
 }
 
+#include "jpegConvert.h"
+
 struct str_map {
     const char *const desc;
     int val;
@@ -94,12 +96,12 @@ struct board_property{
 
 typedef struct {
 	unsigned int in1_w;
-	unsigned int in1_h;
 	unsigned int out1_w;
+	unsigned int in1_h;
 	unsigned int out1_h;
 	unsigned int in2_w;
-	unsigned int in2_h;
 	unsigned int out2_w;
+	unsigned int in2_h;
 	unsigned int out2_h;
 	uint8_t update_flag; 
 } common_crop_t;
@@ -117,8 +119,8 @@ typedef struct {
 	unsigned short orig_picture_dy;
 	unsigned short ui_thumbnail_height;
 	unsigned short ui_thumbnail_width;
-	unsigned short thumbnail_width;
 	unsigned short thumbnail_height;
+	unsigned short thumbnail_width;
 	unsigned short raw_picture_height;
 	unsigned short raw_picture_width;
 	unsigned short filler7;
