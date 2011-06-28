@@ -1,29 +1,26 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
-
-PRODUCT_LOCALES += mdpi
 
 DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay
 
-TARGET_PREBUILT_KERNEL := device/lge/thunderc/files/zImage
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+	LOCAL_KERNEL := device/lge/thunderc/files/zImage-$(SUB_MODEL)
+else
+	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
 
-#    libaudio.thunderc \
-
 PRODUCT_PACKAGES += \
-    gps.thunderc \
     librs_jni \
     libmm-omxcore \
     libOmxCore \
+    gps.thunderc \
     flash_image \
     dump_image \
     erase_image \
     e2fsck \
     SpareParts
-
 
 DISABLE_DEXPREOPT := false
 
@@ -103,7 +100,6 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/tcp_bic.ko:system/lib/modules/tcp_bic.ko \
     device/lge/thunderc/files/tcp_htcp.ko:system/lib/modules/tcp_htcp.ko \
     device/lge/thunderc/files/tcp_westwood.ko:system/lib/modules/tcp_westwood.ko \
-#    vendor/lge/thunderc/proprietary/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     vendor/lge/thunderc/proprietary/system/etc/wl/nvram.txt:system/etc/wl/nvram.txt \
     device/lge/thunderc/files/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     vendor/lge/thunderc/proprietary/system/etc/wl/rtecdc.bin:system/etc/wl/rtecdc.bin \
@@ -135,27 +131,6 @@ PRODUCT_COPY_FILES += \
 # LGE services
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/system/bin/qmuxd:system/bin/qmuxd \
-
-# Sprint MMS
-PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/apns-conf.xml:system/etc/apns-conf.xml \
-
-# wipeirface (What is this?)
-# (Whatever it is LS670 doesn't have it)
-# PRODUCT_COPY_FILES += \
-#    vendor/lge/thunderc/proprietary/system/bin/wiperiface:system/bin/wiperiface \
-
-# Touchscreen firmware updater
-#PRODUCT_COPY_FILES += \
-#    vendor/lge/thunderc/proprietary/system/bin/tsdown:system/bin/tsdown \
-#    vendor/lge/thunderc/proprietary/system/etc/MELFAS_FIRM.bin:system/etc/MELFAS_FIRM.bin \
-
-# netmgr (What is this?)
-#PRODUCT_COPY_FILES += \
-#    vendor/lge/thunderc/proprietary/system/bin/netmgrd:system/bin/netmgrd \
-#    vendor/lge/thunderc/proprietary/system/lib/libdsutils.so:system/lib/libdsutils.so \
-#    vendor/lge/thunderc/proprietary/system/lib/libnetmgr.so:system/lib/libnetmgr.so
-
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.lge.vibrator_amp=125 \
@@ -210,41 +185,60 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/proprietary/system/bin/BCM4325D1_004.002.004.0218.0248.hcd:system/bin/BCM4325D1_004.002.004.0218.0248.hcd \
-#    vendor/lge/thunderc/proprietary/system/bin/btld:system/bin/btld
-#    vendor/lge/thunderc/proprietary/system/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf \
-#    vendor/lge/thunderc/proprietary/system/etc/bluetooth/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
-#    vendor/lge/thunderc/proprietary/system/etc/bluetooth/blacklist.conf:system/etc/bluetooth/blacklist.conf \
-#    vendor/lge/thunderc/proprietary/system/etc/bluetooth/input.conf:system/etc/bluetooth/input.conf \
-#    vendor/lge/thunderc/proprietary/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
+    vendor/lge/thunderc/proprietary/system/bin/BCM4325D1_004.002.004.0218.0248.hcd:system/bin/BCM4325D1_004.002.004.0218.0248.hcd
 
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
     device/lge/thunderc/files/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
+PRODUCT_LOCALES += mdpi
+
+$(call inherit-product, device/common/gps/gps_us_supl.mk)
 $(call inherit-product, build/target/product/full.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_thunderc
 PRODUCT_BRAND := LGE
 PRODUCT_DEVICE := thunderc
-PRODUCT_MODEL := LS670
 PRODUCT_MANUFACTURER := LGE
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=thunderc
 
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.com.google.clientidbase=android-sprint-us \
         ro.com.google.locationfeatures=1 \
-        ro.cdma.home.operator.numeric=310120 \
-        ro.cdma.home.operator.alpha=Sprint \
         ro.cdma.voicemail.number=mine \
         ro.setupwizard.enable_bypass=1 \
-        gsm.sim.operator.alpha=Sprint \
-        gsm.sim.operator.numeric=310120 \
         gsm.sim.operator.iso-country=us \
-        gsm.operator.alpha=Sprint \
-        gsm.operator.numeric=310120 \
         gsm.operator.iso-country=us 
         qemu.sf.lcd_density=160 \
         ro.sf.hwrotation=180 \
         ro.sf.lcd_density=160
+
+
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc/files/apns-conf-$(SUB_MODEL).xml:system/etc/apns-conf.xml \
+
+ifeq ($(SUB_MODEL),LS670)
+# We're on Sprint
+
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.com.google.clientidbase=android-sprint-us \
+        ro.cdma.home.operator.numeric=310120 \
+        ro.cdma.home.operator.alpha=Sprint \
+        gsm.sim.operator.alpha=Sprint \
+        gsm.sim.operator.numeric=310120 \
+        gsm.operator.alpha=Sprint \
+        gsm.operator.numeric=310120
+endif
+
+ifeq ($(SUB_MODEL),VM670)
+# We're on Sprint (well, Virgin Mobile)
+
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.com.google.clientidbase=android-sprint-us \
+        ro.cdma.home.operator.numeric=31000 \
+        ro.cdma.home.operator.alpha=Virgin_Mobile \
+        gsm.sim.operator.alpha=Virgin Mobile \
+        gsm.sim.operator.numeric=31000 \
+        gsm.operator.alpha=Virgin Mobile \
+        gsm.operator.numeric=31000
+endif
