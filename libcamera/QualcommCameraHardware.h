@@ -38,8 +38,6 @@ extern "C" {
 #include <msm_camera.h>
 }
 
-#include "jpegConvert.h"
-
 struct str_map {
     const char *const desc;
     int val;
