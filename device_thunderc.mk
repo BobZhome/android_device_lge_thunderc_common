@@ -210,12 +210,12 @@ PRODUCT_COPY_FILES += \
 # Bluetooth
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/files/system/bin/BCM4325D1_004.002.004.0218.0248.hcd:system/bin/BCM4325D1_004.002.004.0218.0248.hcd \
-    vendor/lge/thunderc/files/system/bin/btld:system/bin/btld \
-    vendor/lge/thunderc/files/system/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/blacklist.conf:system/etc/bluetooth/blacklist.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/input.conf:system/etc/bluetooth/input.conf \
-    vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
+    vendor/lge/thunderc/files/system/bin/btld:system/bin/btld
+#    vendor/lge/thunderc/files/system/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf \
+#    vendor/lge/thunderc/files/system/etc/bluetooth/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
+#    vendor/lge/thunderc/files/system/etc/bluetooth/blacklist.conf:system/etc/bluetooth/blacklist.conf \
+#    vendor/lge/thunderc/files/system/etc/bluetooth/input.conf:system/etc/bluetooth/input.conf \
+#    vendor/lge/thunderc/files/system/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
 
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
@@ -237,14 +237,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.com.google.locationfeatures=1 \
         ro.cdma.home.operator.numeric=310120 \
         ro.cdma.home.operator.alpha=Sprint \
-	ro.cdma.voicemail.number=mine \
+        ro.cdma.voicemail.number=mine \
         ro.setupwizard.enable_bypass=1 \
-	gsm.sim.operator.alpha=Sprint \
-	gsm.sim.operator.numeric=310120 \
-	gsm.sim.operator.iso-country=us \
-	gsm.operator.alpha=Sprint \
-	gsm.operator.numeric=310120 \
-	gsm.operator.iso-country=us 
+        gsm.sim.operator.alpha=Sprint \
+        gsm.sim.operator.numeric=310120 \
+        gsm.sim.operator.iso-country=us \
+        gsm.operator.alpha=Sprint \
+        gsm.operator.numeric=310120 \
+        gsm.operator.iso-country=us 
         qemu.sf.lcd_density=160 \
         ro.sf.hwrotation=180 \
         ro.sf.lcd_density=160
