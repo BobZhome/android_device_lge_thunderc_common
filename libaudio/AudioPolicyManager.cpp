@@ -45,8 +45,8 @@ extern "C" void destroyAudioPolicyManager(AudioPolicyInterface *interface)
 AudioPolicyManager::AudioPolicyManager(AudioPolicyClientInterface *clientInterface)
                 : AudioPolicyManagerBase(clientInterface)
 {
-    mAvailableOutputDevices |= AudioSystem::DEVICE_OUT_SPEAKER_IN_CALL;
-    mAvailableOutputDevices |= AudioSystem::DEVICE_OUT_SPEAKER_RING;  
+//    mAvailableOutputDevices |= AudioSystem::DEVICE_OUT_SPEAKER_IN_CALL;
+//    mAvailableOutputDevices |= AudioSystem::DEVICE_OUT_SPEAKER_RING;  
 }
 
 uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, bool fromCache)
@@ -117,8 +117,8 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
                 if (device) break;
             }
 #endif
-            device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER_IN_CALL;
-            if (device) break;
+/*            device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER_IN_CALL;
+            if (device) break;*/
             
             device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER;
             if (device == 0) {
@@ -131,20 +131,17 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
     case STRATEGY_SONIFICATION:
     case STRATEGY_MEDIA_SONIFICATION:
 
-        device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER_RING;
-        if (device) break;
         // If incall, just select the STRATEGY_PHONE device: The rest of the behavior is handled by
         // handleIncallSonification().
-        if (isInCall()) {
+        if (isInCall() || (mPhoneState == AudioSystem::MODE_RINGTONE)) {
             device = getDeviceForStrategy(STRATEGY_PHONE, false);
             break;
+        }       
+        device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER;
+        if (device == 0) {
+            LOGE("getDeviceForStrategy() speaker device not found");
         }
-        if (strategy == STRATEGY_SONIFICATION) {
-            device = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER;
-            if (device == 0) {
-                LOGE("getDeviceForStrategy() speaker device not found");
-            }
-        }
+
         // The second device used for sonification is the same as the device used by media strategy
         // FALL THROUGH
 
