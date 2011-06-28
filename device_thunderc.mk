@@ -3,7 +3,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/lge/thunderc/files/zImage-$(SUB_MODEL)
+	LOCAL_KERNEL := device/lge/thunderc/files/kernel/$(SUB_MODEL)/zImage
 else
 	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
@@ -94,12 +94,12 @@ PRODUCT_COPY_FILES += \
 
 # Wifi
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/wireless.ko:system/lib/modules/wireless.ko \
-    device/lge/thunderc/files/tun.ko:system/lib/modules/tun.ko \
-    device/lge/thunderc/files/dma_test.ko:system/lib/modules/dma_test.ko \
-    device/lge/thunderc/files/tcp_bic.ko:system/lib/modules/tcp_bic.ko \
-    device/lge/thunderc/files/tcp_htcp.ko:system/lib/modules/tcp_htcp.ko \
-    device/lge/thunderc/files/tcp_westwood.ko:system/lib/modules/tcp_westwood.ko \
+    device/lge/thunderc/files/kernel/$(SUB_MODEL)/wireless.ko:system/lib/modules/wireless.ko \
+    device/lge/thunderc/files/kernel/$(SUB_MODEL)/tun.ko:system/lib/modules/tun.ko \
+    device/lge/thunderc/files/kernel/$(SUB_MODEL)/dma_test.ko:system/lib/modules/dma_test.ko \
+    device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_bic.ko:system/lib/modules/tcp_bic.ko \
+    device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_htcp.ko:system/lib/modules/tcp_htcp.ko \
+    device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_westwood.ko:system/lib/modules/tcp_westwood.ko \
     vendor/lge/thunderc/proprietary/system/etc/wl/nvram.txt:system/etc/wl/nvram.txt \
     device/lge/thunderc/files/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     vendor/lge/thunderc/proprietary/system/etc/wl/rtecdc.bin:system/etc/wl/rtecdc.bin \
@@ -215,7 +215,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/apns-conf-$(SUB_MODEL).xml:system/etc/apns-conf.xml \
+    device/lge/thunderc/files/etc/apns-conf-$(SUB_MODEL).xml:system/etc/apns-conf.xml \
 
 ifeq ($(SUB_MODEL),LS670)
 # We're on Sprint
