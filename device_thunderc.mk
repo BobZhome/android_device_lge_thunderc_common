@@ -1,6 +1,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay
+DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay-common device/lge/thunderc/overlay-$(SUB_MODEL)
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 	LOCAL_KERNEL := device/lge/thunderc/files/kernel/$(SUB_MODEL)/zImage
@@ -20,13 +20,21 @@ PRODUCT_PACKAGES += \
     dump_image \
     erase_image \
     e2fsck \
-    SpareParts
+    SpareParts \
+    CMWallpapers \
+    LiveWallpapers \
+    LiveWallpapersPicker \
+    MagicSmokeWallpapers \
+    VisualizationWallpapers
+
+PRODUCT_COPY_FILES += packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml
+
 
 DISABLE_DEXPREOPT := false
 
 # Scott Pilgrim Awesome, thanks to Nick7!
-PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/bootanimation.zip:system/media/bootanimation.zip \
+#PRODUCT_COPY_FILES += \
+#    device/lge/thunderc/files/bootanimation.zip:system/media/bootanimation.zip \
 
 # Backlight
 PRODUCT_COPY_FILES += \
