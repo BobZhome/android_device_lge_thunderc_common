@@ -14,13 +14,7 @@
      limitations under the License.
 -->
 
-<!-- This file contains fake APNs that are necessary for the emulator
-     to talk to the network.  It should only be installed for SDK builds.
-
-     This file is not installed by the local Android.mk, it's installed using
-     a PRODUCT_COPY_FILES line in the sdk section of the toplevel Makefile.
--->
 <apns version="6">
-<!-- use empty string to specify no proxy or port -->
-  <apn carrier="Virgin Mobile" mcc="310" mnc="00" apn="0" port="" mmsproxy="205.239.233.136" mmsport="81" mmsc="http://mmsc.vmobl.com:8088/mms?" type="mms" />
-</apns>
+    <!-- use empty string to specify no proxy or port -->
+    <apn carrier="Virgin Mobile" mcc="200" mnc="053" apn="0" port="" mmsproxy="205.239.233.136" mmsport="81" mmsc="http://mmsc.vmobl.com:8088/mms?" type="mms" /
+></apns>

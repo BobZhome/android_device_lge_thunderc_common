@@ -221,7 +221,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.sf.hwrotation=180 \
         ro.sf.lcd_density=160
 
-
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/etc/apns-conf-$(SUB_MODEL).xml:system/etc/apns-conf.xml \
 
@@ -241,12 +240,16 @@ endif
 ifeq ($(SUB_MODEL),VM670)
 # We're on Sprint (well, Virgin Mobile)
 
+# http://en.wikipedia.org/wiki/Mobile_Network_Code
+# Set this properly so that Android Marketplace gets
+# this right.  APN settings can use the bogus Sprint
+# values if needed.
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.com.google.clientidbase=android-sprint-us \
-        ro.cdma.home.operator.numeric=31000 \
+        ro.cdma.home.operator.numeric=200053 \
         ro.cdma.home.operator.alpha=Virgin_Mobile \
         gsm.sim.operator.alpha=Virgin Mobile \
-        gsm.sim.operator.numeric=31000 \
+        gsm.sim.operator.numeric=200053 \
         gsm.operator.alpha=Virgin Mobile \
-        gsm.operator.numeric=31000
+        gsm.operator.numeric=200053
 endif
