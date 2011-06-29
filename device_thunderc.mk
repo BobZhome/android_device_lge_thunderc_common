@@ -221,8 +221,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.sf.hwrotation=180 \
         ro.sf.lcd_density=160
 
-PRODUCT_COPY_FILES += \
+
+PRODUCT_COPY_FILES := \
     device/lge/thunderc/files/etc/apns-conf-$(SUB_MODEL).xml:system/etc/apns-conf.xml \
+    $(PRODUCT_COPY_FILES)
 
 ifeq ($(SUB_MODEL),LS670)
 # We're on Sprint
