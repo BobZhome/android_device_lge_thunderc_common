@@ -22,3 +22,6 @@
 
 add_lunch_combo cyanogen_thunderc_VM670-eng
 add_lunch_combo cyanogen_thunderc_LS670-eng
+add_lunch_combo cyanogen_thunderc_MS690-eng
+add_lunch_combo cyanogen_thunderc_US670-eng
+add_lunch_combo cyanogen_thunderc_VS660-eng

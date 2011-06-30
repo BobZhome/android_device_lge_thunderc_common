@@ -227,31 +227,49 @@ PRODUCT_COPY_FILES := \
     $(PRODUCT_COPY_FILES)
 
 ifeq ($(SUB_MODEL),LS670)
-# We're on Sprint
-
-PRODUCT_PROPERTY_OVERRIDES += \
-        ro.com.google.clientidbase=android-sprint-us \
-        ro.cdma.home.operator.numeric=310120 \
-        ro.cdma.home.operator.alpha=Sprint \
-        gsm.sim.operator.alpha=Sprint \
-        gsm.sim.operator.numeric=310120 \
-        gsm.operator.alpha=Sprint \
-        gsm.operator.numeric=310120
+    # We're on Sprint
+    CDMA_GOOGLE_BASE := android-sprint-us
+    CDMA_CARRIER_ALPHA := Sprint
+    CDMA_CARRIER_NUMERIC := 310120
 endif
 
 ifeq ($(SUB_MODEL),VM670)
-# We're on Sprint (well, Virgin Mobile)
-
-# http://en.wikipedia.org/wiki/Mobile_Network_Code
-# Set this properly so that Android Marketplace gets
-# this right.  APN settings can use the bogus Sprint
-# values if needed.
-PRODUCT_PROPERTY_OVERRIDES += \
-        ro.com.google.clientidbase=android-sprint-us \
-        ro.cdma.home.operator.numeric=200053 \
-        ro.cdma.home.operator.alpha=Virgin_Mobile \
-        gsm.sim.operator.alpha=Virgin Mobile \
-        gsm.sim.operator.numeric=200053 \
-        gsm.operator.alpha=Virgin Mobile \
-        gsm.operator.numeric=200053
+    # We're on Sprint (well, Virgin Mobile)
+    # http://en.wikipedia.org/wiki/Mobile_Network_Code
+    # Set this properly so that Android Marketplace gets
+    # this right.
+    CDMA_GOOGLE_BASE := android-sprint-us
+    CDMA_CARRIER_ALPHA := Virgin Mobile
+    CDMA_CARRIER_NUMERIC := 200053
 endif
+
+ifeq ($(SUB_MODEL),MS690)
+    # We're on MetroPCS (TODO)
+    CDMA_GOOGLE_BASE := android-sprint-us
+    CDMA_CARRIER_ALPHA := MetroPCS
+    CDMA_CARRIER_NUMERIC := 311660
+endif
+
+ifeq ($(SUB_MODEL),US670)
+    # We're on USC (TODO)
+    CDMA_GOOGLE_BASE := android-sprint-us
+    CDMA_CARRIER_ALPHA := US Cellular
+    CDMA_CARRIER_NUMERIC := 310066
+endif
+
+ifeq ($(SUB_MODEL),VS660)
+    # We're on Verizon (TODO)
+    CDMA_GOOGLE_BASE := android-sprint-us
+    CDMA_CARRIER_ALPHA := Verizon Wireless
+    CDMA_CARRIER_NUMERIC := 310012
+endif
+
+
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.com.google.clientidbase=$(CDMA_GOOGLE_BASE) \
+        ro.cdma.home.operator.alpha=$(CDMA_CARRIER_ALPHA) \
+        ro.cdma.home.operator.numeric=$(CDMA_CARRIER_NUMERIC) \
+        gsm.sim.operator.alpha=$(CDMA_CARRIER_ALPHA) \
+        gsm.sim.operator.numeric=$(CDMA_CARRIER_NUMERIC) \
+        gsm.operator.alpha=$(CDMA_CARRIER_ALPHA) \
+        gsm.operator.numeric=$(CDMA_CARRIER_NUMERIC)
