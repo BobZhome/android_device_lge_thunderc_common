@@ -43,6 +43,7 @@
 #define COMBO_DEVICE_SUPPORTED 0 // Headset speaker combo device not supported on this target
 #define DUALMIC_KEY "dualmic_enabled"
 #define TTY_MODE_KEY "tty_mode"
+#define MAX_VOLUME 7.0
 
 namespace android {
 static int audpre_index, tx_iir_index;
@@ -1223,9 +1224,9 @@ status_t AudioHardware::setVoiceVolume(float v)
         v = 1.0;
     }
 
-    int vol = lrint(v * 4.0) + 1;
+    int vol = lrint(v * MAX_VOLUME);
     LOGD("setVoiceVolume(%f)\n", v);
-    LOGI("Setting in-call volume to %d (available range is 0 to 7)\n", vol);
+    LOGI("Setting in-call volume to %d (available range is 0 to %.1f)\n", vol, MAX_VOLUME);
 
     if ((mCurSndDevice != -1) && ((mCurSndDevice == SND_DEVICE_TTY_HEADSET) || (mCurSndDevice == SND_DEVICE_TTY_VCO)))
     {
@@ -1241,7 +1242,7 @@ status_t AudioHardware::setVoiceVolume(float v)
 status_t AudioHardware::setMasterVolume(float v)
 {
     Mutex::Autolock lock(mLock);
-    int vol = ceil(v * 5.0);
+    int vol = ceil(v * MAX_VOLUME);
     LOGI("Set master volume to %d.\n", vol);
 //    set_volume_rpc(SND_DEVICE_FM_HEADSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
 //    set_volume_rpc(SND_DEVICE_FM_SPEAKER, SND_METHOD_VOICE, vol * 3, m7xsnddriverfd);
@@ -1504,7 +1505,7 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
 
        mCurSndDevice = new_snd_device;
        if (new_snd_device == SND_DEVICE_BT) {
-           set_volume_rpc(SND_DEVICE_CURRENT, SND_METHOD_VOICE, 5, m7xsnddriverfd);
+           set_volume_rpc(SND_DEVICE_CURRENT, SND_METHOD_VOICE, (int)MAX_VOLUME, m7xsnddriverfd);
        }
     }
     return ret;
