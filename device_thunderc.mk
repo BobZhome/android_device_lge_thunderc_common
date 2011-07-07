@@ -245,7 +245,7 @@ endif
 
 ifeq ($(SUB_MODEL),MS690)
     # We're on MetroPCS (TODO)
-    CDMA_GOOGLE_BASE := android-sprint-us
+    CDMA_GOOGLE_BASE := android-metropcs-us
     CDMA_CARRIER_ALPHA := MetroPCS
     CDMA_CARRIER_NUMERIC := 311660
 endif
@@ -259,7 +259,7 @@ endif
 
 ifeq ($(SUB_MODEL),VS660)
     # We're on Verizon (TODO)
-    CDMA_GOOGLE_BASE := android-sprint-us
+    CDMA_GOOGLE_BASE := android-verizon
     CDMA_CARRIER_ALPHA := Verizon Wireless
     CDMA_CARRIER_NUMERIC := 310012
 endif
