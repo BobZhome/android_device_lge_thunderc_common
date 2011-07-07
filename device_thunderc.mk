@@ -32,10 +32,6 @@ PRODUCT_COPY_FILES += packages/wallpapers/LivePicker/android.software.live_wallp
 
 DISABLE_DEXPREOPT := false
 
-# Scott Pilgrim Awesome, thanks to Nick7!
-#PRODUCT_COPY_FILES += \
-#    device/lge/thunderc/files/bootanimation.zip:system/media/bootanimation.zip \
-
 # Backlight
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/system/lib/hw/lights.thunderc.so:system/lib/hw/lights.thunderc.so \
@@ -140,9 +136,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/system/bin/qmuxd:system/bin/qmuxd \
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.lge.vibrator_amp=125 \
-
 # RIL
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/system/lib/libril-qc-1.so:system/lib/libril-qc-1.so \
@@ -216,7 +209,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.cdma.voicemail.number=mine \
         ro.setupwizard.enable_bypass=1 \
         gsm.sim.operator.iso-country=us \
-        gsm.operator.iso-country=us 
+        gsm.operator.iso-country=us \
         qemu.sf.lcd_density=160 \
         ro.sf.hwrotation=180 \
         ro.sf.lcd_density=160
@@ -239,7 +232,7 @@ ifeq ($(SUB_MODEL),VM670)
     # Set this properly so that Android Marketplace gets
     # this right.
     CDMA_GOOGLE_BASE := android-sprint-us
-    CDMA_CARRIER_ALPHA := Virgin Mobile
+    CDMA_CARRIER_ALPHA := Virgin_Mobile
     CDMA_CARRIER_NUMERIC := 200053
 endif
 
@@ -253,14 +246,14 @@ endif
 ifeq ($(SUB_MODEL),US670)
     # We're on USC (TODO)
     CDMA_GOOGLE_BASE := android-sprint-us
-    CDMA_CARRIER_ALPHA := US Cellular
+    CDMA_CARRIER_ALPHA := US_Cellular
     CDMA_CARRIER_NUMERIC := 310066
 endif
 
 ifeq ($(SUB_MODEL),VS660)
     # We're on Verizon (TODO)
     CDMA_GOOGLE_BASE := android-verizon
-    CDMA_CARRIER_ALPHA := Verizon Wireless
+    CDMA_CARRIER_ALPHA := Verizon_Wireless
     CDMA_CARRIER_NUMERIC := 310012
 endif
 
