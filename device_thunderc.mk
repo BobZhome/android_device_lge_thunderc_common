@@ -180,9 +180,9 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/system/lib/libOmxMpeg4Dec.so:system/lib/libOmxMpeg4Dec.so \
     vendor/lge/thunderc/proprietary/system/lib/libOmxQcelp13Enc.so:system/lib/libOmxQcelp13Enc.so \
     vendor/lge/thunderc/proprietary/system/lib/libOmxQcelpDec.so:system/lib/libOmxQcelpDec.so \
-#   vendor/lge/thunderc/proprietary/system/lib/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
+    vendor/lge/thunderc/proprietary/system/lib/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
     vendor/lge/thunderc/proprietary/system/lib/libOmxWmaDec.so:system/lib/libOmxWmaDec.so \
-    vendor/lge/thunderc/proprietary/system/lib/libOmxWmvDec.so:system/lib/libOmxWmvDec.so \
+    vendor/lge/thunderc/proprietary/system/lib/libOmxWmvDec.so:system/lib/libOmxWmvDec.so
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
