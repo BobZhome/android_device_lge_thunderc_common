@@ -16,6 +16,8 @@ PRODUCT_PACKAGES += \
     libmm-omxcore \
     libOmxCore \
     gps.thunderc \
+    bdaddr_read \
+    gadget_id \
     flash_image \
     dump_image \
     erase_image \
