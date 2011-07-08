@@ -106,6 +106,7 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_bic.ko:system/lib/modules/tcp_bic.ko \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_htcp.ko:system/lib/modules/tcp_htcp.ko \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_westwood.ko:system/lib/modules/tcp_westwood.ko \
+    device/lge/thunderc/files/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     vendor/lge/thunderc/proprietary/system/etc/wl/nvram.txt:system/etc/wl/nvram.txt \
     device/lge/thunderc/files/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     vendor/lge/thunderc/proprietary/system/etc/wl/rtecdc.bin:system/etc/wl/rtecdc.bin \
