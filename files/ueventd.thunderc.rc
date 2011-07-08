@@ -1,4 +1,4 @@
-# Overrides for the LS670
+# Overrides for the CDMA variants
 /dev/oncrpc/*             0660   radio       radio
 /dev/ttyHSUSB0            0660   root        system
 /dev/smdcntl0             0640   radio       radio

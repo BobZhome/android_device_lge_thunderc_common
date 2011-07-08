@@ -204,17 +204,6 @@ PRODUCT_DEVICE := thunderc
 PRODUCT_MANUFACTURER := LGE
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=thunderc
 
-PRODUCT_PROPERTY_OVERRIDES += \
-        ro.com.google.locationfeatures=1 \
-        ro.cdma.voicemail.number=mine \
-        ro.setupwizard.enable_bypass=1 \
-        gsm.sim.operator.iso-country=us \
-        gsm.operator.iso-country=us \
-        qemu.sf.lcd_density=160 \
-        ro.sf.hwrotation=180 \
-        ro.sf.lcd_density=160
-
-
 PRODUCT_COPY_FILES := \
     device/lge/thunderc/files/etc/apns-conf-$(SUB_MODEL).xml:system/etc/apns-conf.xml \
     $(PRODUCT_COPY_FILES)
