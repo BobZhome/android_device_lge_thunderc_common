@@ -207,10 +207,6 @@ PRODUCT_DEVICE := thunderc
 PRODUCT_MANUFACTURER := LGE
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=thunderc
 
-PRODUCT_COPY_FILES := \
-    device/lge/thunderc/files/etc/apns-conf-$(SUB_MODEL).xml:system/etc/apns-conf.xml \
-    $(PRODUCT_COPY_FILES)
-
 ifeq ($(SUB_MODEL),LS670)
     # We're on Sprint
     CDMA_GOOGLE_BASE := android-sprint-us
