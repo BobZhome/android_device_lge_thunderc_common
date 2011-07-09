@@ -187,6 +187,10 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/system/lib/libOmxWmaDec.so:system/lib/libOmxWmaDec.so \
     vendor/lge/thunderc/proprietary/system/lib/libOmxWmvDec.so:system/lib/libOmxWmvDec.so
 
+# CND
+PRODUCT_COPY_FILES += \
+    vendor/lge/thunderc/proprietary/system/bin/cnd:system/bin/cnd
+
 # Bluetooth
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/system/bin/BCM4325D1_004.002.004.0218.0248.hcd:system/bin/BCM4325D1_004.002.004.0218.0248.hcd
