@@ -98,7 +98,7 @@ on boot
 	chown system radio /dev/rtc1
 	chmod 0660 radio /dev/rtc1
 
-# LGE_CHANGE_S, [jisung.yang@lge.com] 2010-04-24, <make wifi directory>  
+# LGE_CHANGE_S, [jisung.yang@lge.com] 2010-04-24, <make wifi directory>
 # WIFI
 	mkdir /data/misc/wifi/sockets 0770 wifi wifi
 	setprop wifi.supplicant_scan_interval 20
@@ -107,14 +107,7 @@ on boot
 
 #DHCP
 	mkdir /data/misc/dhcp 0777 system system
-        chmod 0666 /data/bdaddr
-
-service bdaddr /system/bin/bdaddr_read
-    user root
-    disabled
-    oneshot
-
-# LGE_CHANGE_E, [jisung.yang@lge.com] 2010-04-24, <make wifi directory> 
+	chmod 0666 /data/bdaddr
 
 ## ERS
 	mkdir /data/data/com.lge.ers
@@ -130,52 +123,56 @@ service bdaddr /system/bin/bdaddr_read
 	chown root log /data/dontpanic/last_kmsg
 	chmod 0640 /data/dontpanic/last_kmsg
 
+service bdaddr /system/bin/bdaddr_read
+	user root
+	disabled
+	oneshot
+
 on property:init.svc.hcid=running
 	write /sys/devices/virtual/bluetooth/hci0/idle_timeout 7000
-# LGE_CHANGE_S [sm.shim@lge.com] 2010-08-02, FPRI/DB check
-# DBCHECK
-        mkdir /data/dbcheck 0777 system system
-# LGE_CHANGE_E [sm.shim@lge.com] 2010-08-02, FPRI/DB check 
 
+	# LGE_CHANGE_S [sm.shim@lge.com] 2010-08-02, FPRI/DB check
+	# DBCHECK
+	mkdir /data/dbcheck 0777 system system
 
-# LGE_CHANGE_S [kaisr.shin@lge.com] 2010-07-14, merge from MS690 : 20100703 infojunhyung.cho@lge.com MS690:create r$
- mkdir /cache/com.hp.mvpdm 0770
- chown root root /cache/com.hp.mvpdm
- chmod 0777 /cache/com.hp.mvpdm
+	# LGE_CHANGE_E [sm.shim@lge.com] 2010-08-02, FPRI/DB check
+	# LGE_CHANGE_S [kaisr.shin@lge.com] 2010-07-14, merge from MS690 : 20100703 infojunhyung.cho@lge.com MS690:create r$
+	mkdir /cache/com.hp.mvpdm 0770
+	chown root root /cache/com.hp.mvpdm
+	chmod 0777 /cache/com.hp.mvpdm
 
- mkdir /cache/com.hp.mvpdm/tmp 0770
- chown root root /cache/com.hp.mvpdm/tmp
- chmod 0770 /cache/com.hp.mvpdm/tmp
-# LGE_CHANGE_E [kaisr.shin@lge.com] 2010-07-14
-
+	mkdir /cache/com.hp.mvpdm/tmp 0770
+	chown root root /cache/com.hp.mvpdm/tmp
+	chmod 0770 /cache/com.hp.mvpdm/tmp
+	# LGE_CHANGE_E [kaisr.shin@lge.com] 2010-07-14
 
 on property:init.svc.bootanim=running
-    start bdaddr
+	start bdaddr
 
 service hciattach /system/bin/brcm_patchram_plus -d --baudrate 3000000 --patchram /system/bin/BCM4325D1_004.002.004.0218.0248.hcd --enable_hci /dev/ttyHS0
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
+	user bluetooth
+	group bluetooth net_bt_admin
+	disabled
+	oneshot
 
 service qmuxd /system/bin/qmuxd 
 
 service cnd /system/bin/cnd
-    socket cnd stream 660 root radio
-    socket cne stream 660 root radio
+	socket cnd stream 660 root radio
+	socket cne stream 660 root radio
 
 service ami304d /system/bin/ami304d
-    user compass
-    group system
+	user compass
+	group system
 
 ## USB
 # LGE_CHANGE [dojip.kim@lge.com] 2010-09-05,
 # postpone port-bridge daemon launch due to lock-up during boot-up time (from VS660)
 #service port-bridge /system/bin/port-bridge /dev/smd0 /dev/ttyHSUSB0
-#    disabled
+#	 disabled
 
 #on property:init.svc.bootanim=stopped
-#    start port-bridge
+#	 start port-bridge
 
 # LGE_CHANGE_S, [jisung.yang@lge.com], 2010-04-24,<register WLAN services>
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf #-dd
@@ -195,25 +192,25 @@ stop dhcpcd_wlan0
 # LGE_CHANGE_E, [jisung.yang@lge.com], 2010-04-24,<register WLAN services>
 
 #service dhcp-service /system/bin/netcfg eth0 dhcp
-#    oneshot
+#	 oneshot
 
 on property:dev.bootcomplete=1
-    start qcom-post-boot
+	start qcom-post-boot
 
 #on property:dev.bootcomplete=1
-#    stop dhcp-service
-#    start dhcp-service
+#	 stop dhcp-service
+#	 start dhcp-service
 
 
 service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmcblk0p11
-    user root
-    disabled
+	user root
+	disabled
 
 #service netmgrd /system/bin/netmgrd -E
-#    disabled
+#	 disabled
 
 #on property:ro.use_data_netmgrd=true
-#    start netmgrd
+#	 start netmgrd
 
 # LGE_CHANGE [dojip.kim@lge.com] 2010-09-02, blocked in production build
 # bugreport is triggered by the KEY_VOLUME_DOWN and KEY_MENU keycodes
@@ -224,13 +221,13 @@ service bugreport /system/bin/logwrapper /system/bin/dumpstate -d -v -o /sdcard/
 
 # LGE_CHANGE_S [jeongku.choi@lge.com] 2010-07-09, [CIQ] adapting patch files
 service iqmsd /system/bin/iqmsd
-    disabled
+	disabled
 
 on property:service.iq.active=1
-    start iqmsd
+	start iqmsd
 
 on property:service.iq.active=0
-    stop iqmsd
+	stop iqmsd
 
 # LGE_CHANGE_E [jeongku.choi@lge.com] 2010-07-09, [CIQ]
 
