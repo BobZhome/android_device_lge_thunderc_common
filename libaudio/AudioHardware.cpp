@@ -1440,7 +1440,7 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
 #endif
             {
                 LOGI("Routing audio to Wired Headset\n");
-                new_snd_device = SND_DEVICE_HEADSET;
+                new_snd_device = SND_DEVICE_HEADSET_STEREO;
             }
             new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
         } else if (outputDevices & AudioSystem::DEVICE_OUT_SPEAKER) {
