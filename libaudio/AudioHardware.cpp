@@ -198,7 +198,7 @@ AudioHardware::AudioHardware() :
     }else LOGE("Could not open MSM SND driver.");
 //-----------------------------
     struct sockaddr_nl nladdr;
-    int sz = 64 * 1024;
+    int sz = 65536;
     int on = 1;
 
     memset(&nladdr, 0, sizeof(nladdr));
@@ -212,7 +212,7 @@ AudioHardware::AudioHardware() :
         return;
     }
 
-    if (setsockopt(mSock, SOL_SOCKET, SO_RCVBUFFORCE, &sz, sizeof(sz)) < 0) {
+    if (setsockopt(mSock, SOL_SOCKET, SO_RCVBUF, &sz, sizeof(sz)) < 0) {
         SLOGE("Unable to set uevent socket options: %s", strerror(errno));
         return;
     }
