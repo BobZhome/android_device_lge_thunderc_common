@@ -27,7 +27,7 @@
          Turn off to use new Gingerbread animation -->
     <bool name="config_animateScreenLights">false</bool>
     
-    <bool name="config_unplugTurnsOnScreen">true</bool>
+    <bool name="config_unplugTurnsOnScreen">false</bool>
     
     <string name="default_wallpaper_component">com.android.wallpaper/.nexus.NexusWallpaper</string>
     
@@ -120,10 +120,10 @@
     <bool name="config_sip_wifi_only">false</bool>
 
     <!-- Enable the screen-on animation -->
-    <bool name="config_enableScreenOnAnimation">false</bool>
+    <bool name="config_enableScreenOnAnimation">true</bool>
 
     <!-- Enable the screen-off animation -->
-    <bool name="config_enableScreenOffAnimation">false</bool>
+    <bool name="config_enableScreenOffAnimation">true</bool>
 
     <!-- Component name of the service providing network location support. -->
     <string name="config_networkLocationProvider">com.google.android.location.NetworkLocationProvider</string>
