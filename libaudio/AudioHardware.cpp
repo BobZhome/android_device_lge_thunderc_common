@@ -246,10 +246,10 @@ AudioHardware::AudioHardware() :
 AudioHardware::~AudioHardware()
 {
     for (size_t index = 0; index < mInputs.size(); index++) {
-        closeInputStream((AudioStreamIn*)mInputs[index]);
+        closeInputStream((AudioStreamIn *)mInputs[index]);
     }
     mInputs.clear();
-    closeOutputStream((AudioStreamOut*)mOutput);
+    closeOutputStream((AudioStreamOut *)mOutput);
     delete [] mSndEndpoints;
     if (acoustic) {
         ::dlclose(acoustic);
@@ -425,7 +425,7 @@ status_t AudioHardware::getMicMute(bool *state)
     return NO_ERROR;
 }
 
-status_t AudioHardware::setParameters(const String8& keyValuePairs)
+status_t AudioHardware::setParameters(const String8 &keyValuePairs)
 {
     AudioParameter param = AudioParameter(keyValuePairs);
     String8 value;
@@ -507,7 +507,7 @@ status_t AudioHardware::setParameters(const String8& keyValuePairs)
     return NO_ERROR;
 }
 
-String8 AudioHardware::getParameters(const String8& keys)
+String8 AudioHardware::getParameters(const String8 &keys)
 {
     AudioParameter param = AudioParameter(keys);
     String8 value;
@@ -1717,7 +1717,7 @@ bool AudioHardware::AudioStreamOutMSM72xx::checkStandby()
 }
 
 
-status_t AudioHardware::AudioStreamOutMSM72xx::setParameters(const String8& keyValuePairs)
+status_t AudioHardware::AudioStreamOutMSM72xx::setParameters(const String8 &keyValuePairs)
 {
     AudioParameter param = AudioParameter(keyValuePairs);
     String8 key = String8(AudioParameter::keyRouting);
@@ -1738,7 +1738,7 @@ status_t AudioHardware::AudioStreamOutMSM72xx::setParameters(const String8& keyV
     return status;
 }
 
-String8 AudioHardware::AudioStreamOutMSM72xx::getParameters(const String8& keys)
+String8 AudioHardware::AudioStreamOutMSM72xx::getParameters(const String8 &keys)
 {
     AudioParameter param = AudioParameter(keys);
     String8 value;
@@ -1765,7 +1765,7 @@ AudioHardware::AudioStreamInMSM72xx::AudioStreamInMSM72xx() :
     mHardware(0), mFd(-1), mState(AUDIO_INPUT_CLOSED), mRetryCount(0),
     mFormat(AUDIO_HW_IN_FORMAT), mChannels(AUDIO_HW_IN_CHANNELS),
     mSampleRate(AUDIO_HW_IN_SAMPLERATE), mBufferSize(AUDIO_HW_IN_BUFFERSIZE),
-    mAcoustics((AudioSystem::audio_in_acoustics)0), mDevices(0)
+    mDevices(0), mAcoustics((AudioSystem::audio_in_acoustics)0)
 {
 }
 
@@ -2178,7 +2178,7 @@ status_t AudioHardware::AudioStreamInMSM72xx::standby()
     return NO_ERROR;
 }
 
-status_t AudioHardware::AudioStreamInMSM72xx::dump(int fd, const Vector<String16>& args)
+status_t AudioHardware::AudioStreamInMSM72xx::dump(int fd, const Vector<String16> &args)
 {
     const size_t SIZE = 256;
     char buffer[SIZE];
@@ -2204,7 +2204,7 @@ status_t AudioHardware::AudioStreamInMSM72xx::dump(int fd, const Vector<String16
     return NO_ERROR;
 }
 
-status_t AudioHardware::AudioStreamInMSM72xx::setParameters(const String8& keyValuePairs)
+status_t AudioHardware::AudioStreamInMSM72xx::setParameters(const String8 &keyValuePairs)
 {
     AudioParameter param = AudioParameter(keyValuePairs);
     String8 key = String8(AudioParameter::keyRouting);
@@ -2229,7 +2229,7 @@ status_t AudioHardware::AudioStreamInMSM72xx::setParameters(const String8& keyVa
     return status;
 }
 
-String8 AudioHardware::AudioStreamInMSM72xx::getParameters(const String8& keys)
+String8 AudioHardware::AudioStreamInMSM72xx::getParameters(const String8 &keys)
 {
     AudioParameter param = AudioParameter(keys);
     String8 value;
