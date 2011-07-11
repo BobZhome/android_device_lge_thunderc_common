@@ -1135,6 +1135,7 @@ void QualcommCameraHardware::initDefaultParameters()
     if( (!strcmp(sensorType->name, "2mp")) ||
         (!strcmp(mSensorInfo.name, "vx6953")) ||
 		(!strcmp(mSensorInfo.name, "ov5642")) ||
+		(!strcmp(mSensorInfo.name, "isx005")) ||
 		(!strcmp(mSensorInfo.name, "VX6953")) ) {
         LOGI("Parameter Rolloff is not supported for this sensor");
     } else {
@@ -4136,11 +4137,13 @@ status_t QualcommCameraHardware::setLensshadeValue(const CameraParameters& param
 {
     if( (!strcmp(sensorType->name, "2mp")) ||
         (!strcmp(mSensorInfo.name, "vx6953")) ||
-		(!strcmp(mSensorInfo.name, "ov5642")) ||
-	(!strcmp(mSensorInfo.name, "VX6953")) ) {
+		(!strcmp(mSensorInfo.name, "ov5642")) || /* http://www.ovt.com/products/sensor.php?id=65 */
+		(!strcmp(mSensorInfo.name, "isx005")) || /* Optimus V -- Sony 3MP sensor -- http://www.sony.net/Products/SC-HP/cx_news/vol59/pdf/isx005_006.pdf */
+	    (!strcmp(mSensorInfo.name, "VX6953")) ) {
         LOGI("Parameter Rolloff is not supported for this sensor");
         return NO_ERROR;
     }
+
     const char *str = params.get(CameraParameters::KEY_LENSSHADE);
     if (str != NULL) {
         int value = attr_lookup(lensshade,
