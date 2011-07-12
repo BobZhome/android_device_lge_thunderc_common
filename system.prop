@@ -87,7 +87,7 @@ debug.sf.hw=1
 windowsmgr.max_events_per_sec=260
 ro.telephony.call_ring.multiple=false
 
-# Common to alL CDMA variants (IHO)
+# Common to all CDMA variants (IHO)
 ro.com.google.locationfeatures=1
 ro.cdma.voicemail.number=mine
 ro.setupwizard.enable_bypass=1
