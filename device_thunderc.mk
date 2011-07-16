@@ -211,6 +211,13 @@ PRODUCT_DEVICE := thunderc
 PRODUCT_MANUFACTURER := LGE
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=thunderc
 
+ifeq ($(SUB_MODEL),VS660)
+    # We're on Verizon (TODO)
+    CDMA_GOOGLE_BASE := android-verizon
+    CDMA_CARRIER_ALPHA := Verizon_Wireless
+    CDMA_CARRIER_NUMERIC := 310012
+endif
+
 ifeq ($(SUB_MODEL),LS670)
     # We're on Sprint
     CDMA_GOOGLE_BASE := android-sprint-us
@@ -228,13 +235,6 @@ ifeq ($(SUB_MODEL),VM670)
     CDMA_CARRIER_NUMERIC := 200053
 endif
 
-ifeq ($(SUB_MODEL),MS690)
-    # We're on MetroPCS (TODO)
-    CDMA_GOOGLE_BASE := android-metropcs-us
-    CDMA_CARRIER_ALPHA := MetroPCS
-    CDMA_CARRIER_NUMERIC := 311660
-endif
-
 ifeq ($(SUB_MODEL),US670)
     # We're on USC (TODO)
     CDMA_GOOGLE_BASE := android-sprint-us
@@ -242,13 +242,19 @@ ifeq ($(SUB_MODEL),US670)
     CDMA_CARRIER_NUMERIC := 310066
 endif
 
-ifeq ($(SUB_MODEL),VS660)
-    # We're on Verizon (TODO)
-    CDMA_GOOGLE_BASE := android-verizon
-    CDMA_CARRIER_ALPHA := Verizon_Wireless
-    CDMA_CARRIER_NUMERIC := 310012
+ifeq ($(SUB_MODEL),LW690)
+    # We're on Cricket (TODO)
+    CDMA_GOOGLE_BASE := android-cricket-us
+    CDMA_CARRIER_ALPHA := Cricket
+    CDMA_CARRIER_NUMERIC := 310016
 endif
 
+ifeq ($(SUB_MODEL),MS690)
+    # We're on MetroPCS (TODO)
+    CDMA_GOOGLE_BASE := android-metropcs-us
+    CDMA_CARRIER_ALPHA := MetroPCS
+    CDMA_CARRIER_NUMERIC := 311660
+endif
 
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.com.google.clientidbase=$(CDMA_GOOGLE_BASE) \
