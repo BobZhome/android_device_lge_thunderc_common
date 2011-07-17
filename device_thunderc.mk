@@ -1,5 +1,3 @@
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-
 DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay-common device/lge/thunderc/overlay-$(SUB_MODEL)
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
@@ -199,10 +197,12 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
     device/lge/thunderc/files/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
-PRODUCT_LOCALES += mdpi
-
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 $(call inherit-product, build/target/product/full.mk)
+
+# We don't need to pull in the languages_full.mk manually because it'll get clobbered anyhow by full.mk
+# mdpi goes last so that the janky default locale/region code can pick a sane default
+PRODUCT_LOCALES += mdpi
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_thunderc
