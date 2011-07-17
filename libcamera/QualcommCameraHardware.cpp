@@ -910,18 +910,7 @@ QualcommCameraHardware::QualcommCameraHardware()
         }
     }
 
-    switch(mCurrentTarget){
-        case TARGET_MSM7627:
-            jpegPadding = 8;
-            break;
-        case TARGET_QSD8250:
-        case TARGET_MSM7630:
-            jpegPadding = 0;
-            break;
-        default:
-            jpegPadding = 0;
-            break;
-    }
+    jpegPadding = 0;
     LOGV("constructor EX");
 }
 
