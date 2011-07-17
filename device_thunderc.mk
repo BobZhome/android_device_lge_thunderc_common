@@ -100,7 +100,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/wireless.ko:system/lib/modules/wireless.ko \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/tun.ko:system/lib/modules/tun.ko \
-    device/lge/thunderc/files/kernel/$(SUB_MODEL)/dma_test.ko:system/lib/modules/dma_test.ko \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_bic.ko:system/lib/modules/tcp_bic.ko \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_htcp.ko:system/lib/modules/tcp_htcp.ko \
     device/lge/thunderc/files/kernel/$(SUB_MODEL)/tcp_westwood.ko:system/lib/modules/tcp_westwood.ko \
