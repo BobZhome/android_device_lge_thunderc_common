@@ -1,4 +1,4 @@
-DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay-common device/lge/thunderc/overlay-$(SUB_MODEL)
+DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay/common device/lge/thunderc/overlay/$(SUB_MODEL)
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 	LOCAL_KERNEL := device/lge/thunderc/files/kernel/$(SUB_MODEL)/zImage
