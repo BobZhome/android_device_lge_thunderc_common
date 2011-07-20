@@ -197,7 +197,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
-    device/lge/thunderc/files/mvdalvik.sh:system/etc/init.d/01mvdalvik \
+    device/lge/thunderc/files/etc/init.d/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 $(call inherit-product, build/target/product/full.mk)
