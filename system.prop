@@ -94,5 +94,5 @@ ro.setupwizard.enable_bypass=1
 gsm.sim.operator.iso-country=us
 gsm.operator.iso-country=us
 qemu.sf.lcd_density=160
-ro.sf.hwrotation=180
+ro.sf.hwrotation=0
 ro.sf.lcd_density=160
