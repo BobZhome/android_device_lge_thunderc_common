@@ -1,6 +1,15 @@
 ## hopemini@lge.com, 20100416
 
 on boot
+	# Update the mountpoints to noatime
+	mount yaffs2 mtd@system /system ro remount noatime
+	mount yaffs2 mtd@userdata /data remount nosuid nodev noatime
+	mount yaffs2 mtd@cache /cache remount nosuid nodev noatime
+
+	# Increase the read ahead cache from 128KB to 512KB
+	write /sys/devices/virtual/bdi/179:0/read_ahead_kb 512
+	write /sys/devices/virtual/mtd/mtd6/mtdblock6/queue/read_ahead_kb 64
+
 	chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
 	chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
 	chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
