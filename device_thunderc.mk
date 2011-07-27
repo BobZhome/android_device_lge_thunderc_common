@@ -234,7 +234,7 @@ ifeq ($(SUB_MODEL),VM670)
     # this right.
     CDMA_GOOGLE_BASE := android-sprint-us
     CDMA_CARRIER_ALPHA := Virgin_Mobile
-    CDMA_CARRIER_NUMERIC := 200053
+    CDMA_CARRIER_NUMERIC := 311490
 endif
 
 ifeq ($(SUB_MODEL),US670)
