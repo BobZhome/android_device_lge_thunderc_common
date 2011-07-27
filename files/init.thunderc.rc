@@ -6,9 +6,19 @@ on boot
 	mount yaffs2 mtd@userdata /data remount nosuid nodev noatime
 	mount yaffs2 mtd@cache /cache remount nosuid nodev noatime
 
-	# Increase the read ahead cache from 128KB to 512KB
+	# Increase the read ahead cache from 128KB to 512KB (SD)
 	write /sys/devices/virtual/bdi/179:0/read_ahead_kb 512
+
+	#  Increase the read ahead cache from 4KB to 64KB (/data)
 	write /sys/devices/virtual/mtd/mtd6/mtdblock6/queue/read_ahead_kb 64
+
+	#  Increase the read ahead cache from 4KB to 128KB (/system)
+	write /sys/devices/virtual/mtd/mtd6/mtdblock5/queue/read_ahead_kb 128
+
+	# Mark the internal NAND as non-rotational just in case
+	write /sys/devices/virtual/mtd/mtd1/mtdblock1/queue/rotational 0
+	write /sys/devices/virtual/mtd/mtd5/mtdblock5/queue/rotational 0
+	write /sys/devices/virtual/mtd/mtd6/mtdblock6/queue/rotational 0
 
 	chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
 	chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
