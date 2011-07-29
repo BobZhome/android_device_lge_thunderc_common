@@ -1405,7 +1405,7 @@ static bool native_set_afmode(int camfd, isp3a_af_mode_t af_type)
              strerror(errno));
 
     LOGV("native_set_afmode: ctrlCmd.status == %d\n", ctrlCmd.status);
-    return rc >= 0 && ctrlCmd.status == CAMERA_EXIT_CB_DONE;
+    return rc >= 0 && ctrlCmd.status == 0;
 }
 
 static bool native_cancel_afmode(int camfd, int af_fd)
