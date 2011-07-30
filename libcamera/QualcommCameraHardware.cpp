@@ -3682,11 +3682,7 @@ void QualcommCameraHardware::receiveRawPicture()
         mCrop.in2_h &= ~1;
 
         // Crop the image if zoomed.
-        if (mCrop.in2_w != 0 && mCrop.in2_h != 0 &&
-                (mCrop.in2_w < mCrop.out2_w) &&
-                (mCrop.in2_h < mCrop.out2_h) &&
-                (mCrop.in1_w < mCrop.out1_w)  &&
-                (mCrop.in1_h < mCrop.out1_h) ) {
+        if (mCrop.in2_w != 0 && mCrop.in2_h != 0) {
 
             // By the time native_get_picture returns, picture is taken. Call
             // shutter callback if cam config thread has not done that.
