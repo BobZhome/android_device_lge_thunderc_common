@@ -21,6 +21,8 @@
 ** are intended for use with CyanogenMod. This includes all the support
 ** for ov5642, and the reverse engineered bits like ioctls and EXIF.
 ** Please do not change the EXIF header without asking me first.
+**
+** Spent enough time debugging it, I felt inclined to add my name here - IHO
 */
 
 //#define LOG_NDEBUG 0
@@ -910,7 +912,6 @@ QualcommCameraHardware::QualcommCameraHardware()
         }
     }
 
-    jpegPadding = 0;
     LOGV("constructor EX");
 }
 
@@ -1858,17 +1859,15 @@ bool QualcommCameraHardware::native_jpeg_encode(void)
 
    /* Set maker and model. Read the NOTICE before changing this */
    char model[PROP_VALUE_MAX];
-   char maker[12];
+   const char *maker = "InferiorHumanOrgans";
    int modelLen = 0;
 
-   strncpy(maker,"CyanogenMod",11);
-   maker[11] = '\0';
    __system_property_get("ro.product.device", model);
    modelLen=strlen(model);
    model[modelLen] = '\0';
 
     addExifTag(EXIFTAGID_EXIF_CAMERA_MAKER, EXIF_ASCII,
-                  12, 1, (void *)maker);
+                  strlen(maker), 1, (void *)maker);
     addExifTag(EXIFTAGID_EXIF_CAMERA_MODEL, EXIF_ASCII,
                   modelLen, 1, (void *)model);
 
@@ -1878,7 +1877,7 @@ bool QualcommCameraHardware::native_jpeg_encode(void)
                                   (uint8_t *)mRawHeap->mHeap->base(),
                                   mRawHeap->mHeap->getHeapID(),
                                   &mCrop, exif_data, exif_table_numEntries,
-                                  jpegPadding/2)) {
+                                  0 /* no padding needed */)) {
         LOGE("native_jpeg_encode: jpeg_encoder_encode failed.");
         return false;
     }
@@ -3552,11 +3551,18 @@ void QualcommCameraHardware::notifyShutter(common_crop_t *crop)
             }
         } else {
             // Cropped
-            size.width = (crop->in2_w + jpegPadding) & ~1;
-            size.height = (crop->in2_h + jpegPadding) & ~1;
+
+            // Make sure the dimensions are multiples of 16 otherwise bad things happen
+            crop->in1_w = CEILING16(crop->in1_w);
+            crop->in1_h = CEILING16(crop->in1_h);
+            crop->in2_w = CEILING16(crop->in2_w);
+            crop->in2_h = CEILING16(crop->in2_h);
+
+            size.width = crop->in2_w & ~1;
+            size.height = crop->in2_h & ~1;
             if (size.width > 2048 || size.height > 2048) {
-                size.width = (crop->in1_w + jpegPadding) & ~1;
-                size.height = (crop->in1_h + jpegPadding) & ~1;
+                size.width = crop->in1_w & ~1;
+                size.height = crop->in1_h & ~1;
                 mDisplayHeap = mThumbnailHeap;
             }
         }
@@ -3677,25 +3683,25 @@ void QualcommCameraHardware::receiveRawPicture()
 
         // Crop the image if zoomed.
         if (mCrop.in2_w != 0 && mCrop.in2_h != 0 &&
-                ((mCrop.in2_w + jpegPadding) < mCrop.out2_w) &&
-                ((mCrop.in2_h + jpegPadding) < mCrop.out2_h) &&
-                ((mCrop.in1_w + jpegPadding) < mCrop.out1_w)  &&
-                ((mCrop.in1_h + jpegPadding) < mCrop.out1_h) ) {
+                (mCrop.in2_w < mCrop.out2_w) &&
+                (mCrop.in2_h < mCrop.out2_h) &&
+                (mCrop.in1_w < mCrop.out1_w)  &&
+                (mCrop.in1_h < mCrop.out1_h) ) {
 
             // By the time native_get_picture returns, picture is taken. Call
             // shutter callback if cam config thread has not done that.
             notifyShutter(&mCrop);
-                    crop_yuv420(mCrop.out2_w, mCrop.out2_h, (mCrop.in2_w + jpegPadding), (mCrop.in2_h + jpegPadding),
-                            (uint8_t *)mRawHeap->mHeap->base());
-                    crop_yuv420(mCrop.out1_w, mCrop.out1_h, (mCrop.in1_w + jpegPadding), (mCrop.in1_h + jpegPadding),
-                            (uint8_t *)mThumbnailHeap->mHeap->base());
+            crop_yuv420(mCrop.out2_w, mCrop.out2_h, mCrop.in2_w, mCrop.in2_h,
+                (uint8_t *)mRawHeap->mHeap->base());
+            crop_yuv420(mCrop.out1_w, mCrop.out1_h, mCrop.in1_w, mCrop.in1_h,
+                (uint8_t *)mThumbnailHeap->mHeap->base());
 
             // We do not need jpeg encoder to upscale the image. Set the new
             // dimension for encoder.
-            mDimension.orig_picture_dx = mCrop.in2_w + jpegPadding;
-            mDimension.orig_picture_dy = mCrop.in2_h + jpegPadding;
-            mDimension.thumbnail_width = mCrop.in1_w + jpegPadding;
-            mDimension.thumbnail_height = mCrop.in1_h + jpegPadding;
+            mDimension.orig_picture_dx = mCrop.in2_w;
+            mDimension.orig_picture_dy = mCrop.in2_h;
+            mDimension.thumbnail_width = mCrop.in1_w;
+            mDimension.thumbnail_height = mCrop.in1_h;
         }else {
             memset(&mCrop, 0 ,sizeof(mCrop));
             // By the time native_get_picture returns, picture is taken. Call
