@@ -78,6 +78,7 @@ extern "C" {
 #define DEFAULT_PICTURE_HEIGHT 768
 #define THUMBNAIL_BUFFER_SIZE (THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT * 3/2)
 #define MAX_ZOOM_LEVEL 6
+#define ZOOM_STEP 10
 #define NOT_FOUND -1
 // Number of video buffers held by kernel (initially 1, 2, and 3)
 #define ACTIVE_VIDEO_BUFFERS 3
@@ -2611,7 +2612,7 @@ status_t QualcommCameraHardware::startPreviewInternal()
         mParameters.set("zoom-supported", "false");
         mMaxZoom = 0;
     }
-    mParameters.set("max-zoom",mMaxZoom);
+    mParameters.set("max-zoom", mMaxZoom / ZOOM_STEP);
 
     LOGV("startPreviewInternal X");
     return NO_ERROR;
@@ -4260,7 +4261,6 @@ status_t QualcommCameraHardware::setZoom(const CameraParameters& params)
     // size is. Ex: zoom level 1 is always 1.2x, zoom level 2 is 1.44x, etc. So,
     // we need to have a fixed maximum zoom value and do read it from the
     // driver.
-    static const int ZOOM_STEP = 10;
     int32_t zoom_level = params.getInt("zoom");
 
     LOGV("Set zoom=%d", zoom_level);
