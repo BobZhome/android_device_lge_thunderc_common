@@ -199,7 +199,9 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
     device/lge/thunderc/files/etc/init.d/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
+# Let's use our own GPS config file
+PRODUCT_COPY_FILES += device/lge/thunderc/files/etc/gps.conf:system/etc/gps.conf
+
 $(call inherit-product, build/target/product/full.mk)
 
 # We don't need to pull in the languages_full.mk manually because it'll get clobbered anyhow by full.mk
