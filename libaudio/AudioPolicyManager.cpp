@@ -194,7 +194,7 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
         }
 
         // device is DEVICE_OUT_SPEAKER if we come from case STRATEGY_SONIFICATION, 0 otherwise
-        device |= device2;
+        device = device ? device : device2;
         if (device == 0) {
             LOGE("getDeviceForStrategy() speaker device not found");
         }
