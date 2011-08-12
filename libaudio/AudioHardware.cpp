@@ -1328,7 +1328,7 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
     Mutex::Autolock lock(mLock);
     uint32_t outputDevices = mOutput->devices();
     status_t ret = NO_ERROR;
-    uint32_t new_snd_device = -1;
+    uint32_t new_snd_device = SND_DEVICE_UNINIT;
     int new_post_proc_feature_mask = 0;
 
     //int (*msm72xx_enable_audpp)(int);
@@ -1337,9 +1337,8 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
     if (input != NULL) {
         uint32_t inputDevice = input->devices();
         LOGI("do input routing device %x\n", inputDevice);
-        // ignore routing device information when we start a recording in voice
-        // call
-        // Recording will happen through currently active tx device
+        // Ignore routing device information when we start a recording in voice
+        // call.  Recording will happen through currently active tx device
         if (inputDevice == AudioSystem::DEVICE_IN_VOICE_CALL)
             return NO_ERROR;
 
