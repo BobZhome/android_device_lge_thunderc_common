@@ -14,7 +14,6 @@ PRODUCT_PACKAGES += \
     libmm-omxcore \
     libOmxCore \
     bdaddr_read \
-    gadget_id \
     flash_image \
     dump_image \
     erase_image \
