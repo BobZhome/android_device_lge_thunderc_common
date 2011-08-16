@@ -22,7 +22,6 @@
 
 #include <utils/threads.h>
 #include <utils/SortedVector.h>
-#include <sysutils/NetlinkListener.h>
 
 #include <hardware_legacy/AudioHardwareBase.h>
 
@@ -153,7 +152,7 @@ enum tty_modes {
 #define AUDIO_HW_IN_FORMAT (AudioSystem::PCM_16_BIT)  // Default audio input sample format
 // ----------------------------------------------------------------------------
 
-class NetlinkHandler;
+
 class AudioHardware : public  AudioHardwareBase
 {
     class AudioStreamOutMSM72xx;
@@ -168,7 +167,6 @@ public:
     virtual status_t                setVoiceVolume(float volume);
     virtual status_t                setMasterVolume(float volume);
     virtual status_t                setFmVolume(float volume);
-            void                    setHookMode(bool mode);
     virtual status_t                setMode(int mode);
 
     // mic mute
@@ -215,8 +213,6 @@ private:
             status_t                setFmOnOff(bool onoff);
             AudioStreamInMSM72xx    *getActiveInput_l();
 
-            NetlinkHandler          *mHandler;
-            int                     mSock;
             static const uint32_t   inputSamplingRates[];
             bool                    mInit;
             bool                    mMicMute;
@@ -310,24 +306,6 @@ private:
                 bool            mFirstread;
                 AudioSystem::audio_in_acoustics mAcoustics;
     };
-};
-
-
-#include <sysutils/NetlinkListener.h>
-
-class NetlinkHandler: public NetlinkListener {
-
-public:
-    NetlinkHandler(int listenerSocket, AudioHardware *audio);
-    virtual ~NetlinkHandler();
-
-    int start(void);
-    int stop(void);
-
-private:
-    AudioHardware *mAudio;
-protected:
-    virtual void onEvent(NetlinkEvent *evt);
 };
 
 // ----------------------------------------------------------------------------
