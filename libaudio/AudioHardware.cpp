@@ -1131,7 +1131,7 @@ status_t AudioHardware::setVoiceVolume(float v)
         v = 1.0;
     }
 
-    int vol = lrint(v * MAX_VOLUME);
+    int vol = ceil(v * (MAX_VOLUME-1.0))+1;
     LOGD("setVoiceVolume(%f)\n", v);
     LOGI("Setting in-call volume to %d (available range is 0 to %.1f)\n", vol, MAX_VOLUME);
 
