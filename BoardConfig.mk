@@ -28,9 +28,10 @@ BOARD_USES_QCOM_LIBRPC := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
-BOARD_USES_QCOM_GPS := true
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := thunderc
-BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
+# Using GPSSHIM because our protocol has other version then at hardware/qcom/gps sources available
+BOARD_USES_GPSSHIM := true
+BOARD_GPS_NEEDS_XTRA := true
+BOARD_GPS_LIBRARIES := libloc
 
 BOARD_USE_USB_MASS_STORAGE_SWITCH := true
 BOARD_CUSTOM_USB_CONTROLLER := ../../device/lge/thunderc/netd/UsbController.cpp

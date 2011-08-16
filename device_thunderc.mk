@@ -13,7 +13,6 @@ PRODUCT_PACKAGES += \
     librs_jni \
     libmm-omxcore \
     libOmxCore \
-    gps.thunderc \
     bdaddr_read \
     gadget_id \
     flash_image \
@@ -79,6 +78,16 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/hw/sensors.thunderc.so:system/lib/hw/sensors.thunderc.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/ami304d:system/bin/ami304d \
+
+# GPS
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc/files/etc/loc_parameter.ini:system/etc/loc_parameter.ini \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libloc_api.so:system/lib/libloc_api.so \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libgps.so:system/lib/libgps.so \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libloc.so:system/lib/libloc.so \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libloc.so:obj/lib/libloc.so \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libcommondefs.so:system/lib/libcommondefs.so \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libloc-rpc.so:system/lib/libloc-rpc.so
 
 # 3D
 PRODUCT_COPY_FILES += \
