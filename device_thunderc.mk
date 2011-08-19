@@ -193,10 +193,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/cnd:system/bin/cnd
 
-# Bluetooth
-PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/BCM4325D1_004.002.004.0218.0248.hcd:system/bin/BCM4325D1_004.002.004.0218.0248.hcd
-
 # Kernel modules
 # PRODUCT_COPY_FILES += \
 #    device/lge/thunderc/files/kernel/$(SUB_MODEL)/ext2.ko:system/lib/modules/ext2.ko \
@@ -235,6 +231,7 @@ ifeq ($(SUB_MODEL),LS670)
     CDMA_GOOGLE_BASE := android-sprint-us
     CDMA_CARRIER_ALPHA := Sprint
     CDMA_CARRIER_NUMERIC := 310120
+    BLUETOOTH_FIRMWARE := BCM4325D1_004.002.004.0218.0248.hcd
 endif
 
 ifeq ($(SUB_MODEL),VM670)
@@ -245,6 +242,7 @@ ifeq ($(SUB_MODEL),VM670)
     CDMA_GOOGLE_BASE := android-sprint-us
     CDMA_CARRIER_ALPHA := Virgin_Mobile
     CDMA_CARRIER_NUMERIC := 311490
+    BLUETOOTH_FIRMWARE := BCM4325D1_004.002.004.0218.0248.hcd
 endif
 
 ifeq ($(SUB_MODEL),US670)
@@ -255,10 +253,11 @@ ifeq ($(SUB_MODEL),US670)
 endif
 
 ifeq ($(SUB_MODEL),LW690)
-    # We're on Cricket (TODO)
+    # We're on Cricket (In progress)
     CDMA_GOOGLE_BASE := android-cricket-us
     CDMA_CARRIER_ALPHA := Cricket
     CDMA_CARRIER_NUMERIC := 310016
+    BLUETOOTH_FIRMWARE := BCM4325D1_004.002.004.0285.0301.hcd
 endif
 
 ifeq ($(SUB_MODEL),MS690)
@@ -268,11 +267,15 @@ ifeq ($(SUB_MODEL),MS690)
     CDMA_CARRIER_NUMERIC := 311660
 endif
 
+# Bluetooth
+PRODUCT_COPY_FILES += \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/$(BLUETOOTH_FIRMWARE):system/bin/BCM4325.hcd
+
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.com.google.clientidbase=$(CDMA_GOOGLE_BASE) \
-        ro.cdma.home.operator.alpha=$(CDMA_CARRIER_ALPHA) \
-        ro.cdma.home.operator.numeric=$(CDMA_CARRIER_NUMERIC) \
-        gsm.sim.operator.alpha=$(CDMA_CARRIER_ALPHA) \
-        gsm.sim.operator.numeric=$(CDMA_CARRIER_NUMERIC) \
-        gsm.operator.alpha=$(CDMA_CARRIER_ALPHA) \
-        gsm.operator.numeric=$(CDMA_CARRIER_NUMERIC)
+    ro.com.google.clientidbase=$(CDMA_GOOGLE_BASE) \
+    ro.cdma.home.operator.alpha=$(CDMA_CARRIER_ALPHA) \
+    ro.cdma.home.operator.numeric=$(CDMA_CARRIER_NUMERIC) \
+    gsm.sim.operator.alpha=$(CDMA_CARRIER_ALPHA) \
+    gsm.sim.operator.numeric=$(CDMA_CARRIER_NUMERIC) \
+    gsm.operator.alpha=$(CDMA_CARRIER_ALPHA) \
+    gsm.operator.numeric=$(CDMA_CARRIER_NUMERIC)
