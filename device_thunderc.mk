@@ -10,6 +10,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
 
 PRODUCT_PACKAGES += \
+    gps.thunderc \
     librs_jni \
     libmm-omxcore \
     libOmxCore \
