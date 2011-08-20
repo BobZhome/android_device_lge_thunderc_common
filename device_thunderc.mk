@@ -210,12 +210,10 @@ $(call inherit-product, build/target/product/full.mk)
 # mdpi goes last so that the janky default locale/region code can pick a sane default
 PRODUCT_LOCALES += mdpi
 
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_thunderc
 PRODUCT_BRAND := LGE
 PRODUCT_DEVICE := thunderc
 PRODUCT_MANUFACTURER := LGE
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=thunderc
 
 ifeq ($(SUB_MODEL),VS660)
     # We're on Verizon (TODO)
