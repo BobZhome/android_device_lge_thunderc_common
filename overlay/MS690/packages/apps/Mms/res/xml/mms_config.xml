@@ -11,8 +11,7 @@
     <int name="maxMessageCountPerThread">5000</int>
     <int name="recipientLimit">10</int>
     <int name="smsToMmsTextThreshold">4</int>
-    <string name="uaProfTagName">Profile<string/>
+    <string name="uaProfTagName">Profile</string>
     <string name="userAgent">LG-MS690</string>
-    <string name="uaProfUrl">http://uaprof.metropcs.net/UAProf/
-LG-MS690.xml</string>
+    <string name="uaProfUrl">http://uaprof.metropcs.net/UAProf/LG-MS690.xml</string>
 </mms_config>
