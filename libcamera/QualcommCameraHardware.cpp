@@ -1770,16 +1770,10 @@ void QualcommCameraHardware::setGpsParameters() {
         latref[1] = '\0';
         if (refstr != NULL) {
             strncpy(latref, refstr, 1);
-            addExifTag(EXIFTAGID_GPS_LATITUDE_REF, EXIF_ASCII, 2, 1, (void *)latref);
         } else {
-            const double value = atof(coordinate);
-            if (value < 0) {
-                latref[0] = 'S';
-            } else {
-                latref[0] = 'N';
-            }
-            addExifTag(EXIFTAGID_GPS_LATITUDE_REF, EXIF_ASCII, 2, 1, (void *)latref);
+            latref[0] = (atoi(coordinate) < 0) ? 'S' : 'N';
         }
+        addExifTag(EXIFTAGID_GPS_LATITUDE_REF, EXIF_ASCII, 2, 1, (void *)latref);
     } else
 		return;
 
@@ -1792,16 +1786,10 @@ void QualcommCameraHardware::setGpsParameters() {
         lonref[1] = '\0';
         if (refstr != NULL) {
             strncpy(lonref, refstr, 1);
-            addExifTag(EXIFTAGID_GPS_LONGITUDE_REF, EXIF_ASCII, 2, 1, (void *)lonref);
 	    } else {
-            const double value = atof(coordinate);
-            if (value < 0) {
-                lonref[0] = 'W';
-            } else {
-                lonref[0] = 'E';
-            }
-            addExifTag(EXIFTAGID_GPS_LONGITUDE_REF, EXIF_ASCII, 2, 1, (void *)lonref);
+            lonref[0] = (atoi(coordinate) < 0) ? 'W' : 'E';
 	    }
+	    addExifTag(EXIFTAGID_GPS_LONGITUDE_REF, EXIF_ASCII, 2, 1, (void *)lonref);
     }
 
     //set Altitude
