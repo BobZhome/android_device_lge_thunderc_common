@@ -242,10 +242,12 @@ static const camera_size_type *picture_sizes_ptr;
 static int supportedPictureSizesCount;
 
 static const target_map targetList [] = {
-    { "msm7625", TARGET_MSM7625 },
-    { "msm7627", TARGET_MSM7627 },
-    { "qsd8250", TARGET_QSD8250 },
-    { "msm7630", TARGET_MSM7630 }
+    { "thunderc", TARGET_MSM7627 },
+    { "thunderg", TARGET_MSM7627 },
+    { "msm7625",  TARGET_MSM7625 },
+    { "msm7627",  TARGET_MSM7627 },
+    { "qsd8250",  TARGET_QSD8250 },
+    { "msm7630",  TARGET_MSM7630 }
 };
 static targetType mCurrentTarget = TARGET_MSM7627;
 
@@ -785,16 +787,17 @@ static void cam_frame_post_video (struct msm_frame *p)
 
 void QualcommCameraHardware::storeTargetType(void) {
     char mDeviceName[PROPERTY_VALUE_MAX];
-    property_get("ro.product.device",mDeviceName," ");
+    property_get("ro.product.device", mDeviceName, " ");
     mCurrentTarget = TARGET_MAX;
+
     for (int i = 0; i < TARGET_MAX ; i++) {
-        if (!strncmp(mDeviceName, targetList[i].targetStr, 7)) {
+        if (!strncmp(mDeviceName, targetList[i].targetStr, 8)) {
             mCurrentTarget = targetList[i].targetEnum;
             break;
         }
     }
-    mCurrentTarget = TARGET_MSM7627;
-    LOGV(" Storing the current target type as %d ", mCurrentTarget );
+
+    LOGE(" Storing the current target type as %d ", mCurrentTarget );
     return;
 }
 
