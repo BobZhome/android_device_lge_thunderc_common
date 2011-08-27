@@ -28,6 +28,36 @@
 //#define LOG_NDEBUG 0
 #define LOG_NIDEBUG 0
 #define LOG_TAG "QualcommCameraHardware"
+
+#define DEFAULT_PICTURE_WIDTH  1024
+#define DEFAULT_PICTURE_HEIGHT 768
+#define THUMBNAIL_BUFFER_SIZE (THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT * 1.5)
+#define MAX_ZOOM_LEVEL 6
+#define ZOOM_STEP 10
+#define NOT_FOUND -1
+// Number of video buffers held by kernel (initially 1, 2, and 3)
+#define ACTIVE_VIDEO_BUFFERS 3
+
+#define THUMBNAIL_SIZE_COUNT (sizeof(thumbnail_sizes)/sizeof(thumbnail_size_type))
+#define DEFAULT_THUMBNAIL_SETTING 2
+#define THUMBNAIL_WIDTH_STR "512"
+#define THUMBNAIL_HEIGHT_STR "384"
+#define THUMBNAIL_SMALL_HEIGHT 144
+
+//Default to VGA
+#define DEFAULT_PREVIEW_WIDTH 640
+#define DEFAULT_PREVIEW_HEIGHT 480
+
+#define MAX_EXIF_TABLE_ENTRIES 7
+#define RECORD_BUFFERS_7x30 8
+#define RECORD_BUFFERS_8x50 8
+
+#define DONT_CARE 0
+#define NUM_MORE_BUFS 2
+#define ROUND_TO_PAGE(x)  (((x)+0xfff)&~0xfff)
+#define PREVIEW_SIZE_COUNT (sizeof(preview_sizes)/sizeof(camera_size_type))
+#define STRING_MAP_VALUE(x) x, sizeof(x) / sizeof(str_map)
+
 #include <utils/Log.h>
 
 #include "QualcommCameraHardware.h"
@@ -74,14 +104,12 @@ extern "C" {
 
 #include <msm_camera.h>
 
-#define DEFAULT_PICTURE_WIDTH  1024
-#define DEFAULT_PICTURE_HEIGHT 768
-#define THUMBNAIL_BUFFER_SIZE (THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT * 1.5)
-#define MAX_ZOOM_LEVEL 6
-#define ZOOM_STEP 10
-#define NOT_FOUND -1
-// Number of video buffers held by kernel (initially 1, 2, and 3)
-#define ACTIVE_VIDEO_BUFFERS 3
+#ifdef Q12
+#undef Q12
+#endif
+
+#define Q12 4096
+
 
 #if DLOPEN_LIBMMCAMERA
 #include <dlfcn.h>
@@ -164,10 +192,6 @@ union zoomimage {
     struct mdp_blit_req_list list;
 } zoomImage;
 
-//Default to VGA
-#define DEFAULT_PREVIEW_WIDTH 640
-#define DEFAULT_PREVIEW_HEIGHT 480
-
 /*
  * Modifying preview size requires modification
  * in bitmasks for boardproperties
@@ -187,7 +211,6 @@ static const camera_size_type preview_sizes[] = {
     { 240, 160 }, // SQVGA
     { 176, 144 }, // QCIF
 };
-#define PREVIEW_SIZE_COUNT (sizeof(preview_sizes)/sizeof(camera_size_type))
 
 static camera_size_type supportedPreviewSizes[PREVIEW_SIZE_COUNT];
 static unsigned int previewSizeCount;
@@ -224,12 +247,6 @@ static int PICTURE_SIZE_COUNT = sizeof(picture_sizes)/sizeof(camera_size_type);
 static const camera_size_type * picture_sizes_ptr;
 static int supportedPictureSizesCount;
 
-#ifdef Q12
-#undef Q12
-#endif
-
-#define Q12 4096
-
 static const target_map targetList [] = {
     { "msm7625", TARGET_MSM7625 },
     { "msm7627", TARGET_MSM7627 },
@@ -251,11 +268,6 @@ static thumbnail_size_type thumbnail_sizes[] = {
     { 5461, 512, 384 }, //1.333333
     { 5006, 352, 288 }, //1.222222
 };
-#define THUMBNAIL_SIZE_COUNT (sizeof(thumbnail_sizes)/sizeof(thumbnail_size_type))
-#define DEFAULT_THUMBNAIL_SETTING 2
-#define THUMBNAIL_WIDTH_STR "512"
-#define THUMBNAIL_HEIGHT_STR "384"
-#define THUMBNAIL_SMALL_HEIGHT 144
 
 static int attr_lookup(const str_map arr[], int len, const char *name)
 {
@@ -281,14 +293,10 @@ static inline unsigned clp2(unsigned x)
 }
 
 static int exif_table_numEntries = 0;
-#define MAX_EXIF_TABLE_ENTRIES 7
 exif_tags_info_t exif_data[MAX_EXIF_TABLE_ENTRIES];
 static zoom_crop_info zoomCropInfo;
 static void *mLastQueuedFrame = NULL;
-#define RECORD_BUFFERS_7x30 8
-#define RECORD_BUFFERS_8x50 8
 static int kRecordBufferCount;
-
 
 namespace android {
 
@@ -586,8 +594,6 @@ static const str_map iso[] = {
     { CameraParameters::ISO_800,   CAMERA_ISO_800    }
 };
 
-#define DONT_CARE 0
-
 static const str_map focus_modes[] = {
     { CameraParameters::FOCUS_MODE_AUTO,     AF_MODE_AUTO   },
     { CameraParameters::FOCUS_MODE_INFINITY, DONT_CARE      },
@@ -665,11 +671,12 @@ static String8 create_values_str(const str_map *values, int len) {
     return str;
 }
 
-static String8 create_values_range_str(int min, int max){
+static String8 create_values_range_str(int min, int max)
+{
     String8 str;
     char buffer[32];
 
-    if (min <= max){
+    if (min <= max) {
         snprintf(buffer, sizeof(buffer), "%d", min);
         str.append(buffer);
 
@@ -697,7 +704,7 @@ static struct fifo_queue g_busy_frame_queue =
 static void cam_frame_wait_video (void)
 {
     LOGV("cam_frame_wait_video E ");
-    if ((g_busy_frame_queue.num_of_frames) <=0){
+    if ((g_busy_frame_queue.num_of_frames) <=0) {
         pthread_cond_wait(&(g_busy_frame_queue.wait), &(g_busy_frame_queue.mut));
     }
     LOGV("cam_frame_wait_video X");
@@ -840,8 +847,6 @@ void *opencamerafd(void *data) {
  * data will be placed in a buffer from DstSet, and this buffer will be given
  * to surface flinger to display.
  */
-#define NUM_MORE_BUFS 2
-
 QualcommCameraHardware::QualcommCameraHardware()
     : mParameters(),
       mCameraRunning(false),
@@ -903,12 +908,13 @@ QualcommCameraHardware::QualcommCameraHardware()
 }
 
 
-void QualcommCameraHardware::filterPreviewSizes(){
+void QualcommCameraHardware::filterPreviewSizes()
+{
 
     unsigned int boardMask = 0;
     unsigned int prop = 0;
 
-    for (prop=0; prop<sizeof(boardProperties)/sizeof(board_property); prop++){
+    for (prop=0; prop<sizeof(boardProperties)/sizeof(board_property); prop++) {
         if (mCurrentTarget == boardProperties[prop].target) {
             boardMask = boardProperties[prop].previewSizeMask;
             break;
@@ -934,13 +940,14 @@ void QualcommCameraHardware::filterPreviewSizes(){
 }
 
 //filter Picture sizes based on max width and height
-void QualcommCameraHardware::filterPictureSizes(){
+void QualcommCameraHardware::filterPictureSizes()
+{
     int i;
     for (i=0;i<PICTURE_SIZE_COUNT;i++) {
         if(((picture_sizes[i].width <=
                 sensorType->max_supported_snapshot_width) &&
            (picture_sizes[i].height <=
-                   sensorType->max_supported_snapshot_height))){
+                   sensorType->max_supported_snapshot_height))) {
             picture_sizes_ptr = picture_sizes + i;
             supportedPictureSizesCount = PICTURE_SIZE_COUNT - i  ;
             return ;
@@ -948,7 +955,6 @@ void QualcommCameraHardware::filterPictureSizes(){
     }
 }
 
-#define STRING_MAP_VALUE(x) x, sizeof(x) / sizeof(str_map)
 void QualcommCameraHardware::initDefaultParameters()
 {
     LOGV("initDefaultParameters E");
@@ -988,7 +994,7 @@ void QualcommCameraHardware::initDefaultParameters()
     mParameters.setPreviewFrameRate(DEFAULT_FPS);
     if((strcmp(mSensorInfo.name, "vx6953")) &&
         (strcmp(mSensorInfo.name, "VX6953")) &&
-        (strcmp(sensorType->name, "2mp"))){
+        (strcmp(sensorType->name, "2mp"))) {
         mParameters.set(
             CameraParameters::KEY_SUPPORTED_PREVIEW_FRAME_RATES,
             preview_frame_rate_values.string());
@@ -1104,7 +1110,8 @@ void QualcommCameraHardware::initDefaultParameters()
     LOGV("initDefaultParameters X");
 }
 
-void QualcommCameraHardware::findSensorType(){
+void QualcommCameraHardware::findSensorType()
+{
     mDimension.picture_width = DEFAULT_PICTURE_WIDTH;
     mDimension.picture_height = DEFAULT_PICTURE_HEIGHT;
     bool ret = native_set_parm(CAMERA_SET_PARM_DIMENSION,
@@ -1123,8 +1130,6 @@ void QualcommCameraHardware::findSensorType(){
     sensorType = sensorTypes;
     return;
 }
-
-#define ROUND_TO_PAGE(x)  (((x)+0xfff)&~0xfff)
 
 bool QualcommCameraHardware::startCamera()
 {
@@ -2704,10 +2709,10 @@ void QualcommCameraHardware::runAutoFocus()
     if (err == NO_ERROR) {
         {
             Mutex::Autolock cameraRunningLock(&mCameraRunningLock);
-            if(mCameraRunning){
+            if (mCameraRunning) {
                 LOGV("Start AF");
                 status = native_set_afmode(mAutoFocusFd, afMode);
-            }else{
+            } else {
                 LOGV("As Camera preview is not running, AF not issued");
                 status = false;
             }
@@ -2857,7 +2862,7 @@ void QualcommCameraHardware::runSnapshotThread(void *data)
         else
             LOGE("main: native_start_snapshot failed!");
     } else if (mSnapshotFormat == PICTURE_FORMAT_RAW) {
-        if(native_start_raw_snapshot(mCameraControlFd)){
+        if (native_start_raw_snapshot(mCameraControlFd)) {
            receiveRawSnapshot();
         } else {
            LOGE("main: native_start_raw_snapshot failed!");
@@ -3072,7 +3077,7 @@ sp<CameraHardwareInterface> QualcommCameraHardware::createInstance()
     // Wait until the previous release is done.
     while (singleton_releasing) {
         if ((singleton_releasing_start_time != 0) &&
-                (systemTime() - singleton_releasing_start_time) > SINGLETON_RELEASING_WAIT_TIME){
+                (systemTime() - singleton_releasing_start_time) > SINGLETON_RELEASING_WAIT_TIME) {
             LOGV("in createinstance system time is %lld %lld %lld ",
                     systemTime(), singleton_releasing_start_time, SINGLETON_RELEASING_WAIT_TIME);
             singleton_lock.unlock();
@@ -3557,7 +3562,7 @@ static void crop_yuv420(uint32_t width, uint32_t height,
 }
 
 
-void QualcommCameraHardware::receiveRawSnapshot(){
+void QualcommCameraHardware::receiveRawSnapshot() {
     LOGV("receiveRawSnapshot E");
 
     Mutex::Autolock cbLock(&mCallbackLock);
@@ -3750,7 +3755,7 @@ status_t QualcommCameraHardware::setPreviewSize(const CameraParameters& params)
             // 720p , preview can be 768X432 (currently for 7x30 and 8k
             // targets)
             if(width == 1280 && height == 720 &&
-             ((mCurrentTarget == TARGET_MSM7630) || (mCurrentTarget == TARGET_QSD8250))){
+             ((mCurrentTarget == TARGET_MSM7630) || (mCurrentTarget == TARGET_QSD8250))) {
                 LOGD("change preview resolution to 768X432 since recording is in 720p");
                 mDimension.display_width = preview_sizes[2].width;
                 mDimension.display_height= preview_sizes[2].height;
@@ -3770,7 +3775,7 @@ status_t QualcommCameraHardware::setPreviewFrameRate(const CameraParameters& par
 {
     if ((!strcmp(mSensorInfo.name, "vx6953")) ||
         (!strcmp(mSensorInfo.name, "VX6953")) ||
-        (!strcmp(sensorType->name, "2mp"))){
+        (!strcmp(sensorType->name, "2mp"))) {
         LOGI("set fps is not supported for this sensor");
         return NO_ERROR;
     }
