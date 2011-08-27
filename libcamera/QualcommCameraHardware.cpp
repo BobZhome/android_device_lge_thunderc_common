@@ -222,7 +222,7 @@ board_property boardProperties[] = {
         {TARGET_QSD8250, 0x00000fff}
 };
 
-/*       TODO
+/* TODO
  * Ideally this should be a populated by lower layers.
  * But currently this is no API to do that at lower layer.
  * Hence populating with default sizes for now. This needs
@@ -237,9 +237,9 @@ static const camera_size_type picture_sizes[] = {
     { 640,   480 }, // VGA
     { 320,   240 }  // QVGA
 };
-static int PICTURE_SIZE_COUNT = sizeof(picture_sizes)/sizeof(camera_size_type);
+static unsigned int PICTURE_SIZE_COUNT = sizeof(picture_sizes)/sizeof(camera_size_type);
 static const camera_size_type *picture_sizes_ptr;
-static int supportedPictureSizesCount;
+static unsigned int supportedPictureSizesCount;
 
 static const target_map targetList [] = {
     { "thunderc", TARGET_MSM7627 },
@@ -289,7 +289,7 @@ static inline unsigned clp2(unsigned x)
 }
 
 static int exif_table_numEntries = 0;
-exif_tags_info_t exif_data[MAX_EXIF_TABLE_ENTRIES];
+static exif_tags_info_t exif_data[MAX_EXIF_TABLE_ENTRIES];
 static zoom_crop_info zoomCropInfo;
 static void *mLastQueuedFrame = NULL;
 static int kRecordBufferCount;
@@ -911,7 +911,7 @@ void QualcommCameraHardware::filterPreviewSizes()
     unsigned int boardMask = 0;
     unsigned int prop = 0;
 
-    for (prop=0; prop<sizeof(boardProperties)/sizeof(board_property); prop++) {
+    for (prop=0; prop < sizeof(boardProperties) / sizeof(board_property); prop++) {
         if (mCurrentTarget == boardProperties[prop].target) {
             boardMask = boardProperties[prop].previewSizeMask;
             break;
@@ -923,7 +923,7 @@ void QualcommCameraHardware::filterPreviewSizes()
 
     int bitMask = boardMask & sensorType->bitMask;
     if (bitMask) {
-        unsigned int mask = 1<<(PREVIEW_SIZE_COUNT-1);
+        unsigned int mask = 1 << (PREVIEW_SIZE_COUNT-1);
         previewSizeCount=0;
         unsigned int i = 0;
         while (mask) {
@@ -939,8 +939,7 @@ void QualcommCameraHardware::filterPreviewSizes()
 //filter Picture sizes based on max width and height
 void QualcommCameraHardware::filterPictureSizes()
 {
-    int i;
-    for (i=0;i<PICTURE_SIZE_COUNT;i++) {
+    for (unsigned int i=0; i < PICTURE_SIZE_COUNT; i++) {
         if(((picture_sizes[i].width <=
                 sensorType->max_supported_snapshot_width) &&
            (picture_sizes[i].height <=
@@ -1953,7 +1952,7 @@ void QualcommCameraHardware::runFrameThread(void *data)
 void QualcommCameraHardware::runVideoThread(void *data)
 {
     LOGD("runVideoThread E");
-    msm_frame* vframe = NULL;
+    msm_frame *vframe = NULL;
 
     while (true) {
         pthread_mutex_lock(&(g_busy_frame_queue.mut));
@@ -3049,7 +3048,7 @@ extern "C" int HAL_getNumberOfCameras()
 	return sizeof(sCameraInfo) / sizeof(sCameraInfo[0]);
 }
 
-extern "C" void HAL_getCameraInfo(int cameraId, struct CameraInfo* cameraInfo)
+extern "C" void HAL_getCameraInfo(int cameraId, struct CameraInfo *cameraInfo)
 {
 	memcpy(cameraInfo, &sCameraInfo[cameraId], sizeof(CameraInfo));
 }
@@ -3802,7 +3801,7 @@ status_t QualcommCameraHardware::setPictureSize(const CameraParameters& params)
     LOGV("requested picture size %d x %d", width, height);
 
     // Validate the picture size
-    for (int i = 0; i < supportedPictureSizesCount; ++i) {
+    for (unsigned int i = 0; i < supportedPictureSizesCount; ++i) {
         if (width == picture_sizes_ptr[i].width
                 && height == picture_sizes_ptr[i].height) {
             if (!strcmp(mSensorInfo.name, "ov5642") && width == 2592) {
@@ -3937,8 +3936,7 @@ status_t QualcommCameraHardware::setContrast(const CameraParameters& params)
     }
 
     int contrast = params.getInt(CameraParameters::KEY_CONTRAST);
-    if ((contrast < CAMERA_MIN_CONTRAST)
-            || (contrast > CAMERA_MAX_CONTRAST))
+    if ((contrast < CAMERA_MIN_CONTRAST) || (contrast > CAMERA_MAX_CONTRAST))
         return UNKNOWN_ERROR;
 
     LOGV("setting contrast %d", contrast);
@@ -4277,7 +4275,7 @@ status_t QualcommCameraHardware::setOrientation(const CameraParameters& params)
 
 status_t QualcommCameraHardware::setPictureFormat(const CameraParameters& params)
 {
-    const char * str = params.get(CameraParameters::KEY_PICTURE_FORMAT);
+    const char *str = params.get(CameraParameters::KEY_PICTURE_FORMAT);
 
     if (str != NULL) {
         int32_t value = attr_lookup(picture_formats,
@@ -4313,10 +4311,7 @@ void QualcommCameraHardware::MemPool::completeInitialization()
     if (mFrameSize > 0) {
         mBuffers = new sp<MemoryBase>[mNumBuffers];
         for (int i = 0; i < mNumBuffers; i++) {
-            mBuffers[i] = new
-                MemoryBase(mHeap,
-                           i * mAlignedBufferSize,
-                           mFrameSize);
+            mBuffers[i] = new MemoryBase(mHeap, i * mAlignedBufferSize, mFrameSize);
         }
     }
 }
@@ -4324,10 +4319,7 @@ void QualcommCameraHardware::MemPool::completeInitialization()
 QualcommCameraHardware::AshmemPool::AshmemPool(int buffer_size, int num_buffers,
                                                int frame_size,
                                                const char *name) :
-    QualcommCameraHardware::MemPool(buffer_size,
-                                    num_buffers,
-                                    frame_size,
-                                    name)
+    QualcommCameraHardware::MemPool(buffer_size, num_buffers, frame_size, name)
 {
     LOGV("constructing MemPool %s backed by ashmem: "
          "%d frames @ %d uint8_ts, "
@@ -4424,7 +4416,7 @@ QualcommCameraHardware::PmemPool::PmemPool(const char *pmem_pool,
             for (int cnt = 0; cnt < num_buf; ++cnt) {
                 int active = 1;
                 if (pmem_type == MSM_PMEM_VIDEO) {
-                     active = (cnt<ACTIVE_VIDEO_BUFFERS);
+                     active = (cnt < ACTIVE_VIDEO_BUFFERS);
                      LOGV(" pmempool creating video buffers : active %d ", active);
                 } else if (pmem_type == MSM_PMEM_PREVIEW) {
                      active = (cnt < (num_buf-1));
@@ -4528,26 +4520,26 @@ static bool register_buf(int camfd,
     return true;
 }
 
-status_t QualcommCameraHardware::MemPool::dump(int fd, const Vector<String16>& args) const
+status_t QualcommCameraHardware::MemPool::dump(int fd, const Vector<String16> &args) const
 {
-    const size_t SIZE = 256;
-    char buffer[SIZE];
+    const size_t BUFFER_SIZE = 255;
+    char buffer[BUFFER_SIZE+1];
     String8 result;
-    snprintf(buffer, 255, "QualcommCameraHardware::AshmemPool::dump\n");
+    snprintf(buffer, BUFFER_SIZE, "QualcommCameraHardware::AshmemPool::dump\n");
     result.append(buffer);
     if (mName) {
-        snprintf(buffer, 255, "mem pool name (%s)\n", mName);
+        snprintf(buffer, BUFFER_SIZE, "mem pool name (%s)\n", mName);
         result.append(buffer);
     }
 
     if (mHeap != 0) {
-        snprintf(buffer, 255, "heap base(%p), size(%d), flags(%d), device(%s)\n",
+        snprintf(buffer, BUFFER_SIZE, "heap base(%p), size(%d), flags(%d), device(%s)\n",
                  mHeap->getBase(), mHeap->getSize(),
                  mHeap->getFlags(), mHeap->getDevice());
         result.append(buffer);
     }
 
-    snprintf(buffer, 255,
+    snprintf(buffer, BUFFER_SIZE,
              "buffer size (%d), number of buffers (%d), frame size(%d)",
              mBufferSize, mNumBuffers, mFrameSize);
 
