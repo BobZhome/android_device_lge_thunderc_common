@@ -1758,45 +1758,56 @@ static void setLatLon(exif_tag_id_t tag, const char *latlonString) {
 }
 
 void QualcommCameraHardware::setGpsParameters() {
-    const char *str = NULL;
+    const char *coordinate = NULL;
+    const char *refstr = NULL;
 
     //Set Latitude
-    str = mParameters.get(CameraParameters::KEY_GPS_LATITUDE);
-    if(str != NULL) {
-        setLatLon(EXIFTAGID_GPS_LATITUDE, str);
+    coordinate = mParameters.get(CameraParameters::KEY_GPS_LATITUDE);
+    if (coordinate != NULL) {
+        setLatLon(EXIFTAGID_GPS_LATITUDE, coordinate);
         //set Latitude Ref
-        str = NULL;
-        str = mParameters.get(CameraParameters::KEY_GPS_LATITUDE_REF);
-        if(str != NULL) {
-            strncpy(latref, str, 1);
-            latref[1] = '\0';
-            addExifTag(EXIFTAGID_GPS_LATITUDE_REF, EXIF_ASCII, 2,
-                        1, (void *)latref);
+        refstr = mParameters.get(CameraParameters::KEY_GPS_LATITUDE_REF);
+        latref[1] = '\0';
+        if (refstr != NULL) {
+            strncpy(latref, refstr, 1);
+            addExifTag(EXIFTAGID_GPS_LATITUDE_REF, EXIF_ASCII, 2, 1, (void *)latref);
+        } else {
+            const double value = atof(coordinate);
+            if (value < 0) {
+                latref[0] = 'S';
+            } else {
+                latref[0] = 'N';
+            }
+            addExifTag(EXIFTAGID_GPS_LATITUDE_REF, EXIF_ASCII, 2, 1, (void *)latref);
         }
     } else
 		return;
 
     //set Longitude
-    str = NULL;
-    str = mParameters.get(CameraParameters::KEY_GPS_LONGITUDE);
-    if(str != NULL) {
-        setLatLon(EXIFTAGID_GPS_LONGITUDE, str);
+    coordinate = mParameters.get(CameraParameters::KEY_GPS_LONGITUDE);
+    if (coordinate != NULL) {
+        setLatLon(EXIFTAGID_GPS_LONGITUDE, coordinate);
         //set Longitude Ref
-        str = NULL;
-        str = mParameters.get(CameraParameters::KEY_GPS_LONGITUDE_REF);
-        if(str != NULL) {
-            strncpy(lonref, str, 1);
-            lonref[1] = '\0';
-            addExifTag(EXIFTAGID_GPS_LONGITUDE_REF, EXIF_ASCII, 2,
-                        1, (void *)lonref);
-	}
+        refstr = mParameters.get(CameraParameters::KEY_GPS_LONGITUDE_REF);
+        lonref[1] = '\0';
+        if (refstr != NULL) {
+            strncpy(lonref, refstr, 1);
+            addExifTag(EXIFTAGID_GPS_LONGITUDE_REF, EXIF_ASCII, 2, 1, (void *)lonref);
+	    } else {
+            const double value = atof(coordinate);
+            if (value < 0) {
+                lonref[0] = 'W';
+            } else {
+                lonref[0] = 'E';
+            }
+            addExifTag(EXIFTAGID_GPS_LONGITUDE_REF, EXIF_ASCII, 2, 1, (void *)lonref);
+	    }
     }
 
     //set Altitude
-    str = NULL;
-    str = mParameters.get(CameraParameters::KEY_GPS_ALTITUDE);
-    if(str != NULL) {
-        double value = atoi(str);
+    coordinate = mParameters.get(CameraParameters::KEY_GPS_ALTITUDE);
+    if (coordinate != NULL) {
+        double value = atoi(coordinate);
         uint32_t value_meter = value * 1000;
         rat_t alt_value = {value_meter, 1000};
         memcpy(&altitude, &alt_value, sizeof(altitude));
