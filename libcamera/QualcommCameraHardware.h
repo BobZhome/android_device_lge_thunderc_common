@@ -49,14 +49,14 @@ typedef enum {
     TARGET_QSD8250,
     TARGET_MSM7630,
     TARGET_MAX
-}targetType;
+} targetType;
 
 struct target_map {
     const char *targetStr;
     targetType targetEnum;
 };
 
-struct board_property{
+struct board_property {
     targetType target;
     unsigned int previewSizeMask;
 };
