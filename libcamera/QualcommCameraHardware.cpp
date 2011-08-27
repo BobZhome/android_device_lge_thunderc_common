@@ -222,8 +222,6 @@ board_property boardProperties[] = {
         {TARGET_QSD8250, 0x00000fff}
 };
 
-//static const camera_size_type* picture_sizes;
-//static int PICTURE_SIZE_COUNT;
 /*       TODO
  * Ideally this should be a populated by lower layers.
  * But currently this is no API to do that at lower layer.
@@ -234,17 +232,13 @@ board_property boardProperties[] = {
 static const camera_size_type picture_sizes[] = {
     { 2048, 1536 }, // 3MP QXGA
     { 1600, 1200 }, // 2MP UXGA
-//    { 1280, 768 }, //WXGA
-//    { 1280, 720 }, //HD720
-    { 1024, 768}, // 1MP XGA
-//    { 800, 600 }, //SVGA
-    { 640, 480 }, // VGA
-    { 352, 288 }, //CIF
-    { 320, 240 }, // QVGA
-    { 176, 144 } // QCIF
+    { 1024,  768 }, // 1MP XGA
+    { 800,   600 }, // SVGA
+    { 640,   480 }, // VGA
+    { 320,   240 }  // QVGA
 };
 static int PICTURE_SIZE_COUNT = sizeof(picture_sizes)/sizeof(camera_size_type);
-static const camera_size_type * picture_sizes_ptr;
+static const camera_size_type *picture_sizes_ptr;
 static int supportedPictureSizesCount;
 
 static const target_map targetList [] = {
