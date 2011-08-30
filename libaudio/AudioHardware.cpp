@@ -29,6 +29,8 @@
 #include <sys/stat.h>
 #include <dlfcn.h>
 #include <fcntl.h>
+#include <sysutils/NetlinkEvent.h>
+#include <linux/netlink.h>
 #include <sys/socket.h>
 
 // hardware specific functions
@@ -192,6 +194,52 @@ AudioHardware::AudioHardware() :
     } else {
         LOGE("Could not open MSM SND driver.");
     }
+//-----------------------------
+    struct sockaddr_nl nladdr;
+    int sz = 65536;
+    int on = 1;
+
+    memset(&nladdr, 0, sizeof(nladdr));
+    nladdr.nl_family = AF_NETLINK;
+    nladdr.nl_pid = getpid();
+    nladdr.nl_groups = 0xffffffff;
+
+    if ((mSock = socket(PF_NETLINK,
+                        SOCK_DGRAM,NETLINK_KOBJECT_UEVENT)) < 0) {
+        SLOGE("Unable to create uevent socket: %s", strerror(errno));
+        return;
+    }
+
+    if (setsockopt(mSock, SOL_SOCKET, SO_RCVBUF, &sz, sizeof(sz)) < 0) {
+        SLOGE("Unable to set uevent socket options: %s", strerror(errno));
+        return;
+    }
+
+    if (setsockopt(mSock, SOL_SOCKET, SO_PASSCRED, &on, sizeof(on)) < 0) {
+        SLOGE("Unable to set uevent socket SO_PASSCRED option: %s", strerror(errno));
+        return;
+    }
+
+    if (bind(mSock, (struct sockaddr *) &nladdr, sizeof(nladdr)) < 0) {
+        SLOGE("Unable to bind uevent socket: %s", strerror(errno));
+        return;
+    }
+
+    mHandler = new NetlinkHandler(mSock, this);
+    if (mHandler->start()) {
+        SLOGE("Unable to start NetlinkHandler: %s", strerror(errno));
+        return;
+    }
+//-----------------------------
+    FILE *tfd = fopen("/sys/devices/virtual/switch/h2w/state","r");
+    if (tfd < 0) {
+        SLOGE("Can't open h2w switch: %s", strerror(errno));
+        return;
+    }
+    char state = fgetc(tfd);
+    fclose(tfd);
+    if (state == '1')
+        setHookMode(true);
 }
 
 AudioHardware::~AudioHardware()
@@ -212,6 +260,29 @@ AudioHardware::~AudioHardware()
     }
     enable_preproc_mask = 0;
     mInit = false;
+//----------------------------
+    if (mHandler->stop()) {
+        SLOGE("Unable to stop NetlinkHandler: %s", strerror(errno));
+        goto end;
+    }
+    delete mHandler;
+    mHandler = NULL;
+
+    close(mSock);
+    mSock = -1;
+end:
+    return;
+//----------------------------
+}
+
+void AudioHardware::setHookMode(bool mode)
+{
+    msm_snd_set_hook_mode_param hook_param;
+    hook_param.mode = mode ? 1 : 0;
+    if (ioctl(m7xsnddriverfd, SND_SET_HOOK_MODE, &hook_param) < 0) {
+        LOGE("MIK: ERROR");
+    }
+    LOGE("MIK: %d", hook_param.get_param);
 }
 
 status_t AudioHardware::initCheck()
@@ -2175,6 +2246,40 @@ String8 AudioHardware::AudioStreamInMSM72xx::getParameters(const String8 &keys)
 
 extern "C" AudioHardwareInterface *createAudioHardware(void) {
     return new AudioHardware();
+}
+
+NetlinkHandler::NetlinkHandler(int listenerSocket, AudioHardware *audio) :
+                NetlinkListener(listenerSocket) {
+    mAudio = audio;
+}
+
+NetlinkHandler::~NetlinkHandler() {
+}
+
+int NetlinkHandler::start() {
+    return this->startListener();
+}
+
+int NetlinkHandler::stop() {
+    return this->stopListener();
+}
+
+void NetlinkHandler::onEvent(NetlinkEvent *evt) {
+    const char *subsys = evt->getSubsystem();
+
+    if (!subsys) {
+        SLOGW("No subsystem found in netlink event");
+        return;
+    }
+
+    if (!strcmp(subsys, "switch")) {
+        const char *name = evt->findParam("SWITCH_NAME");
+        if (name && !strcmp(name, "h2w")) {
+            const char *state = evt->findParam("SWITCH_STATE");
+            if (state)
+                mAudio->setHookMode(state[0]=='1');
+        }
+    }
 }
 
 }; // namespace android
