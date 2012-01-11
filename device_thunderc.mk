@@ -41,12 +41,12 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/usr/keychars/thunder_keypad.kcm.bin:system/usr/keychars/thunder_keypad.kcm.bin \
 
-# Board-specific init (does not support charging in "power off" state yet)
+# Board-specific init
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/init.thunderc.rc:root/init.thunderc.rc \
     device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunder.rc \
     device/lge/thunderc/files/initlogo.rle:root/initlogo.rle \
-    device/lge/thunderc/files/chargerlogo:root/chargerlogo \
+    device/lge/thunderc/files/sbin/chargerlogo:root/sbin/chargerlogo \
     device/lge/thunderc/files/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
     device/lge/thunderc/files/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
     device/lge/thunderc/files/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
@@ -64,6 +64,24 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
     device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
     device/lge/thunderc/files/etc/init.local.rc:/system/etc/init.local.rc
+
+# Locate vendor bootimage files if present
+# Because these are carrier specific, I've left the default to no logo.
+# Both the images and the bootlogo binary are carrier specific.  Since this should
+# be a pretty simple app to write, it would be nice to get one generic one that'll
+# just pick up every RLE image and display it (along the lines of the existing
+# bootanimation binary from CM).  Eventually a knob to disable this for people
+# who don't want carrier branding should be implemented.
+BOOTIMAGE_FILES := $(wildcard device/lge/thunderc/files/bootimages/$(SUB_MODEL)/*.rle)
+BOOTIMAGE_BINARY := $(wildcard device/lge/thunderc/files/sbin/$(SUB_MODEL)/bootlogo)
+ifneq ($(BOOTIMAGE_BINARY),)
+  ifneq ($(BOOTIMAGE_FILES),)
+    PRODUCT_COPY_FILES += \
+        device/lge/thunderc/files/sbin/$(SUB_MODEL)/bootlogo:root/sbin/bootlogo
+    PRODUCT_COPY_FILES += \
+        $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
+  endif
+endif
 
 # 2D (using proprietary because of poor performance of open source libs)
 PRODUCT_COPY_FILES += \
