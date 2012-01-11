@@ -45,7 +45,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/common/init.thunderc.rc:root/init.thunderc.rc \
     device/lge/thunderc/files/common/ueventd.thunderc.rc:root/ueventd.thunder.rc \
-    device/lge/thunderc/files/common/initlogo.rle:root/initlogo.rle \
     device/lge/thunderc/files/common/sbin/chargerlogo:root/sbin/chargerlogo \
     device/lge/thunderc/files/common/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
     device/lge/thunderc/files/common/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
@@ -84,6 +83,14 @@ ifneq ($(BOOTIMAGE_BINARY),)
         device/lge/thunderc/files/$(BOOTIMAGE_MODEL)/sbin/bootlogo:root/sbin/bootlogo
     PRODUCT_COPY_FILES += \
         $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
+  endif
+endif
+
+# Only copy the initial logo if we're not using a carrier logo
+ifeq ($(BOOTIMAGE_BINARY),)
+  ifeq ($(BOOTIMAGE_FILES),)
+    PRODUCT_COPY_FILES += \
+        device/lge/thunderc/files/common/initlogo.rle:root/initlogo.rle
   endif
 endif
 
