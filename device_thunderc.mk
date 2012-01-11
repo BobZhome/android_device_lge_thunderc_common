@@ -1,7 +1,7 @@
 DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc/overlay/common device/lge/thunderc/overlay/$(SUB_MODEL)
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/lge/thunderc/files/kernel/$(SUB_MODEL)/zImage
+	LOCAL_KERNEL := device/lge/thunderc/files/$(SUB_MODEL)/kernel/zImage
 else
 	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
@@ -38,32 +38,32 @@ PRODUCT_COPY_FILES += \
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
+    device/lge/thunderc/files/common/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/usr/keychars/thunder_keypad.kcm.bin:system/usr/keychars/thunder_keypad.kcm.bin \
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/init.thunderc.rc:root/init.thunderc.rc \
-    device/lge/thunderc/files/ueventd.thunderc.rc:root/ueventd.thunder.rc \
-    device/lge/thunderc/files/initlogo.rle:root/initlogo.rle \
-    device/lge/thunderc/files/sbin/chargerlogo:root/sbin/chargerlogo \
-    device/lge/thunderc/files/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
-    device/lge/thunderc/files/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
-    device/lge/thunderc/files/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
-    device/lge/thunderc/files/chargerimages/battery_ani_04.rle:root/chargerimages/battery_ani_04.rle \
-    device/lge/thunderc/files/chargerimages/battery_ani_05.rle:root/chargerimages/battery_ani_05.rle \
-    device/lge/thunderc/files/chargerimages/battery_charging_01.rle:root/chargerimages/battery_charging_01.rle \
-    device/lge/thunderc/files/chargerimages/battery_charging_02.rle:root/chargerimages/battery_charging_02.rle \
-    device/lge/thunderc/files/chargerimages/battery_charging_03.rle:root/chargerimages/battery_charging_03.rle \
-    device/lge/thunderc/files/chargerimages/battery_charging_04.rle:root/chargerimages/battery_charging_04.rle \
-    device/lge/thunderc/files/chargerimages/battery_charging_05.rle:root/chargerimages/battery_charging_05.rle \
-    device/lge/thunderc/files/chargerimages/battery_charging_06.rle:root/chargerimages/battery_charging_06.rle \
-    device/lge/thunderc/files/chargerimages/battery_notenough.rle:root/chargerimages/battery_notenough.rle \
-    device/lge/thunderc/files/chargerimages/battery_bg.rle:root/chargerimages/battery_bg.rle \
-    device/lge/thunderc/files/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
-    device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
-    device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
-    device/lge/thunderc/files/etc/init.local.rc:/system/etc/init.local.rc
+    device/lge/thunderc/files/common/init.thunderc.rc:root/init.thunderc.rc \
+    device/lge/thunderc/files/common/ueventd.thunderc.rc:root/ueventd.thunder.rc \
+    device/lge/thunderc/files/common/initlogo.rle:root/initlogo.rle \
+    device/lge/thunderc/files/common/sbin/chargerlogo:root/sbin/chargerlogo \
+    device/lge/thunderc/files/common/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_ani_04.rle:root/chargerimages/battery_ani_04.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_ani_05.rle:root/chargerimages/battery_ani_05.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_charging_01.rle:root/chargerimages/battery_charging_01.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_charging_02.rle:root/chargerimages/battery_charging_02.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_charging_03.rle:root/chargerimages/battery_charging_03.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_charging_04.rle:root/chargerimages/battery_charging_04.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_charging_05.rle:root/chargerimages/battery_charging_05.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_charging_06.rle:root/chargerimages/battery_charging_06.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_notenough.rle:root/chargerimages/battery_notenough.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_bg.rle:root/chargerimages/battery_bg.rle \
+    device/lge/thunderc/files/common/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
+    device/lge/thunderc/files/common/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
+    device/lge/thunderc/files/common/etc/init.local.rc:/system/etc/init.local.rc
 
 # Change this if you'd like to use the splash screen from a different carrier
 BOOTIMAGE_MODEL := $(SUB_MODEL)
@@ -75,13 +75,13 @@ BOOTIMAGE_MODEL := $(SUB_MODEL)
 # just pick up every RLE image and display it (along the lines of the existing
 # bootanimation binary from CM).  Eventually a knob to disable this for people
 # who don't want carrier branding should be implemented.
-BOOTIMAGE_FILES := $(wildcard device/lge/thunderc/files/bootimages/$(BOOTIMAGE_MODEL)/*.rle)
-BOOTIMAGE_BINARY := $(wildcard device/lge/thunderc/files/sbin/$(BOOTIMAGE_MODEL)/bootlogo)
+BOOTIMAGE_FILES := $(wildcard device/lge/thunderc/files/$(BOOTIMAGE_MODEL)/bootimages/*.rle)
+BOOTIMAGE_BINARY := $(wildcard device/lge/thunderc/files/$(BOOTIMAGE_MODEL)/sbin/bootlogo)
 
 ifneq ($(BOOTIMAGE_BINARY),)
   ifneq ($(BOOTIMAGE_FILES),)
     PRODUCT_COPY_FILES += \
-        device/lge/thunderc/files/sbin/$(BOOTIMAGE_MODEL)/bootlogo:root/sbin/bootlogo
+        device/lge/thunderc/files/$(BOOTIMAGE_MODEL)/sbin/bootlogo:root/sbin/bootlogo
     PRODUCT_COPY_FILES += \
         $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
   endif
@@ -100,7 +100,7 @@ PRODUCT_COPY_FILES += \
 
 # GPS
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/etc/loc_parameter.ini:system/etc/loc_parameter.ini \
+    device/lge/thunderc/files/common/etc/loc_parameter.ini:system/etc/loc_parameter.ini \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libloc_api.so:system/lib/libloc_api.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libgps.so:system/lib/libgps.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libloc.so:system/lib/libloc.so \
@@ -126,11 +126,11 @@ PRODUCT_COPY_FILES += \
 
 # WiFi
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/kernel/$(SUB_MODEL)/wireless.ko:system/lib/modules/wireless.ko \
-    device/lge/thunderc/files/kernel/$(SUB_MODEL)/tun.ko:system/lib/modules/tun.ko \
-    device/lge/thunderc/files/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    device/lge/thunderc/files/$(SUB_MODEL)/kernel/wireless.ko:system/lib/modules/wireless.ko \
+    device/lge/thunderc/files/$(SUB_MODEL)/kernel/tun.ko:system/lib/modules/tun.ko \
+    device/lge/thunderc/files/common/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/etc/wl/nvram.txt:system/etc/wl/nvram.txt \
-    device/lge/thunderc/files/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
+    device/lge/thunderc/files/common/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/etc/wl/rtecdc.bin:system/etc/wl/rtecdc.bin \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/etc/wl/rtecdc-apsta.bin:system/etc/wl/rtecdc-apsta.bin \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/etc/wl/rtecdc-mfgtest.bin:system/etc/wl/rtecdc-mfgtest.bin
@@ -141,9 +141,9 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
+    device/lge/thunderc/files/common/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libaudioeq.so:system/lib/libaudioeq.so \
-    device/lge/thunderc/files/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    device/lge/thunderc/files/common/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
 
 # Device permissions
 PRODUCT_COPY_FILES += \
@@ -215,16 +215,16 @@ PRODUCT_COPY_FILES += \
 
 # Kernel modules
 # PRODUCT_COPY_FILES += \
-#    device/lge/thunderc/files/kernel/$(SUB_MODEL)/ext2.ko:system/lib/modules/ext2.ko \
-#    device/lge/thunderc/files/kernel/$(SUB_MODEL)/ext4.ko:system/lib/modules/ext4.ko \
-#    device/lge/thunderc/files/kernel/$(SUB_MODEL)/mbcache.ko:system/lib/modules/mbcache.ko \
+#    device/lge/thunderc/files/$(SUB_MODEL)/kernel/ext2.ko:system/lib/modules/ext2.ko \
+#    device/lge/thunderc/files/$(SUB_MODEL)/kernel/ext4.ko:system/lib/modules/ext4.ko \
+#    device/lge/thunderc/files/$(SUB_MODEL)/kernel/mbcache.ko:system/lib/modules/mbcache.ko \
 
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
-    device/lge/thunderc/files/etc/init.d/mvdalvik.sh:system/etc/init.d/01mvdalvik \
+    device/lge/thunderc/files/common/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    device/lge/thunderc/files/common/etc/init.d/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
 # Let's use our own GPS config file
-PRODUCT_COPY_FILES += device/lge/thunderc/files/etc/gps.conf:system/etc/gps.conf
+PRODUCT_COPY_FILES += device/lge/thunderc/files/common/etc/gps.conf:system/etc/gps.conf
 
 $(call inherit-product, build/target/product/full.mk)
 
