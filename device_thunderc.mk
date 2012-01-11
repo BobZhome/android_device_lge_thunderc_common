@@ -65,6 +65,9 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
     device/lge/thunderc/files/etc/init.local.rc:/system/etc/init.local.rc
 
+# Change this if you'd like to use the splash screen from a different carrier
+BOOTIMAGE_MODEL := $(SUB_MODEL)
+
 # Locate vendor bootimage files if present
 # Because these are carrier specific, I've left the default to no logo.
 # Both the images and the bootlogo binary are carrier specific.  Since this should
@@ -72,12 +75,13 @@ PRODUCT_COPY_FILES += \
 # just pick up every RLE image and display it (along the lines of the existing
 # bootanimation binary from CM).  Eventually a knob to disable this for people
 # who don't want carrier branding should be implemented.
-BOOTIMAGE_FILES := $(wildcard device/lge/thunderc/files/bootimages/$(SUB_MODEL)/*.rle)
-BOOTIMAGE_BINARY := $(wildcard device/lge/thunderc/files/sbin/$(SUB_MODEL)/bootlogo)
+BOOTIMAGE_FILES := $(wildcard device/lge/thunderc/files/bootimages/$(BOOTIMAGE_MODEL)/*.rle)
+BOOTIMAGE_BINARY := $(wildcard device/lge/thunderc/files/sbin/$(BOOTIMAGE_MODEL)/bootlogo)
+
 ifneq ($(BOOTIMAGE_BINARY),)
   ifneq ($(BOOTIMAGE_FILES),)
     PRODUCT_COPY_FILES += \
-        device/lge/thunderc/files/sbin/$(SUB_MODEL)/bootlogo:root/sbin/bootlogo
+        device/lge/thunderc/files/sbin/$(BOOTIMAGE_MODEL)/bootlogo:root/sbin/bootlogo
     PRODUCT_COPY_FILES += \
         $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
   endif
