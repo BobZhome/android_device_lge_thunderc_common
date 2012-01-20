@@ -69,29 +69,15 @@ BOOTIMAGE_MODEL := $(SUB_MODEL)
 
 # Locate vendor bootimage files if present
 # Because these are carrier specific, I've left the default to no logo.
-# Both the images and the bootlogo binary are carrier specific.  Since this should
-# be a pretty simple app to write, it would be nice to get one generic one that'll
-# just pick up every RLE image and display it (along the lines of the existing
-# bootanimation binary from CM).  Eventually a knob to disable this for people
-# who don't want carrier branding should be implemented.
 BOOTIMAGE_FILES := $(wildcard device/lge/thunderc/files/$(BOOTIMAGE_MODEL)/bootimages/*.rle)
-BOOTIMAGE_BINARY := $(wildcard device/lge/thunderc/files/$(BOOTIMAGE_MODEL)/sbin/bootlogo)
 
-ifneq ($(BOOTIMAGE_BINARY),)
-  ifneq ($(BOOTIMAGE_FILES),)
-    PRODUCT_COPY_FILES += \
-        device/lge/thunderc/files/$(BOOTIMAGE_MODEL)/sbin/bootlogo:root/sbin/bootlogo
-    PRODUCT_COPY_FILES += \
-        $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
-  endif
-endif
-
-# Only copy the initial logo if we're not using a carrier logo
-ifeq ($(BOOTIMAGE_BINARY),)
-  ifeq ($(BOOTIMAGE_FILES),)
-    PRODUCT_COPY_FILES += \
-        device/lge/thunderc/files/common/initlogo.rle:root/initlogo.rle
-  endif
+ifeq ($(BOOTIMAGE_FILES),)
+  PRODUCT_COPY_FILES += \
+      device/lge/thunderc/files/common/initlogo.rle:root/initlogo.rle
+else
+  PRODUCT_PACKAGES += bootlogo
+  PRODUCT_COPY_FILES += \
+      $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
 endif
 
 # 2D (using proprietary because of poor performance of open source libs)
