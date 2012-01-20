@@ -45,6 +45,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/common/init.thunderc.rc:root/init.thunderc.rc \
     device/lge/thunderc/files/common/ueventd.thunderc.rc:root/ueventd.thunder.rc \
+    device/lge/thunderc/files/common/etc/init.local.rc:/system/etc/init.local.rc
+
+# Off-mode charging pieces
+PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/common/sbin/chargerlogo:root/sbin/chargerlogo \
     device/lge/thunderc/files/common/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
     device/lge/thunderc/files/common/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
@@ -62,9 +66,9 @@ PRODUCT_COPY_FILES += \
     device/lge/thunderc/files/common/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
     device/lge/thunderc/files/common/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
     device/lge/thunderc/files/common/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
-    device/lge/thunderc/files/common/etc/init.local.rc:/system/etc/init.local.rc
 
 # Change this if you'd like to use the splash screen from a different carrier
+# Change this to a non-existent directory if you'd like to disable the boot animation
 BOOTIMAGE_MODEL := $(SUB_MODEL)
 
 # Locate vendor bootimage files if present
