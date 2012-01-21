@@ -26,7 +26,8 @@ LOCAL_MODULE := bootlogo
 
 LOCAL_FORCE_STATIC_EXECUTABLE := true
 LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)/sbin
-LOCAL_STATIC_LIBRARIES := libcutils libc
+LOCAL_STATIC_LIBRARIES := libpng libz libm libcutils libc 
+LOCAL_C_INCLUDES += external/zlib external/libpng
 
 include $(BUILD_EXECUTABLE)
 

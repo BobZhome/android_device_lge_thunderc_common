@@ -19,7 +19,7 @@
  * Currently this will search for appropriately named RLE image files and display
  * them.  Future hacks to support other image formats coming.
  * FN: /bootimages/*power_on_*.rle (this will catch files from any carrier
- * 
+ *
  */
 
 #include <stdio.h>
@@ -39,7 +39,10 @@
 
 #include <cutils/memory.h>
 
+#include <png.h>
+
 #define BOOT_IMAGE_DIRECTORY "/bootimages"
+
 int file_count = 0, raw_count = 0;
 
 struct FB {
@@ -193,20 +196,150 @@ void scan_directory(DIR *directory, char (*array)[NAME_MAX]) {
 
     /* Scan the directory for potential boot images.  */
     while ((dent = readdir(directory))) {
-        const int idx1 = strstr(dent->d_name, "_power_on_")-dent->d_name;
+        const int idx1 = strstr(dent->d_name, "power_on_")-dent->d_name;
         const int idx2 = strstr(dent->d_name, ".rle")-dent->d_name;
+        const int idx3 = strstr(dent->d_name, ".png")-dent->d_name;
         const int ridx = strlen(dent->d_name)-4;
         if (first_pass) {
-            if ((idx1 > 0) && (idx2 == ridx)) {
+            if ((idx1 >= 0) && ((idx2 == ridx) || (idx3 == ridx)) {
                 file_count++;
+                printf("Found another file\n");
             }
             raw_count++;
         } else {
-            if ((idx1 > 0) && (idx2 == ridx)) {
+            if ((idx1 >= 0) && ((idx2 == ridx) || (idx3 == ridx)) {
                 snprintf(array[file_count++], NAME_MAX, "%s/%s", BOOT_IMAGE_DIRECTORY, dent->d_name);
+                printf("Found %s/%s\n", BOOT_IMAGE_DIRECTORY, dent->d_name);
             }
         }
     }
+}
+
+/* Based on http://zarb.org/~gc/html/libpng.html */
+void display_png_image(const char *filename)
+{
+    unsigned int x, y;
+    unsigned int width, height;
+    png_byte color_type;
+
+    png_structp png_ptr;
+    png_infop info_ptr;
+    png_bytep *row_pointers;
+
+    char header[8];    // 8 is the maximum size that can be checked
+
+    if (vt_set_mode(1)) {
+        return;
+    }
+
+    /* open file and test for it being a png */
+    FILE *fp = fopen(filename, "rb");
+    if (!fp) {
+        fprintf(stderr, "[bootlogo] %s could not be opened for reading\n", filename);
+        goto fail_restore_text;
+    }
+
+    fread(header, 1, 8, fp);
+    if (png_sig_cmp(header, 0, 8)) {
+        fprintf(stderr, "[bootlogo] %s is not recognized as a PNG file\n", filename);
+        goto fail_close_file;
+    }
+
+
+    /* initialize libpng */
+    png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+
+    if (!png_ptr) {
+        fprintf(stderr, "[bootlogo] png_create_read_struct failed");
+        goto fail_close_file;
+    }
+
+    info_ptr = png_create_info_struct(png_ptr);
+    if (!info_ptr) {
+        fprintf(stderr, "[bootlogo] png_create_info_struct failed\n");
+        goto fail_close_file;
+    }
+
+    if (setjmp(png_jmpbuf(png_ptr))) {
+        fprintf(stderr, "[bootlogo] Error during init_io\n");
+        goto fail_close_file;
+    }
+
+    png_init_io(png_ptr, fp);
+    png_set_sig_bytes(png_ptr, 8);
+
+    png_read_info(png_ptr, info_ptr);
+
+    width = png_get_image_width(png_ptr, info_ptr);
+    height = png_get_image_height(png_ptr, info_ptr);
+    color_type = png_get_color_type(png_ptr, info_ptr);
+
+    /* read file */
+    if (setjmp(png_jmpbuf(png_ptr))) {
+        fprintf(stderr, "[bootlogo] Error during read_image\n");
+        goto fail_close_file;
+    }
+
+    row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
+    for (y = 0; y < height; y++) {
+        row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(png_ptr,info_ptr));
+    }
+
+    png_read_image(png_ptr, row_pointers);
+
+    fclose(fp); fp = NULL;
+
+    /* Clean up after libpng */
+    //png_read_end(png_ptr, NULL);
+    //png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+
+    struct FB fb;
+    if (fb_open(&fb)) {
+      goto fail_restore_text;
+    }
+
+    const unsigned int max_width = fb_width(&fb);
+    const unsigned int max_height = fb_height(&fb);
+
+    switch (png_get_color_type(png_ptr, info_ptr)) {
+        case PNG_COLOR_TYPE_RGB:
+            break;
+        case PNG_COLOR_TYPE_RGBA:
+        default:
+            fprintf(stderr, "%s is not an RGB input file\n", filename);
+            goto fail_restore_text;
+    }
+
+    if ((height > max_height) || (width > max_width)) {
+        fprintf(stderr, "[bootlogo] %s is too big, 320x480 max\n", filename);
+        goto fail_restore_text;
+    } else if ((height != max_height) || (width != max_width)) {
+        fprintf(stderr, "[bootlogo] %s is not 320x480 (it is %dx%d - recoverable)\n", filename, width, height);
+    }
+
+    unsigned short *data_565 = fb.bits;
+
+    for (y = 0; y < height; y++) {
+        png_byte *row = row_pointers[y];
+        for (x = 0; x < width; x++) {
+            png_byte *ptr = &(row[x*3]);
+            const unsigned int pixIndex = (y*max_width)+(x);
+            android_memset16(data_565+pixIndex, ( ((((unsigned short) ptr[0]) & 0xF8U) << 8) | ((((unsigned short) ptr[1]) & 0xFCU) << 3) | (((unsigned short) ptr[2]) >> 3) ), 2);
+        }
+    }
+
+    fb_update(&fb);
+    fb_close(&fb);
+    return;
+
+// Should probably destroy the read sruct here...
+fail_close_file:
+    if (fp != NULL) {
+        fclose(fp);
+    }
+fail_restore_text:
+    vt_set_mode(0);
+    return;
 }
 
 int main(int argc, char **argv)
@@ -231,7 +364,14 @@ int main(int argc, char **argv)
 
     int i;
     for (i=0; i < file_count; i++) {
-        load_565rle_image(image_names[i]);
+        const int idx_rle = strstr(image_names[i], ".rle")-image_names[i];
+        const int idx_png = strstr(image_names[i], ".png")-image_names[i];
+
+        if (idx_rle >= 0) {
+            load_565rle_image(image_names[i]);
+        } else if (idx_png >= 0) {
+            display_png_image(image_names[i]);
+        } // else we shouldn't be here...
         usleep(100*1000);
     }
 
