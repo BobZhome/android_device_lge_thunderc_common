@@ -16,9 +16,9 @@
  *
  * Modifications to bootlogo for the IHO project by Tom Marshall and Alex Zepeda.
  *
- * Currently this will search for appropriately named RLE image files and display
- * them.  Future hacks to support other image formats coming.
- * FN: /bootimages/*power_on_*.rle (this will catch files from any carrier
+ * Currently this will search for appropriately named PNG and RLE image files and
+ * display them.  This will catch files from any carrier, and any RLE or PNG files
+ * with power_on_ in the filename.
  *
  */
 
@@ -201,13 +201,13 @@ void scan_directory(DIR *directory, char (*array)[NAME_MAX]) {
         const int idx3 = strstr(dent->d_name, ".png")-dent->d_name;
         const int ridx = strlen(dent->d_name)-4;
         if (first_pass) {
-            if ((idx1 >= 0) && ((idx2 == ridx) || (idx3 == ridx)) {
+            if ((idx1 >= 0) && ((idx2 == ridx) || (idx3 == ridx))) {
                 file_count++;
                 printf("Found another file\n");
             }
             raw_count++;
         } else {
-            if ((idx1 >= 0) && ((idx2 == ridx) || (idx3 == ridx)) {
+            if ((idx1 >= 0) && ((idx2 == ridx) || (idx3 == ridx))) {
                 snprintf(array[file_count++], NAME_MAX, "%s/%s", BOOT_IMAGE_DIRECTORY, dent->d_name);
                 printf("Found %s/%s\n", BOOT_IMAGE_DIRECTORY, dent->d_name);
             }
