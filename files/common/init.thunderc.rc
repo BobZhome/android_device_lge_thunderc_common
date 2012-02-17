@@ -12,8 +12,10 @@ service bootlogo /sbin/bootlogo
 #    the boot to proceed normally.
 #  * If booted via USB cable, chargerlogo will run indefinitely, blocking the
 #    boot process from proceeding any further.
-on early-boot
+on boot-pause
   exec /sbin/chargerlogo
+
+on early-boot
   start bootlogo
 
 on boot
