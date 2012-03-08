@@ -38,7 +38,7 @@ PRODUCT_COPY_FILES += \
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/common/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/7k_handset.kl \
+    device/lge/thunderc/files/common/usr/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
     device/lge/thunderc/files/common/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/usr/keychars/thunder_keypad.kcm.bin:system/usr/keychars/thunder_keypad.kcm.bin \
 
