@@ -25,48 +25,48 @@ PRODUCT_COPY_FILES += \
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc_common/usr/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
-    device/lge/thunderc_common/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
+    device/lge/thunderc_common/files/usr/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
+    device/lge/thunderc_common/files/usr/keylayout/thunder_keypad.kl:system/usr/keylayout/thunder_keypad.kl \
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc_common/init.thunderc.rc:root/init.thunderc.rc \
-    device/lge/thunderc_common/ueventd.thunderc.rc:root/ueventd.thunder.rc \
-    device/lge/thunderc_common/etc/init.local.rc:/system/etc/init.local.rc
+    device/lge/thunderc_common/files/init.thunderc.rc:root/init.thunderc.rc \
+    device/lge/thunderc_common/files/ueventd.thunderc.rc:root/ueventd.thunder.rc \
+    device/lge/thunderc_common/files/etc/init.local.rc:/system/etc/init.local.rc
 
 # Off-mode charging pieces
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc_common/sbin/chargerlogo:root/sbin/chargerlogo \
-    device/lge/thunderc_common/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
-    device/lge/thunderc_common/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
-    device/lge/thunderc_common/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
-    device/lge/thunderc_common/chargerimages/battery_ani_04.rle:root/chargerimages/battery_ani_04.rle \
-    device/lge/thunderc_common/chargerimages/battery_ani_05.rle:root/chargerimages/battery_ani_05.rle \
-    device/lge/thunderc_common/chargerimages/battery_charging_01.rle:root/chargerimages/battery_charging_01.rle \
-    device/lge/thunderc_common/chargerimages/battery_charging_02.rle:root/chargerimages/battery_charging_02.rle \
-    device/lge/thunderc_common/chargerimages/battery_charging_03.rle:root/chargerimages/battery_charging_03.rle \
-    device/lge/thunderc_common/chargerimages/battery_charging_04.rle:root/chargerimages/battery_charging_04.rle \
-    device/lge/thunderc_common/chargerimages/battery_charging_05.rle:root/chargerimages/battery_charging_05.rle \
-    device/lge/thunderc_common/chargerimages/battery_charging_06.rle:root/chargerimages/battery_charging_06.rle \
-    device/lge/thunderc_common/chargerimages/battery_notenough.rle:root/chargerimages/battery_notenough.rle \
-    device/lge/thunderc_common/chargerimages/battery_bg.rle:root/chargerimages/battery_bg.rle \
-    device/lge/thunderc_common/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
-    device/lge/thunderc_common/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
-    device/lge/thunderc_common/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
+    device/lge/thunderc_common/files/sbin/chargerlogo:root/sbin/chargerlogo \
+    device/lge/thunderc_common/files/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_ani_04.rle:root/chargerimages/battery_ani_04.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_ani_05.rle:root/chargerimages/battery_ani_05.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_charging_01.rle:root/chargerimages/battery_charging_01.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_charging_02.rle:root/chargerimages/battery_charging_02.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_charging_03.rle:root/chargerimages/battery_charging_03.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_charging_04.rle:root/chargerimages/battery_charging_04.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_charging_05.rle:root/chargerimages/battery_charging_05.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_charging_06.rle:root/chargerimages/battery_charging_06.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_notenough.rle:root/chargerimages/battery_notenough.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_bg.rle:root/chargerimages/battery_bg.rle \
+    device/lge/thunderc_common/files/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
+    device/lge/thunderc_common/files/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_02.rle \
 
 # GPS
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc_common/etc/loc_parameter.ini:system/etc/loc_parameter.ini \
+    device/lge/thunderc_common/files/etc/loc_parameter.ini:system/etc/loc_parameter.ini \
 
 # WiFi
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc_common/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    device/lge/thunderc_common/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
+    device/lge/thunderc_common/files/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    device/lge/thunderc_common/files/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc_common/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
-    device/lge/thunderc_common/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    device/lge/thunderc_common/files/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
+    device/lge/thunderc_common/files/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
 
 # Device permissions
 PRODUCT_COPY_FILES += \
@@ -81,11 +81,11 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
 
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc_common/etc/media_profiles.xml:system/etc/media_profiles.xml \
-    device/lge/thunderc_common/etc/init.d/mvdalvik.sh:system/etc/init.d/01mvdalvik \
+    device/lge/thunderc_common/files/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    device/lge/thunderc_common/files/etc/init.d/mvdalvik.sh:system/etc/init.d/01mvdalvik \
 
 # Let's use our own GPS config file
-PRODUCT_COPY_FILES += device/lge/thunderc_common/etc/gps.conf:system/etc/gps.conf
+PRODUCT_COPY_FILES += device/lge/thunderc_common/files/etc/gps.conf:system/etc/gps.conf
 
 $(call inherit-product, build/target/product/full.mk)
 
