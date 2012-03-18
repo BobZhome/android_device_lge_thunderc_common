@@ -1,4 +1,4 @@
-DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc_common/overlay/common 
+DEVICE_PACKAGE_OVERLAYS += device/lge/thunderc_common/overlay
 
 PRODUCT_PACKAGES += \
     gps.thunderc \
