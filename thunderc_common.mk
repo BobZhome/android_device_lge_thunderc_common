@@ -192,11 +192,16 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libsnd.so:system/lib/libsnd.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libqmi.so:system/lib/libqmi.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libdll.so:system/lib/libdll.so \
-    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/liblgerft.so:system/lib/liblgerft.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libbcmwl.so:system/lib/libbcmwl.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libdss.so:system/lib/libdss.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libril.so:system/lib/libril.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/rild:system/bin/rild \
+
+# The Vortex doesn't seem to have this library.
+ifneq ($(SUB_MODEL),VS660)
+  PRODUCT_COPY_FILES += \
+      vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/liblgerft.so:system/lib/liblgerft.so
+endif
 
 # OMX
 PRODUCT_COPY_FILES += \
@@ -207,22 +212,26 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxAmrDec.so:system/lib/libOmxAmrDec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxAmrEnc.so:system/lib/libOmxAmrEnc.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxAmrRtpDec.so:system/lib/libOmxAmrRtpDec.so \
-    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxAmrwbDec.so:system/lib/libOmxAmrwbDec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxEvrcDec.so:system/lib/libOmxEvrcDec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxEvrcEnc.so:system/lib/libOmxEvrcEnc.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxH264Dec.so:system/lib/libOmxH264Dec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxMp3Dec.so:system/lib/libOmxMp3Dec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxMpeg4Dec.so:system/lib/libOmxMpeg4Dec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxQcelp13Enc.so:system/lib/libOmxQcelp13Enc.so \
-    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxQcelpDec.so:system/lib/libOmxQcelpDec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxWmaDec.so:system/lib/libOmxWmaDec.so \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxWmvDec.so:system/lib/libOmxWmvDec.so
 
-# CND
-PRODUCT_COPY_FILES += \
-    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/cnd:system/bin/cnd
-    
+ifeq ($(SUB_MODEL),VS660)
+  PRODUCT_COPY_FILES += \
+      vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxCore.so:system/lib/libOmxCore.so \
+      vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxQcelp13Dec.so:system/lib/libOmxQcelp13Dec.so
+else
+  PRODUCT_COPY_FILES += \
+      vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxAmrwbDec.so:system/lib/libOmxAmrwbDec.so \
+      vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxQcelpDec.so:system/lib/libOmxQcelpDec.so
+endif
+
 # Bluetooth
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/$(BLUETOOTH_FIRMWARE):system/bin/BCM4325.hcd
