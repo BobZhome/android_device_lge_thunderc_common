@@ -105,14 +105,6 @@ PRODUCT_MANUFACTURER := LGE
 #    CDMA_CARRIER_NUMERIC := 310012
 #endif
 
-#ifeq ($(SUB_MODEL),LS670)
-#    # We're on Sprint
-#    CDMA_GOOGLE_BASE := android-sprint-us
-#    CDMA_CARRIER_ALPHA := Sprint
-#    CDMA_CARRIER_NUMERIC := 310120
-#    BLUETOOTH_FIRMWARE := BCM4325D1_004.002.004.0218.0248.hcd
-#endif
-
 #ifeq ($(SUB_MODEL),US670)
 #    # We're on USC (TODO)
 #    CDMA_GOOGLE_BASE := android-sprint-us
