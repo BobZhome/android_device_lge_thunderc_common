@@ -229,6 +229,10 @@ PRODUCT_COPY_FILES += \
       vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxQcelpDec.so:system/lib/libOmxQcelpDec.so
 endif
 
+# CND
+PRODUCT_COPY_FILES += \
+    vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/cnd:system/bin/cnd
+
 # Bluetooth
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/$(BLUETOOTH_FIRMWARE):system/bin/BCM4325.hcd
@@ -240,11 +244,11 @@ PRODUCT_COPY_FILES += \
 
 # Misc
 PRODUCT_COPY_FILES += \
-    device/lge/thunderc/files/media/bootanimation.zip:system/media/bootanimation.zip \
-    device/lge/thunderc/files/media/somebodys.ogg:system/media/audio/ringtones/somebodys.ogg \
-    device/lge/thunderc/files/media/Clockopia.ttf:system/fonts/Clockopia.ttf \
-    device/lge/thunderc/files/media/DroidSans.ttf:system/fonts/DroidSans.ttf \
-    device/lge/thunderc/files/media/DroidSans-Bold.ttf:system/fonts/DroidSans-Bold.ttf
+    device/lge/thunderc_common/files/media/bootanimation.zip:system/media/bootanimation.zip \
+    device/lge/thunderc_common/files/media/somebodys.ogg:system/media/audio/ringtones/somebodys.ogg \
+    device/lge/thunderc_common/files/media/Clockopia.ttf:system/fonts/Clockopia.ttf \
+    device/lge/thunderc_common/files/media/DroidSans.ttf:system/fonts/DroidSans.ttf \
+    device/lge/thunderc_common/files/media/DroidSans-Bold.ttf:system/fonts/DroidSans-Bold.ttf
 
 $(call inherit-product, build/target/product/small_base.mk)
 
