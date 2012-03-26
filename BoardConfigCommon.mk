@@ -27,6 +27,7 @@ BOARD_USES_QCOM_LIBS := true
 BOARD_USES_QCOM_LIBRPC := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_FORCE_STATIC_A2DP := true
 
 # Using GPSSHIM so that we can use the LG/Qualcomm binary blobs because
 # the open source stuff seems to be buggy, and Qualcomm doesn't believe
@@ -52,20 +53,12 @@ WIFI_DRIVER_HAS_LGE_SOFTAP := true
 
 BOARD_EGL_CFG := device/lge/thunderc_common/files/lib/egl/egl.cfg
 
-BOARD_KERNEL_CMDLINE := mem=477M console=ttyMSM2,115200n8 androidboot.hardware=thunderc
+BOARD_KERNEL_CMDLINE := mem=477M console=ttyMSM2,115200n8 androidboot.hardware=thunderc uart_console=disable recovery=off lge.rev=10
 BOARD_KERNEL_BASE := 0x12200000
 BOARD_PAGE_SIZE := 0x00000800
 
 # Appropriate defaults?
 BOARD_FLASH_BLOCK_SIZE := 131072
-
-# Optimus C
-#ifeq ($(SUB_MODEL),LW690)
-#    BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00500000
-#    BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00500000
-#    BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x0bd00000
-#    BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x0c900000
-#endif
 
 #BOARD_HAS_NO_SELECT_BUTTON := true
 
@@ -81,3 +74,6 @@ TARGET_PROVIDES_LIBAUDIO := true
 BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 TARGET_SF_NEEDS_REAL_DIMENSIONS := true
+
+# Charging while powered off
+BOARD_GLOBAL_CFLAGS += -DCHARGERMODE_CMDLINE_NAME='"lge.reboot"' -DCHARGERMODE_CMDLINE_VALUE='"pwroff"'

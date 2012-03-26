@@ -17,10 +17,7 @@ PRODUCT_PACKAGES += \
     e2fsck \
     SpareParts \
     CMWallpapers \
-    LiveWallpapers \
     LiveWallpapersPicker \
-    MagicSmokeWallpapers \
-    VisualizationWallpapers
 
 DISABLE_DEXPREOPT := false
 
@@ -38,12 +35,12 @@ PRODUCT_COPY_FILES += \
 BOOTIMAGE_FILES := $(wildcard device/lge/thunderc_$(SUB_MODEL)/files/bootimages/*.rle)
 
 ifeq ($(BOOTIMAGE_FILES),)
-  PRODUCT_COPY_FILES += \
-      device/lge/thunderc_common/files/initlogo.rle:root/initlogo.rle
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc_common/files/initlogo.rle:root/initlogo.rle
 else
-  PRODUCT_PACKAGES += bootlogo
-  PRODUCT_COPY_FILES += \
-      $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
+PRODUCT_PACKAGES += bootlogo
+PRODUCT_COPY_FILES += \
+    $(foreach f,$(BOOTIMAGE_FILES),$(f):root/bootimages/$(notdir $(f)))
 endif
 
 # Keylayouts
@@ -199,7 +196,7 @@ PRODUCT_COPY_FILES += \
 
 # The Vortex doesn't seem to have this library.
 ifneq ($(SUB_MODEL),VS660)
-  PRODUCT_COPY_FILES += \
+PRODUCT_COPY_FILES += \
       vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/liblgerft.so:system/lib/liblgerft.so
 endif
 
@@ -223,11 +220,11 @@ PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxWmvDec.so:system/lib/libOmxWmvDec.so
 
 ifeq ($(SUB_MODEL),VS660)
-  PRODUCT_COPY_FILES += \
+PRODUCT_COPY_FILES += \
       vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxCore.so:system/lib/libOmxCore.so \
       vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxQcelp13Dec.so:system/lib/libOmxQcelp13Dec.so
 else
-  PRODUCT_COPY_FILES += \
+PRODUCT_COPY_FILES += \
       vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxAmrwbDec.so:system/lib/libOmxAmrwbDec.so \
       vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/lib/libOmxQcelpDec.so:system/lib/libOmxQcelpDec.so
 endif
@@ -236,7 +233,20 @@ endif
 PRODUCT_COPY_FILES += \
     vendor/lge/thunderc/proprietary/$(SUB_MODEL)/system/bin/$(BLUETOOTH_FIRMWARE):system/bin/BCM4325.hcd
 
-$(call inherit-product, build/target/product/full.mk)
+# Apps
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc_common/files/apps/CarHomeGoogle.apk:system/app/CarHomeGoogle.apk \
+    device/lge/thunderc_common/files/apps/LauncherPro.apk:system/app/LauncherPro.apk \
+
+# Misc
+PRODUCT_COPY_FILES += \
+    device/lge/thunderc/files/media/bootanimation.zip:system/media/bootanimation.zip \
+    device/lge/thunderc/files/media/somebodys.ogg:system/media/audio/ringtones/somebodys.ogg \
+    device/lge/thunderc/files/media/Clockopia.ttf:system/fonts/Clockopia.ttf \
+    device/lge/thunderc/files/media/DroidSans.ttf:system/fonts/DroidSans.ttf \
+    device/lge/thunderc/files/media/DroidSans-Bold.ttf:system/fonts/DroidSans-Bold.ttf
+
+$(call inherit-product, build/target/product/small_base.mk)
 
 # We don't need to pull in the languages_full.mk manually because it'll get clobbered anyhow by full.mk
 # mdpi goes last so that the janky default locale/region code can pick a sane default
@@ -255,25 +265,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
     gsm.sim.operator.numeric=$(CDMA_CARRIER_NUMERIC) \
     gsm.operator.alpha=$(CDMA_CARRIER_ALPHA) \
     gsm.operator.numeric=$(CDMA_CARRIER_NUMERIC)
-
-#ifeq ($(SUB_MODEL),VS660)
-#    # We're on Verizon (TODO)
-#    CDMA_GOOGLE_BASE := android-verizon
-#    CDMA_CARRIER_ALPHA := Verizon_Wireless
-#    CDMA_CARRIER_NUMERIC := 310012
-#endif
-
-#ifeq ($(SUB_MODEL),US670)
-#    # We're on USC (TODO)
-#    CDMA_GOOGLE_BASE := android-sprint-us
-#    CDMA_CARRIER_ALPHA := US_Cellular
-#    CDMA_CARRIER_NUMERIC := 310066
-#endif
-
-#ifeq ($(SUB_MODEL),LW690)
-#    # We're on Cricket (In progress)
-#    CDMA_GOOGLE_BASE := android-cricket-us
-#    CDMA_CARRIER_ALPHA := Cricket
-#    CDMA_CARRIER_NUMERIC := 310016
-#    BLUETOOTH_FIRMWARE := BCM4325D1_004.002.004.0285.0301.hcd
-#endif
