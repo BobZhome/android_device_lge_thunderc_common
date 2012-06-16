@@ -334,10 +334,6 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
                          GRALLOC_USAGE_PMEM_PRIVATE_ADSP |
 #endif
                          GRALLOC_USAGE_SW_READ_OFTEN);
-<<<<<<< HEAD
-=======
-
->>>>>>> libcamera: Update to camera hal from zte blade.
       retVal = mWindow->set_buffers_geometry(mWindow,
                                              previewWidth, previewHeight,
 #ifdef HWA
@@ -417,53 +413,6 @@ CameraHAL_GenClientData(const android::sp<android::IMemory> &dataPtr,
       LOGV("CameraHAL_GenClientData: ERROR allocating memory from client\n");
    }
    return clientData;
-<<<<<<< HEAD
-}
-
-void
-CameraHAL_DataCb(int32_t msg_type, const android::sp<android::IMemory>& dataPtr,
-                 void *user)
-{
-   LOGV("CameraHAL_DataCb: msg_type:%d user:%p\n", msg_type, user);
-   if (msg_type == CAMERA_MSG_PREVIEW_FRAME) {
-      int32_t previewWidth, previewHeight;
-      android::CameraParameters hwParameters = qCamera->getParameters();
-      hwParameters.getPreviewSize(&previewWidth, &previewHeight);
-      CameraHAL_HandlePreviewData(dataPtr, mWindow, origCamReqMemory,
-                                  previewWidth, previewHeight);
-   } else if (origData_cb != NULL && origCamReqMemory != NULL) {
-      camera_memory_t *clientData = CameraHAL_GenClientData(dataPtr,
-                                       origCamReqMemory, user);
-      if (clientData != NULL) {
-         LOGV("CameraHAL_DataCb: Posting data to client\n");
-         origData_cb(msg_type, clientData, 0, NULL, user);
-         clientData->release(clientData);
-      }
-   }
-}
-
-void
-CameraHAL_DataTSCb(nsecs_t timestamp, int32_t msg_type,
-                   const android::sp<android::IMemory>& dataPtr, void *user)
-{
-   LOGV("CameraHAL_DataTSCb: timestamp:%lld msg_type:%d user:%p\n",
-        timestamp /1000, msg_type, user);
-
-   if (origDataTS_cb != NULL && origCamReqMemory != NULL) {
-      camera_memory_t *clientData = CameraHAL_GenClientData(dataPtr,
-                                       origCamReqMemory, user);
-      if (clientData != NULL) {
-         LOGV("CameraHAL_DataTSCb: Posting data to client timestamp:%lld\n",
-              systemTime());
-         origDataTS_cb(timestamp, msg_type, clientData, 0, user);
-         qCamera->releaseRecordingFrame(dataPtr);
-         clientData->release(clientData);
-      } else {
-         LOGD("CameraHAL_DataTSCb: ERROR allocating memory from client\n");
-      }
-   }
-}
-=======
 }
 
 void
@@ -511,7 +460,6 @@ CameraHAL_DataTSCb(nsecs_t timestamp, int32_t msg_type,
       }
    }
 }
->>>>>>> libcamera: Update to camera hal from zte blade.
 
 int
 CameraHAL_GetNum_Cameras(void)
@@ -685,17 +633,11 @@ qcamera_start_preview(struct camera_device * device)
    LOGV("qcamera_start_preview: Preview enabled:%d msg enabled:%d\n",
         qCamera->previewEnabled(),
         qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME));
-<<<<<<< HEAD
-   if (!qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME)) {
-      qCamera->enableMsgType(CAMERA_MSG_PREVIEW_FRAME);
-   }
-=======
 
    if (!qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME)) {
       qCamera->enableMsgType(CAMERA_MSG_PREVIEW_FRAME);
    }
 
->>>>>>> libcamera: Update to camera hal from zte blade.
    return qCamera->startPreview();
 }
 
@@ -709,10 +651,6 @@ qcamera_stop_preview(struct camera_device * device)
    if (qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME)) {
       qCamera->disableMsgType(CAMERA_MSG_PREVIEW_FRAME);
    }
-<<<<<<< HEAD
-=======
-
->>>>>>> libcamera: Update to camera hal from zte blade.
    return qCamera->stopPreview();
 }
 
@@ -738,10 +676,6 @@ qcamera_start_recording(struct camera_device * device)
    /* TODO: Remove hack. */
    qCamera->enableMsgType(CAMERA_MSG_VIDEO_FRAME);
    qCamera->startRecording();
-<<<<<<< HEAD
-=======
-
->>>>>>> libcamera: Update to camera hal from zte blade.
    return NO_ERROR;
 }
 
@@ -801,10 +735,6 @@ qcamera_take_picture(struct camera_device * device)
                          CAMERA_MSG_COMPRESSED_IMAGE);
 
    qCamera->takePicture();
-<<<<<<< HEAD
-=======
-
->>>>>>> libcamera: Update to camera hal from zte blade.
    return NO_ERROR;
 }
 
