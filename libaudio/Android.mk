@@ -1,54 +1,48 @@
+ifneq ($(BUILD_TINY_ANDROID),true)
+
 LOCAL_PATH := $(call my-dir)
 
-####### LIBCAMERA #######
-
-# When zero we link against libmmcamera; when 1, we dlopen libmmcamera.
-DLOPEN_LIBMMCAMERA:=1
-
 include $(CLEAR_VARS)
+
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+LOCAL_STATIC_LIBRARIES := libmedia_helper
+LOCAL_WHOLE_STATIC_LIBRARIES := libaudiopolicy_legacy
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_PRELINK_MODULE := false
+LOCAL_SHARED_LIBRARIES := \
+    libcutils \
+    libutils \
+    libmedia
 
-LOCAL_SRC_FILES:= QualcommCameraHardware.cpp
+LOCAL_SRC_FILES:= AudioPolicyManager.cpp
 
-LOCAL_CFLAGS:= -DDLOPEN_LIBMMCAMERA=$(DLOPEN_LIBMMCAMERA)
-
-# Can be raised to 6 to improve framerate, at the cost of allocating
-# more ADSP memory. Use 0xa68000 as pool size in kernel to test
-LOCAL_CFLAGS+= -DNUM_PREVIEW_BUFFERS=2 -D_ANDROID_
-
-LOCAL_C_INCLUDES+= \
-    $(TARGET_OUT_HEADERS)/mm-camera \
-    $(TARGET_OUT_HEADERS)/mm-still/jpeg \
-
-LOCAL_SHARED_LIBRARIES:= libutils libui libcamera_client liblog libcutils
-
-LOCAL_SHARED_LIBRARIES+= libbinder
-ifneq ($(DLOPEN_LIBMMCAMERA),1)
-LOCAL_SHARED_LIBRARIES+= liboemcamera
-else
-LOCAL_SHARED_LIBRARIES+= libdl
+ifeq ($(BOARD_HAVE_BLUETOOTH),true)
+  LOCAL_CFLAGS += -DWITH_A2DP
 endif
 
-LOCAL_MODULE:= libcamera
+LOCAL_MODULE := audio_policy.thunderc
 include $(BUILD_SHARED_LIBRARY)
-
-## Make camera wrapper
 
 include $(CLEAR_VARS)
 
-LOCAL_C_FLAGS        += -O3
-LOCAL_MODULE_TAGS    := optional
-LOCAL_MODULE_PATH    := $(TARGET_OUT_SHARED_LIBRARIES)/hw
-LOCAL_MODULE         := camera.$(TARGET_BOARD_PLATFORM)
-LOCAL_SRC_FILES      := cameraHal.cpp
-LOCAL_PRELINK_MODULE := false
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+LOCAL_STATIC_LIBRARIES += libmedia_helper
+LOCAL_WHOLE_STATIC_LIBRARIES := libaudiohw_legacy
+LOCAL_MODULE_TAGS := optional
 
-LOCAL_SHARED_LIBRARIES := liblog libdl libutils libcamera_client libbinder libcutils libhardware libcamera libui
-LOCAL_C_INCLUDES       := frameworks/base/services \
-                          frameworks/base/include \
-                          hardware/libhardware/include \
-                          hardware
+LOCAL_SHARED_LIBRARIES := \
+    libcutils \
+    libutils \
+    libmedia \
+    libhardware_legacy \
+    libdl
 
+LOCAL_SRC_FILES += AudioHardware.cpp
+
+LOCAL_CFLAGS += -fno-short-enums
+
+LOCAL_MODULE := audio.primary.thunderc
 include $(BUILD_SHARED_LIBRARY)
+
+
+endif # not BUILD_TINY_ANDROID
