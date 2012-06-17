@@ -45,7 +45,7 @@ public:
             uint32_t w, uint32_t h, int32_t f, uint32_t ws, uint32_t hs);
 
     static sp<OverlayRef> readFromParcel(const Parcel& data);
-    static status_t writeToParcel(Parcel* reply, const sp<OverlayRef>& o);
+    static status_t writeToParcel(Parcel* reply, const sp<OverlayRef>& o);    
 
 private:
     friend class LightRefBase<OverlayRef>;
@@ -73,7 +73,7 @@ public:
 
     /* destroys this overlay */
     void destroy();
-
+    
     /* get the HAL handle for this overlay */
     overlay_handle_t getHandleRef() const;
 
@@ -108,7 +108,7 @@ public:
     int32_t getHeightStride() const;
     int32_t getBufferCount() const;
     status_t getStatus() const;
-
+    
 private:
     virtual ~Overlay();
 
@@ -122,3 +122,4 @@ private:
 }; // namespace android
 
 #endif // ANDROID_OVERLAY_H
+

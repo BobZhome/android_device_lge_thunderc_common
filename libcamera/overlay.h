@@ -232,7 +232,6 @@ struct overlay_control_device_t {
      * size and format is returned in overlay_t. */
     overlay_t* (*createOverlay)(struct overlay_control_device_t *dev,
             uint32_t w, uint32_t h, int32_t format);
-
 #ifdef OMAP_ENHANCEMENT
      /* Overloaded function for S3D Overlay creation.  Used to load V4L2_S3D driver*/
     overlay_t* (*createOverlay_S3D)(struct overlay_control_device_t *dev,
@@ -292,7 +291,7 @@ struct overlay_data_device_t {
 
     /* blocks until an overlay buffer is available and return that buffer. */
     int (*dequeueBuffer)(struct overlay_data_device_t *dev,
-		         overlay_buffer_t *buf);
+                        overlay_buffer_t *buf);
 
     /* release the overlay buffer and post it */
     int (*queueBuffer)(struct overlay_data_device_t *dev,
@@ -311,8 +310,6 @@ struct overlay_data_device_t {
 #endif
 
     int (*setFd)(struct overlay_data_device_t *dev, int fd);
-
-
 };
 
 
@@ -343,3 +340,4 @@ static inline int overlay_data_close(struct overlay_data_device_t* device) {
 __END_DECLS
 
 #endif  // ANDROID_OVERLAY_INTERFACE_H
+

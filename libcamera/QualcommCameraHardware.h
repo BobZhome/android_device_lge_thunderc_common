@@ -19,7 +19,7 @@
 **
 ** All alterations done to this file to add support for the Z71 terminal
 ** are intended for use with CyanogenMod. This includes all the support
-** for ov5642, and the reverse engineered bits like ioctls and EXIF
+** for ov5642, and the reverse engineered bits like ioctls and EXIF 
 ** referred to below as "Values originally from proprietary headers")
 ** Please do not change the EXIF header without asking me first.
 */
@@ -35,7 +35,7 @@
 
 extern "C" {
 #include <linux/android_pmem.h>
-#include <media/msm_camera.h>
+#include <msm_camera.h>
 }
 
 struct str_map {
@@ -102,7 +102,7 @@ typedef struct {
 	unsigned int in2_h;
 	unsigned int out2_w;
 	unsigned int out2_h;
-	uint8_t update_flag;
+	uint8_t update_flag; 
 } common_crop_t;
 
 typedef uint8_t cam_ctrl_type;
@@ -639,3 +639,4 @@ private:
 }; // namespace android
 
 #endif
+
