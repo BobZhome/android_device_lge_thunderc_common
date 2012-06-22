@@ -52,6 +52,7 @@ LOCAL_C_INCLUDES += hardware/libhardware/include
 LOCAL_C_INCLUDES += hardware/libhardware_legacy/include
 LOCAL_C_INCLUDES += frameworks/base/include
 LOCAL_C_INCLUDES += system/core/include
+LOCAL_C_INCLUDES += device/lge/common/include
 
 include $(BUILD_SHARED_LIBRARY)
 
