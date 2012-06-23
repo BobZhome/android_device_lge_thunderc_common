@@ -1,7 +1,7 @@
 # WARNING: This line must come *before* including the proprietary
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
-USE_CAMERA_STUB := true
+USE_CAMERA_STUB := false
 
 #Device Information
 TARGET_ARCH := arm
@@ -24,7 +24,7 @@ TARGET_BOOTLOADER_BOARD_NAME := thunderc
 TARGET_OTA_ASSERT_DEVICE := thunderc
 
 #Camera
-COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
+COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT -DFORCE_CPU_UPLOAD
 # This is needed by libcamera.so 
 BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true 
 
@@ -101,5 +101,6 @@ BOARD_USE_SKIA_LCDTEXT := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 
 #OFFLINE CHARGING
-BOARD_GLOBAL_CFLAGS += -DCHARGERMODE_CMDLINE_NAME='"lge.reboot"' -DCHARGERMODE_CMDLINE_VALUE='"pwroff"'
+BOARD_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"lge.reboot"' -DBOARD_CHARGING_CMDLINE_VALUE='"pwroff"'
+BOARD_USES_RECOVERY_CHARGEMODE := false 
 

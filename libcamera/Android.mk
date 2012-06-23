@@ -1,3 +1,5 @@
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),thunderc)
+
 LOCAL_PATH := $(call my-dir)
 include $(call all-subdir-makefiles)
 
@@ -16,3 +18,4 @@ LOCAL_C_INCLUDES       += hardware/libhardware/include/ hardware
 
 include $(BUILD_SHARED_LIBRARY)
 
+endif
