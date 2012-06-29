@@ -1455,7 +1455,7 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
                 new_snd_device = SND_DEVICE_SPEAKER;
                 new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
             }
-        } else if (outputDevices & AUDIO_DEVICE_OUT_SPEAKER_IN_CALL) { // P500 SPEAKER_IN_CALL fix
+        } else if (outputDevices & AUDIO_DEVICE_OUT_SPEAKER_IN_CALL) { // VM670 SPEAKER_IN_CALL fix
             LOGI("Routing audio to Speaker in call\n");
             new_snd_device = SND_DEVICE_SPEAKER_IN_CALL;
             new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
