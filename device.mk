@@ -1,6 +1,8 @@
 $(call inherit-product, build/target/product/languages_small.mk)
 $(call inherit-product, vendor/cm/config/common_mini_phone.mk)
 
+PRODUCT_LOCALES := en_US es_ES
+
 # We have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
