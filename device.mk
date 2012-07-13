@@ -7,11 +7,11 @@ PRODUCT_LOCALES := en_US es_ES
 PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Use dalvik parameters for a 512 MB device
-$(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 # Publish that we support the live wallpaper feature.
-PRODUCT_COPY_FILES += \
-    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml
+#PRODUCT_COPY_FILES += \
+#    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.lge.vibrator_amp=125 \
