@@ -13,7 +13,7 @@ LOCAL_SRC_FILES      := cameraHal.cpp
 LOCAL_PRELINK_MODULE := false
 
 LOCAL_SHARED_LIBRARIES := liblog libdl libutils libcamera_client libbinder libcutils libhardware libcamera libui
-LOCAL_C_INCLUDES       := frameworks/base/services/ frameworks/base/include
+LOCAL_C_INCLUDES       := frameworks/base/services/ frameworks/base/include frameworks/av/include
 LOCAL_C_INCLUDES       += hardware/libhardware/include/ hardware
 
 include $(BUILD_SHARED_LIBRARY)

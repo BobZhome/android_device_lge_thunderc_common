@@ -9,9 +9,6 @@ TARGET_ARCH := arm
 TARGET_PROVIDES_INIT_TARGET_RC := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 BOARD_NO_RGBX_8888 := true
-BOARD_HAS_JANKY_BACKBUFFER := true
-TARGET_USES_16BPPSURFACE_FOR_OPAQUE := true
-TARGET_USES_OLD_LIBSENSORS_HAL:=true
 
 #Platform
 TARGET_BOARD_PLATFORM := msm7x27
@@ -54,12 +51,7 @@ WIFI_DRIVER_MODULE_NAME         := "wireless"
 WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
 WPA_SUPPLICANT_VERSION          := VER_0_6_X
-HOSTAPD_VERSION			:= VER_0_6_X
-#BOARD_HOSTAPD_DRIVER            := bcm4325
-#BOARD_HOSTAPD_PRIVATE_LIB       := lib_driver_cmd_wext
-#BOARD_SOFTAP_DEVICE_TI          := bcm4325
-#BOARD_P2P_DEVICE_TI             := bcm4325
-
+#HOSTAPD_VERSION			:= VER_0_6_X
 
 #Qualcomm Related
 BOARD_USES_QCOM_HARDWARE := true
@@ -88,7 +80,6 @@ TARGET_HAVE_BYPASS := false
 TARGET_USES_C2D_COMPOSITION := false
 TARGET_USES_GENLOCK := true
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
-BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 
 # RIL
 BOARD_PROVIDES_LIBRIL := true
@@ -98,8 +89,8 @@ BOARD_USE_LEGACY_TOUCHSCREEN := true
 
 #Mass Storage
 BOARD_USE_USB_MASS_STORAGE_SWITCH := true
-BOARD_UMS_LUNFILE := /sys/devices/platform/msm_hsusb/gadget/lun0/file
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
+BOARD_UMS_LUNFILE := /sys/class/android_usb/android0/f_mass_storage/lun/file
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
 BOARD_SDCARD_DEVICE_INTERNAL := /dev/block/vold/179:1
 BOARD_SDEXT_DEVICE := /dev/block/vold/179:2
 
