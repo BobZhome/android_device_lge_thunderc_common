@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "AudioPolicyManager"
+#define LOG_TAG "AudioPolicyManager7627"
 //#define LOG_NDEBUG 0
 #include <utils/Log.h>
 #include "AudioPolicyManager.h"
@@ -46,7 +46,7 @@ extern "C" void destroyAudioPolicyManager(AudioPolicyInterface *interface)
     delete interface;
 }
 
-uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, bool fromCache)
+audio_devices_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, bool fromCache)
 {
     uint32_t device = 0;
 
@@ -118,7 +118,7 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
                 if (device) break;
             }
 #endif
-            // VM670 SPEAKER_IN_CALL fix
+            // P500 SPEAKER_IN_CALL fix
             if (isInCall()) {
                 device = AUDIO_DEVICE_OUT_SPEAKER_IN_CALL;
                 if (device)
@@ -155,7 +155,7 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
         // FALL THROUGH
 
     case STRATEGY_MEDIA: {
-#ifdef FM_RADIO
+#ifdef HAVE_FM_RADIO
         uint32_t device2 = 0;
         if (mForceUse[AudioSystem::FOR_MEDIA] == AudioSystem::FORCE_SPEAKER) {
             device2 = mAvailableOutputDevices & AudioSystem::DEVICE_OUT_SPEAKER;
@@ -203,7 +203,7 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
             ALOGE("getDeviceForStrategy() speaker device not found");
         }
 
-#ifdef FM_RADIO
+#ifdef HAVE_FM_RADIO
         if (mAvailableOutputDevices & AudioSystem::DEVICE_OUT_FM) {
             device |= AudioSystem::DEVICE_OUT_FM;
             
@@ -229,10 +229,10 @@ uint32_t AudioPolicyManager::getDeviceForStrategy(routing_strategy strategy, boo
     }
 
     ALOGV("getDeviceForStrategy() strategy %d, device %x", strategy, device);
-    return device;
+    return (audio_devices_t)device;
 }
 
-status_t AudioPolicyManager::checkAndSetVolume(int stream, int index, audio_io_handle_t output, uint32_t device, int delayMs, bool force)
+status_t AudioPolicyManager::checkAndSetVolume(int stream, int index, audio_io_handle_t output, audio_devices_t device, int delayMs, bool force)
 {
 
     // do not change actual stream volume if the stream is muted
@@ -255,7 +255,7 @@ status_t AudioPolicyManager::checkAndSetVolume(int stream, int index, audio_io_h
     // - the force flag is set
     if (volume != mOutputs.valueFor(output)->mCurVolume[stream] ||
         (stream == AudioSystem::VOICE_CALL) ||
-#ifdef FM_RADIO
+#ifdef HAVE_FM_RADIO
 	    (stream == AudioSystem::FM) ||
 #endif
 	force) {
@@ -280,9 +280,9 @@ status_t AudioPolicyManager::checkAndSetVolume(int stream, int index, audio_io_h
         } else {
             voiceVolume = 1.0;
         }
-        
-        if ((voiceVolume >= 0 && output == mHardwareOutput)
-#ifdef FM_RADIO
+
+        if ((voiceVolume != mLastVoiceVolume && output == mPrimaryOutput)
+#ifdef HAVE_FM_RADIO
           && (!(mAvailableOutputDevices & AudioSystem::DEVICE_OUT_FM))
 #endif
         ) {
@@ -290,7 +290,7 @@ status_t AudioPolicyManager::checkAndSetVolume(int stream, int index, audio_io_h
             mLastVoiceVolume = voiceVolume;
         }
     }
-#ifdef FM_RADIO
+#ifdef HAVE_FM_RADIO
     else if ((stream == AudioSystem::FM) && (mAvailableOutputDevices & AudioSystem::DEVICE_OUT_FM)) {
         float fmVolume = -1.0;
         fmVolume = (float)index/(float)mStreams[stream].mIndexMax;
