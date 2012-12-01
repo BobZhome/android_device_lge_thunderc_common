@@ -7,19 +7,14 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-
-ifeq ($(BOARD_HAVE_BLUETOOTH),true)
-#    LOCAL_CFLAGS += -DWITH_A2DP
-endif
-
-ifeq ($(BOARD_COMBO_DEVICE_SUPPORTED),true)
-    LOCAL_CFLAGS += -DCOMBO_DEVICE_SUPPORTED
-endif
-
-
 LOCAL_SRC_FILES := \
     AudioHardware.cpp \
     audio_hw_hal.cpp
+
+
+ifeq ($(BOARD_HAVE_BLUETOOTH),true)
+    LOCAL_CFLAGS += -DWITH_A2DP
+endif
 
 LOCAL_SHARED_LIBRARIES := libcutils libutils libmedia
 
@@ -28,7 +23,6 @@ ifneq ($(TARGET_SIMULATOR),true)
 endif
 
 LOCAL_STATIC_LIBRARIES := libmedia_helper libaudiohw_legacy
-
 LOCAL_MODULE := audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME)
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_MODULE_TAGS := optional
@@ -44,22 +38,12 @@ LOCAL_C_INCLUDES += system/core/include
 
 include $(BUILD_SHARED_LIBRARY)
 
+
+
 ifeq ("usedefault","audiopolicymanager")
 
-# -------------------------------------------------------------
 # The audio policy is implemented on top of legacy policy code
-# -------------------------------------------------------------
 include $(CLEAR_VARS)
-
-
-ifeq ($(BOARD_HAVE_BLUETOOTH),true)
-#    LOCAL_CFLAGS += -DWITH_A2DP
-endif
-
-ifeq ($(BOARD_COMBO_DEVICE_SUPPORTED),true)
-    LOCAL_CFLAGS += -DCOMBO_DEVICE_SUPPORTED
-endif
-
 
 LOCAL_SRC_FILES := \
     AudioPolicyManager.cpp \
@@ -71,8 +55,13 @@ LOCAL_MODULE := audio_policy.$(TARGET_BOOTLOADER_BOARD_NAME)
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_MODULE_TAGS := optional
 
+ifeq ($(BOARD_HAVE_BLUETOOTH),true)
+    LOCAL_CFLAGS += -DWITH_A2DP
+endif
+
 LOCAL_C_INCLUDES := hardware/libhardware_legacy/audio
 
 
 include $(BUILD_SHARED_LIBRARY)
+
 endif #("usedefault","audiopolicymanager")

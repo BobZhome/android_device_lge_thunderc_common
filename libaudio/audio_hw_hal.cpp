@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2011 The Android Open Source Project
- * Copyright (c) 2012, Code Aurora Forum. All rights reserved.
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "audio.primary.msm7627"
+#define LOG_TAG "qcom_audio_hw_hal"
 //#define LOG_NDEBUG 0
 
 #include <stdint.h>
@@ -79,7 +78,7 @@ static size_t out_get_buffer_size(const struct audio_stream *stream)
     return out->qcom_out->bufferSize();
 }
 
-static audio_channel_mask_t out_get_channels(const struct audio_stream *stream)
+static uint32_t out_get_channels(const struct audio_stream *stream)
 {
     const struct qcom_stream_out *out =
         reinterpret_cast<const struct qcom_stream_out *>(stream);
@@ -90,7 +89,7 @@ static audio_format_t out_get_format(const struct audio_stream *stream)
 {
     const struct qcom_stream_out *out =
         reinterpret_cast<const struct qcom_stream_out *>(stream);
-    return (audio_format_t)out->qcom_out->format();
+    return (audio_format_t) out->qcom_out->format();
 }
 
 static int out_set_format(struct audio_stream *stream, audio_format_t format)
@@ -164,6 +163,14 @@ static int out_get_render_position(const struct audio_stream_out *stream,
     return out->qcom_out->getRenderPosition(dsp_frames);
 }
 
+static int out_get_next_write_timestamp(const struct audio_stream_out *stream,
+                                        int64_t *timestamp)
+{
+    const struct qcom_stream_out *out =
+        reinterpret_cast<const struct qcom_stream_out *>(stream);
+    return out->qcom_out->getNextWriteTimestamp(timestamp);
+}
+
 static int out_add_audio_effect(const struct audio_stream *stream, effect_handle_t effect)
 {
     return 0;
@@ -172,12 +179,6 @@ static int out_add_audio_effect(const struct audio_stream *stream, effect_handle
 static int out_remove_audio_effect(const struct audio_stream *stream, effect_handle_t effect)
 {
     return 0;
-}
-
-static int out_get_next_write_timestamp(const struct audio_stream_out *stream,
-                                        int64_t *timestamp)
-{
-    return -EINVAL;
 }
 
 /** audio_stream_in implementation **/
@@ -205,7 +206,7 @@ static size_t in_get_buffer_size(const struct audio_stream *stream)
     return in->qcom_in->bufferSize();
 }
 
-static audio_channel_mask_t in_get_channels(const struct audio_stream *stream)
+static uint32_t in_get_channels(const struct audio_stream *stream)
 {
     const struct qcom_stream_in *in =
         reinterpret_cast<const struct qcom_stream_in *>(stream);
@@ -216,7 +217,7 @@ static audio_format_t in_get_format(const struct audio_stream *stream)
 {
     const struct qcom_stream_in *in =
         reinterpret_cast<const struct qcom_stream_in *>(stream);
-    return (audio_format_t)in->qcom_in->format();
+    return (audio_format_t) in->qcom_in->format();
 }
 
 static int in_set_format(struct audio_stream *stream, audio_format_t format)
@@ -324,10 +325,9 @@ static uint32_t adev_get_supported_devices(const struct audio_hw_device *dev)
  * #endif
  */
             AUDIO_DEVICE_OUT_AUX_DIGITAL |
-            AUDIO_DEVICE_OUT_ALL_SCO |
             AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET |
             AUDIO_DEVICE_OUT_DGTL_DOCK_HEADSET |
-            AUDIO_DEVICE_OUT_SPEAKER_IN_CALL | // P500 SPEAKER_IN_CALL fix
+            AUDIO_DEVICE_OUT_ALL_SCO |
 #ifdef HAVE_FM_RADIO
             AUDIO_DEVICE_OUT_FM |
 #endif
@@ -364,12 +364,11 @@ static int adev_set_master_volume(struct audio_hw_device *dev, float volume)
     return qadev->hwif->setMasterVolume(volume);
 }
 
-static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
+static int adev_get_master_volume(struct audio_hw_device *dev, float* volume)
 {
     struct qcom_audio_device *qadev = to_ladev(dev);
-    return qadev->hwif->setMode(mode);
+    return qadev->hwif->getMasterVolume(volume);
 }
-
 #ifdef HAVE_FM_RADIO
 static int adev_set_fm_volume(struct audio_hw_device *dev, float volume)
 {
@@ -377,6 +376,11 @@ static int adev_set_fm_volume(struct audio_hw_device *dev, float volume)
     return qadev->hwif->setFmVolume(volume);
 }
 #endif
+static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
+{
+    struct qcom_audio_device *qadev = to_ladev(dev);
+    return qadev->hwif->setMode((int) mode);
+}
 
 static int adev_set_mic_mute(struct audio_hw_device *dev, bool state)
 {
@@ -410,7 +414,8 @@ static size_t adev_get_input_buffer_size(const struct audio_hw_device *dev,
                                          const struct audio_config *config)
 {
     const struct qcom_audio_device *qadev = to_cladev(dev);
-    return qadev->hwif->getInputBufferSize(config->sample_rate, config->format, config->channel_mask);
+    return qadev->hwif->getInputBufferSize(config->sample_rate, (int) config->format,
+                                           popcount(config->channel_mask));
 }
 
 static int adev_open_output_stream(struct audio_hw_device *dev,
@@ -429,11 +434,9 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
     if (!out)
         return -ENOMEM;
 
-    out->qcom_out = qadev->hwif->openOutputStream(devices,
-                                                    (int *)&config->format,
+    out->qcom_out = qadev->hwif->openOutputStream(devices, flags, (int *) &config->format,
                                                     &config->channel_mask,
-                                                    &config->sample_rate,
-                                                    &status);
+                                                    &config->sample_rate, &status);
     if (!out->qcom_out) {
         ret = status;
         goto err_open;
@@ -480,8 +483,8 @@ static void adev_close_output_stream(struct audio_hw_device *dev,
 static int adev_open_input_stream(struct audio_hw_device *dev,
                                   audio_io_handle_t handle,
                                   audio_devices_t devices,
-                                  audio_config *config,
-                                  audio_stream_in **stream_in)
+                                  struct audio_config *config,
+                                  struct audio_stream_in **stream_in)
 {
     struct qcom_audio_device *qadev = to_ladev(dev);
     status_t status;
@@ -492,11 +495,9 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
     if (!in)
         return -ENOMEM;
 
-    in->qcom_in = qadev->hwif->openInputStream(devices, (int *)&config->format,
-                                    &config->channel_mask,
-                                    &config->sample_rate,
-                                    &status,
-                                    (AudioSystem::audio_in_acoustics)0);
+    in->qcom_in = qadev->hwif->openInputStream(devices, (int *) &config->format,
+                                                 &config->channel_mask, &config->sample_rate,
+                                                 &status, (AudioSystem::audio_in_acoustics)0);
     if (!in->qcom_in) {
         ret = status;
         goto err_open;
@@ -584,6 +585,7 @@ static int qcom_adev_open(const hw_module_t* module, const char* name,
     qadev->device.init_check = adev_init_check;
     qadev->device.set_voice_volume = adev_set_voice_volume;
     qadev->device.set_master_volume = adev_set_master_volume;
+    qadev->device.get_master_volume = adev_get_master_volume;
 #ifdef HAVE_FM_RADIO
     qadev->device.set_fm_volume = adev_set_fm_volume;
 #endif
@@ -622,8 +624,8 @@ struct qcom_audio_module HAL_MODULE_INFO_SYM = {
     module: {
         common: {
             tag: HARDWARE_MODULE_TAG,
-            version_major: 1,
-            version_minor: 0,
+            module_api_version: AUDIO_MODULE_API_VERSION_0_1,
+            hal_api_version: HARDWARE_HAL_API_VERSION,
             id: AUDIO_HARDWARE_MODULE_ID,
             name: "QCOM Audio HW HAL",
             author: "Code Aurora Forum",

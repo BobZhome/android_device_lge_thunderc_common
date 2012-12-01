@@ -31,9 +31,6 @@ extern "C" {
 #include <linux/msm_audio_voicememo.h>
 }
 
-// VM670 SPEAKER_IN_CALL fix
-#define AUDIO_DEVICE_OUT_SPEAKER_IN_CALL 0x4000
-
 namespace android_audio_legacy {
 using android::SortedVector;
 using android::Mutex;
@@ -188,6 +185,7 @@ public:
     // create I/O streams
     virtual AudioStreamOut* openOutputStream(
                                 uint32_t devices,
+                                audio_output_flags_t flags,
                                 int *format=0,
                                 uint32_t *channels=0,
                                 uint32_t *sampleRate=0,
